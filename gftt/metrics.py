@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import gaussian_kde
+from scipy.ndimage import map_coordinates
 import geopandas as gpd
 from shapely.geometry import mapping
 import rasterio
@@ -83,3 +84,63 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
                 
         bins = ax.hist(v ** 2, 100);
         return v, bins
+
+    
+def create_synthetic_offset(imgfile, mode='subpixel', block_size=500):
+    """
+    imgfile: str, geotiff file path
+    mode: 'subpixel' or 'multipixel'
+    block_size: int, increment block size
+    ----
+    returns:
+    shift_arx: np.ndarray, offset field (x), in pixels
+    shift_ary: np.ndarray, offset field (y), in pixels
+    ----
+
+    """  
+    with rasterio.open(imgfile) as src:
+        data_shape = (src.height, src.width)
+    idxy, idxx = np.indices(data_shape)   
+    # for Numpy array, first is row element (-> geotiff's y direction, height) 
+    # and second is column element (-> geotiff's x direction, width)
+    
+    if mode == 'subpixel':
+        shift_arx = idxx // block_size
+        shift_arx = 0.1 * shift_arx + 0.1
+        shift_ary = idxy // block_size
+        shift_ary = -0.1 * shift_ary - 0.1
+    elif mode == 'multipixel':
+        shift_arx = 1 + idxx // block_size
+        shift_ary = -1 - idxy // block_size
+    else:
+        raise ValueError('Mode is not defined.')
+        
+    return shift_arx, shift_ary
+
+
+def apply_synthetic_offset(imgfile, shift_arx, shift_ary, spline_order=1):
+    """
+    imgfile: str, geotiff file path
+    shift_arx: np.ndarray, offset field (x) from gftt.create_synthetic_offset
+    shift_ary: np.ndarray, offset field (y) from gftt.create_synthetic_offset
+    ----
+    returns:
+
+    ----
+
+    """  
+    with rasterio.open(imgfile) as src:
+        data_shape = (src.height, src.width)
+        data = src.read(1)
+    idxy, idxx = np.indices(data_shape)
+    shifted_y = idxy + shift_ary
+    shifted_x = idxx + shift_arx
+    shifted_yx = np.vstack((shifted_y.flatten(), shifted_x.flatten()))
+    
+    shifted_val = map_coordinates(data, shifted_yx, order=spline_order, mode='nearest')
+    shifted_val = np.reshape(shifted_val, data_shape)
+    
+    return shifted_val
+    
+def syn_shift_errors(vfile=None, vxfile=None, shift_arx=None, shift_ary=None, thres_sigma=3.0, plot=True, ax=None):
+    pass
