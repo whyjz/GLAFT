@@ -142,5 +142,46 @@ def apply_synthetic_offset(imgfile, shift_arx, shift_ary, spline_order=1):
     
     return shifted_val
     
-def syn_shift_errors(vfile=None, vxfile=None, shift_arx=None, shift_ary=None, thres_sigma=3.0, plot=True, ax=None):
-    pass
+def syn_shift_errors(ref_vx=None, vx=None, ref_vy=None, vy=None, thres_sigma=3.0, plot=True, ax=None):
+    if ref_vx is not None and vx is not None and ref_vy is not None and vy is not None:
+        ref_vx = ref_vx.flatten()
+        vx = vx.flatten()
+        ref_vy = ref_vy.flatten()
+        vy = vy.flatten()
+        valid_idx = vx > -9998 # idx of non-NaN points
+        # valid_idx = vy > -99 # idx of non-NaN points
+        # print('something')
+        vx = vx[valid_idx]
+        vy = vy[valid_idx]
+        ref_vx = ref_vx[valid_idx]
+        ref_vy = ref_vy[valid_idx]
+    else:
+        raise TypeError('ref_vx, vx, ref_vy, and vy are all required.')
+        
+    diff_vx = vx - ref_vx
+    diff_vy = vy - ref_vy
+    # return diff_vx, diff_vy
+    
+    print('Start calculating KDE, this may take a while...')        
+    xy = np.vstack([diff_vx, diff_vy])
+    z = gaussian_kde(xy)(xy)
+    print('KDE Done!')
+
+    thres_multiplier = np.e ** (thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
+    thres = max(z) / thres_multiplier
+    thres_idx = z >= thres
+    idx = thres_idx    # alias
+
+    if plot:
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+        viridis = cm.get_cmap('viridis', 12)
+        pt_style = {'s': 6, 'edgecolor': None}
+
+        ax.scatter(diff_vx[idx], diff_vy[idx], c=z[idx], **pt_style)
+        ax.scatter(diff_vx[~idx], diff_vy[~idx], color=viridis(0), alpha=0.4, **pt_style)
+
+    return diff_vx, diff_vy, z, thres_idx
+    
+
