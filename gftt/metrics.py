@@ -184,4 +184,64 @@ def syn_shift_errors(ref_vx=None, vx=None, ref_vy=None, vy=None, thres_sigma=3.0
 
     return diff_vx, diff_vy, z, thres_idx
     
+def mask_by_shp(geom,array,ds):
+    """
+    retrive date from input raster array falling within input polygon
+    
+    Parameters
+    -------------
+    geom: shapely.geometry 
+        shapefile within which to return raster values
+        if using geopandas GeoDataFrame, input should be geometry column like gdf['geometry']
+    array: np.ma.array
+        masked array of input raster
+    ds: gdal or rasterio dataset
+        dataset information for input array
+        used in computing geotransform
+    
+    Returns
+    -------------
+    masked_array: np.ma.array
+        input array containing non-masked values for only regions falling within input geometry
+    """
+ 
+    if (type(ds) == rasterio.io.DatasetReader):
+        transform = ds.transform
+    else:
+        from affine import Affine
+        transform = Affine.from_gdal(*ds.GetGeoTransform())
+    shp = features.rasterize(geom,out_shape=np.shape(array),fill=-9999,transform=transform,dtype=float)
+    shp_mask = np.ma.masked_where(shp==-9999,shp)
+    masked_array = np.ma.array(array,mask=shp_mask.mask)
+    return masked_array
 
+
+def compute_buffer(shp,buffer_dist=500,external_only=True):
+    """
+    Create a buffer along an input polygon shapefile
+
+    Parameters
+    ------------
+    shp: gpd.GeoDataFrame
+        object containing the polygons to be buffered 
+        (preferred projection crs should be metric (like UTM) and not geographic (in degrees)
+    buffer_dist: numeric
+        distance till which buffer will be computed (units will depend on shapefile CRS (m for metric projections)
+    external_only: bool (default: True)
+        return shapefile containing buffer from outside the polygon area only
+        useful for cases when computing static area stats about glacier boundaries
+    
+    Returns
+    ------------
+    out_shp: gpd.GeoDataFrame
+        buffered shapefile
+    """
+    
+    shp_buffer = shp.copy()
+    shp_buffer['geometry'] = shp_buffer['geometry'].buffer(buffer_dist)
+    if external_only:
+        shp_buffer_external = gpd.overlay(shp_buffer,shp,how='difference')
+        out_shp = shp_buffer_external
+    else:
+        out_shp = shp_buffer
+    return out_shp
