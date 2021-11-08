@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+import numpy as np
+
 def naof2(im):
     """
     NAOF preprocessing filter 
