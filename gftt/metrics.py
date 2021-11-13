@@ -8,12 +8,13 @@ from rasterio.mask import mask
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
-def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None):
+def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000):
     """
     vfile: str, geotiff file path
     vxfile: str, geotiff file path
     vyfile: str, geotiff file path
     off_ice_area: str, off ice area (shapefile) file path
+    max_n: maximum samples to calculate Gaussian KDE
     ----
     returns:
     vx: 1-d np array, vx values from all pixels within the off-ice area.
@@ -57,6 +58,12 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
         
     if case == 1:
         xy = np.vstack([vx, vy])
+        if len(vx) > max_n:
+            ## See https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html#numpy.random.Generator.choice
+            rng = np.random.default_rng()
+            xy = rng.choice(xy, size=max_n, replace=False, axis=1)
+            vx = xy[0, :]
+            vy = xy[1, :]
         z = gaussian_kde(xy)(xy)
 
         thres_multiplier = np.e ** (thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
