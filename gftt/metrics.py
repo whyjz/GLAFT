@@ -41,6 +41,9 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
         except NotImplementedError:
             clipped_data = out_image[0]
         return clipped_data
+    
+    vx_full = None
+    vy_full = None
 
     if vxfile is not None and vyfile is not None:
         case = 1
@@ -59,6 +62,8 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
     if case == 1:
         xy = np.vstack([vx, vy])
         if len(vx) > max_n:
+            vx_full = vx[:]
+            vy_full = vy[:]
             ## See https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html#numpy.random.Generator.choice
             rng = np.random.default_rng()
             xy = rng.choice(xy, size=max_n, replace=False, axis=1)
@@ -78,6 +83,9 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
             viridis = cm.get_cmap('viridis', 12)
             pt_style = {'s': 6, 'edgecolor': None}
             
+            if vx_full is not None:
+                ax.scatter(vx_full, vy_full, color='xkcd:gray', alpha=0.2, **pt_style)
+            
             ax.scatter(vx[idx], vy[idx], c=z[idx], **pt_style)
             ax.scatter(vx[~idx], vy[~idx], color=viridis(0), alpha=0.4, **pt_style)
             
@@ -92,6 +100,22 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
         bins = ax.hist(v ** 2, 100);
         return v, bins
 
+def plot_off_ice_errors(vx, vy, z, thres_idx, ax=None, zoom=True):
+    
+    viridis = cm.get_cmap('viridis', 12)
+    pt_style = {'s': 6, 'edgecolor': None}
+    idx = thres_idx    # alias
+    
+    if ax is None:
+        fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+        
+    ax.scatter(vx[idx], vy[idx], c=z[idx], **pt_style)
+    ax.scatter(vx[~idx], vy[~idx], color=viridis(0), alpha=0.4, **pt_style)
+    if zoom:
+        ax.set_xlim((min(vx[idx]), max(vx[idx])))
+        ax.set_ylim((min(vy[idx]), max(vy[idx])))
+    
+    
     
 def create_synthetic_offset(imgfile, mode='subpixel', block_size=500):
     """
