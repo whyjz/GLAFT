@@ -49,8 +49,9 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
         case = 1
         vx = clip(vxfile, geoms)
         vy = clip(vyfile, geoms)
-        vx = vx[vx > -9998]  # remove NaN points
-        vy = vy[vy > -9998]  # remove NaN points
+        nonNaN_pts_idx = np.logical_and(vx > -9998, vy > -9998)
+        vx = vx[nonNaN_pts_idx]  # remove NaN points
+        vy = vy[nonNaN_pts_idx]  # remove NaN points
     elif vfile is not None:
         case = 2
         v = clip(vfile, geoms)
@@ -235,6 +236,8 @@ def mask_by_shp(geom,array,ds):
     masked_array: np.ma.array
         input array containing non-masked values for only regions falling within input geometry
     """
+    
+    from rasterio import features
  
     if (type(ds) == rasterio.io.DatasetReader):
         transform = ds.transform
