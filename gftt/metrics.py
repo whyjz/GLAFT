@@ -5,8 +5,10 @@ import geopandas as gpd
 from shapely.geometry import mapping
 import rasterio
 from rasterio.mask import mask
+from rasterio import features
 import matplotlib.pyplot as plt
 from matplotlib import cm
+
 
 def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000):
     """
