@@ -10,11 +10,12 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 
 
-def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000):
+def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000):
     """
     vfile: str, geotiff file path
     vxfile: str, geotiff file path
     vyfile: str, geotiff file path
+    wfile: str, goetiff file path (as weight)
     off_ice_area: str, off ice area (shapefile) file path
     max_n: maximum samples to calculate Gaussian KDE
     ----
@@ -46,14 +47,18 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
     
     vx_full = None
     vy_full = None
+    w_full = None
 
     if vxfile is not None and vyfile is not None:
         case = 1
-        vx = clip(vxfile, geoms)
-        vy = clip(vyfile, geoms)
-        nonNaN_pts_idx = np.logical_and(vx > -9998, vy > -9998)
-        vx = vx[nonNaN_pts_idx]  # remove NaN points
-        vy = vy[nonNaN_pts_idx]  # remove NaN points
+        vx_full = clip(vxfile, geoms)
+        vy_full = clip(vyfile, geoms)
+        nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+        vx_full = vx_full[nonNaN_pts_idx]  # remove NaN points
+        vy_full = vy_full[nonNaN_pts_idx]  # remove NaN points
+        if wfile is not None:
+            w_full = clip(wfile, geoms)
+            w_full = w_full[nonNaN_pts_idx]  # remove NaN points
     elif vfile is not None:
         case = 2
         v = clip(vfile, geoms)
@@ -63,17 +68,30 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, off_ice_area=None, thre
         raise TypeError('Either vfile or vxfile+vyfile are required.')
         
     if case == 1:
-        xy = np.vstack([vx, vy])
-        if len(vx) > max_n:
-            vx_full = vx[:]
-            vy_full = vy[:]
+        if wfile is not None:
+            xy_full = np.vstack([vx_full, vy_full, w_full])
+        else:
+            xy_full = np.vstack([vx_full, vy_full])
+        
+        if len(vx_full) > max_n:
             ## See https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html#numpy.random.Generator.choice
             rng = np.random.default_rng()
-            xy = rng.choice(xy, size=max_n, replace=False, axis=1)
-            vx = xy[0, :]
-            vy = xy[1, :]
-        z = gaussian_kde(xy)(xy)
-
+            xy = rng.choice(xy_full, size=max_n, replace=False, axis=1)
+        else:
+            xy = xy_full
+        
+        if wfile is not None:
+            w = xy[2, :]
+            w = np.where(w < 0, 0, w)
+            kernel = gaussian_kde(xy[:2, :], weights=w)
+            z = kernel(xy[:2, :])
+        else:
+            kernel = gaussian_kde(xy)
+            z = kernel(xy)
+            
+        vx = xy[0, :]
+        vy = xy[1, :]
+            
         thres_multiplier = np.e ** (thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
         thres = max(z) / thres_multiplier
         thres_idx = z >= thres
