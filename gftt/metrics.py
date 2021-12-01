@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.stats import gaussian_kde
-from scipy.ndimage import map_coordinates
+from scipy.ndimage import map_coordinates, sobel
 import geopandas as gpd
 from shapely.geometry import mapping
 import rasterio
@@ -59,6 +59,7 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_are
         if wfile is not None:
             w_full = clip(wfile, geoms)
             w_full = w_full[nonNaN_pts_idx]  # remove NaN points
+        # return vx_full, vy_full
     elif vfile is not None:
         case = 2
         v = clip(vfile, geoms)
@@ -66,7 +67,7 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_are
     else:
         case = 0
         raise TypeError('Either vfile or vxfile+vyfile are required.')
-        
+  
     if case == 1:
         if wfile is not None:
             xy_full = np.vstack([vx_full, vy_full, w_full])
@@ -136,7 +137,117 @@ def plot_off_ice_errors(vx, vy, z, thres_idx, ax=None, zoom=True):
         ax.set_xlim((min(vx[idx]), max(vx[idx])))
         ax.set_ylim((min(vy[idx]), max(vy[idx])))
     
+def sobel_scattering(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100):
+    """
+
+    """ 
+    shapefile = gpd.read_file(on_ice_area)
+    geoms = shapefile.geometry.values
+    geoms = [mapping(geoms[i]) for i in range(len(geoms))]
     
+    # def clip(gtiff, geoms):
+    #     with rasterio.open(gtiff) as src:
+    #         out_image, out_transform = mask(src, geoms, crop=True, nodata=-9999.0)
+    #     try:
+    #         clipped_data = out_image.data[0]
+    #     except NotImplementedError:
+    #         clipped_data = out_image[0]
+    #     return clipped_data
+    
+    with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
+        vx_full = srcx.read(1)
+        vy_full = srcy.read(1)
+    if wfile is not None:
+        with rasterio.open(wfile) as srcw:
+            w_full = srcw.read(1)
+    else:
+        w_full = None
+        
+    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+    vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+        
+    sxx = sobel(vx_full,axis=0,mode='constant')
+    sxy = sobel(vx_full,axis=1,mode='constant')
+    # Get square root of sum of squares
+    sobelx = np.hypot(sxx,sxy)
+
+    syx = sobel(vy_full,axis=0,mode='constant')
+    syy = sobel(vy_full,axis=1,mode='constant')
+    # Get square root of sum of squares
+    sobely = np.hypot(syx,syy)
+    
+    # vx_full = None
+    # vy_full = None
+    # w_full = None
+    
+    sx_full = mask_by_shp(shapefile['geometry'], sobelx, rasterio.open(vxfile))
+    sy_full = mask_by_shp(shapefile['geometry'], sobely, rasterio.open(vyfile))
+
+    sobel_NaN_pts_idx     = np.logical_or(np.isnan(sx_full), np.isnan(sy_full))
+    sobel_outlier_pts_idx = np.logical_or(sx_full > max_s, sy_full > max_s)
+    sobel_bad_pts_idx = np.logical_or(sobel_NaN_pts_idx, sobel_outlier_pts_idx)
+    sx_full = sx_full[~sobel_bad_pts_idx]
+    sy_full = sy_full[~sobel_bad_pts_idx]
+
+    # return sx_full, sy_full
+    
+    if w_full is not None:
+        w_full = w_full[~sobel_bad_pts_idx]
+        xy_full = np.vstack([sx_full, sy_full, w_full])
+    else:
+        xy_full = np.vstack([sx_full, sy_full])
+        
+    # return xy_full
+
+    if len(sx_full) > max_n:
+        ## See https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html#numpy.random.Generator.choice
+        rng = np.random.default_rng()
+        xy = rng.choice(xy_full, size=max_n, replace=False, axis=1)
+    else:
+        xy = xy_full
+    
+    # return xy
+
+    if wfile is not None:
+        w = xy[2, :]
+        w = np.where(w < 0, 0, w)
+        kernel = gaussian_kde(xy[:2, :], weights=w)
+        z = kernel(xy[:2, :])
+    else:
+        kernel = gaussian_kde(xy)
+        z = kernel(xy)
+    
+    
+    # xy_full = np.vstack([sx_full.flatten(), sy_full.flatten()])
+    
+    sx = xy[0, :]
+    sy = xy[1, :]
+            
+    thres_multiplier = np.e ** (thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
+    thres = max(z) / thres_multiplier
+    thres_idx = z >= thres
+    idx = thres_idx    # alias
+
+    if plot:
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+        viridis = cm.get_cmap('viridis', 12)
+        pt_style = {'s': 6, 'edgecolor': None}
+
+        if sx_full is not None:
+            ax.scatter(sx_full, sy_full, color='xkcd:gray', alpha=0.2, **pt_style)
+
+        ax.scatter(sx[idx], sy[idx], c=z[idx], **pt_style)
+        ax.scatter(sx[~idx], sy[~idx], color=viridis(0), alpha=0.4, **pt_style)
+
+    return sx, sy, z, thres_idx
+    
+
+    
+    
+
     
 def create_synthetic_offset(imgfile, mode='subpixel', block_size=500):
     """
