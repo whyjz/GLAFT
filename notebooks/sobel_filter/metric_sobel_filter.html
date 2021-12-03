@@ -1,0 +1,2000 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;no title&gt; &#8212; Pejzero</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-tf-test/notebooks/sobel_filter/metric_sobel_filter.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/tentative.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Pejzero</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   Gftt: an open-source tool for evaluating remotely sensed glacier velocity products
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../stable_area_error_assessment/metric_off-ice-error.html">
+   Metric: post-correction off-ice errors
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/sobel_filter/metric_sobel_filter.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-tf-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-tf-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/sobel_filter/metric_sobel_filter.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-tf-test/edit/master/jupyter-book/notebooks/sobel_filter/metric_sobel_filter.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-tf-test/master?urlpath=lab/tree/jupyter-book/notebooks/sobel_filter/metric_sobel_filter.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Developer&#39;s setting</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gftt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span><span class="p">,</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_agu21.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Chip (px)</th>
+      <th>Resolution (px)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>Software</th>
+      <th>Vx</th>
+      <th>Vy</th>
+      <th>OIE-x</th>
+      <th>OIE-y</th>
+      <th>SS-x</th>
+      <th>SS-y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.41748046875</td>
+      <td>0.4541015625</td>
+      <td>1.2541321516036987</td>
+      <td>1.1393810510635376</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.41748046875</td>
+      <td>0.47607421875</td>
+      <td>2.133850574493408</td>
+      <td>2.1707382202148438</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.673828125</td>
+      <td>0.5712890625</td>
+      <td>1.867316722869873</td>
+      <td>1.4211249351501465</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.40283203125</td>
+      <td>0.41015625</td>
+      <td>1.4852099418640137</td>
+      <td>1.3630132675170898</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.3515625</td>
+      <td>0.29296875</td>
+      <td>2.113135576248169</td>
+      <td>2.4851667881011963</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.615234375</td>
+      <td>0.556640625</td>
+      <td>2.5145015716552734</td>
+      <td>2.1094768047332764</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.3826904296875</td>
+      <td>0.380859375</td>
+      <td>1.5888068675994873</td>
+      <td>1.5364807844161987</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.3826904296875</td>
+      <td>0.369873046875</td>
+      <td>2.1407902240753174</td>
+      <td>2.52712082862854</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.59326171875</td>
+      <td>0.5419921875</td>
+      <td>3.1459460258483887</td>
+      <td>3.080463171005249</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.2783203125</td>
+      <td>0.27099609375</td>
+      <td>0.5281569361686707</td>
+      <td>0.5437708497047424</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>1</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.08056640625</td>
+      <td>0.087890625</td>
+      <td>0.9488750696182251</td>
+      <td>0.9639072418212891</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>1</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.47607421875</td>
+      <td>0.46142578125</td>
+      <td>0.8541433215141296</td>
+      <td>0.732421875</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.22705078125</td>
+      <td>0.230712890625</td>
+      <td>0.6923614740371704</td>
+      <td>0.7310289740562439</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.087890625</td>
+      <td>0.087890625</td>
+      <td>1.0925122499465942</td>
+      <td>1.1270732879638672</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.44677734375</td>
+      <td>0.380859375</td>
+      <td>1.367884874343872</td>
+      <td>1.1922963857650757</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.2197265625</td>
+      <td>0.2508544921875</td>
+      <td>0.8949943780899048</td>
+      <td>0.8978667855262756</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.087890625</td>
+      <td>0.087890625</td>
+      <td>1.0809117555618286</td>
+      <td>1.5610727071762085</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.439453125</td>
+      <td>0.391845703125</td>
+      <td>1.6521755456924438</td>
+      <td>1.5513863563537598</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.23354190774032246</td>
+      <td>0.27751872601547506</td>
+      <td>3.3665742732810044</td>
+      <td>4.99091213054888</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.8132470090927522</td>
+      <td>0.5755648147529258</td>
+      <td>7.728610206731613</td>
+      <td>5.8780813432226715</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.25120065569949007</td>
+      <td>0.399150050012882</td>
+      <td>3.8310779684243768</td>
+      <td>4.978074543426624</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.23569657242438996</td>
+      <td>0.38808508659307606</td>
+      <td>15.695086001785903</td>
+      <td>9.616300247702835</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.6140104136459059</td>
+      <td>0.7672143993258354</td>
+      <td>17.388386174019</td>
+      <td>19.71987637543609</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.3672571186496647</td>
+      <td>0.4704818177042076</td>
+      <td>20.31162078507503</td>
+      <td>10.247444735276979</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.28039634227752686</td>
+      <td>0.2815014123916626</td>
+      <td>0.8476556539535522</td>
+      <td>0.6522358655929565</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>LS8-20180304-20180405</td>
+      <td>65</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.15759776532649994</td>
+      <td>0.17998206615447998</td>
+      <td>0.38254401087760925</td>
+      <td>0.3317427635192871</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.5472662448883057</td>
+      <td>0.47937440872192383</td>
+      <td>1.3369081020355225</td>
+      <td>0.9770535826683044</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>LS8-20180304-20180405</td>
+      <td>65</td>
+      <td>1</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.5794689655303955</td>
+      <td>0.5242738723754883</td>
+      <td>1.054446816444397</td>
+      <td>0.9887269139289856</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>LoG</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>0.4641949534416199</td>
+      <td>0.46929478645324707</td>
+      <td>1.104775309562683</td>
+      <td>0.8971686959266663</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>LoG</td>
+      <td>affine adaptive</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>0.7480487823486328</td>
+      <td>0.9187874794006348</td>
+      <td>2.5702035427093506</td>
+      <td>2.4567246437072754</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>1.0400390625</td>
+      <td>1.1572265625</td>
+      <td>3.9863133430480957</td>
+      <td>3.678187370300293</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.703125</td>
+      <td>0.6884765625</td>
+      <td>2.2651619911193848</td>
+      <td>2.25757098197937</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>1.0107421875</td>
+      <td>0.8056640625</td>
+      <td>3.1471989154815674</td>
+      <td>3.158632516860962</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.7763671875</td>
+      <td>0.7177734375</td>
+      <td>2.8179879188537598</td>
+      <td>2.9419665336608887</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.65185546875</td>
+      <td>0.72509765625</td>
+      <td>2.4765825271606445</td>
+      <td>2.4436123371124268</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.380859375</td>
+      <td>0.46875</td>
+      <td>1.615849494934082</td>
+      <td>1.620622992515564</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.3515625</td>
+      <td>0.380859375</td>
+      <td>1.6722332239151</td>
+      <td>1.546919345855713</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.2490234375</td>
+      <td>0.3369140625</td>
+      <td>1.4019709825515747</td>
+      <td>1.4554386138916016</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.2197265625</td>
+      <td>0.322265625</td>
+      <td>1.0899068117141724</td>
+      <td>1.1871562004089355</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.146484375</td>
+      <td>0.2490234375</td>
+      <td>0.8857157826423645</td>
+      <td>1.0021072626113892</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.1171875</td>
+      <td>0.234375</td>
+      <td>0.5574110746383667</td>
+      <td>0.7411588430404663</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.1171875</td>
+      <td>0.205078125</td>
+      <td>0.615931510925293</td>
+      <td>0.786117672920227</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># on-ice area</span>
+<span class="n">in_shp</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/Bedrock_shp/glacier_V1_Kaskawulsh_s.shp&#39;</span>
+<span class="n">on_ice</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">in_shp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Example results</span>
+<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">22</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Date                                           LS8-20180304-20180405
+Chip (px)                                                      multi
+Resolution (px)                                                   16
+Prefilter                                                       None
+Subpixel                                       interest point groups
+Software                                                         GIV
+Vx                 /home/jovyan/Projects/PX_comparison/PX/GIV/u_l...
+Vy                 /home/jovyan/Projects/PX_comparison/PX/GIV/v_l...
+OIE-x                                             0.6140104136459059
+OIE-y                                             0.7672143993258354
+SS-x                                                 17.388386174019
+SS-y                                               19.71987637543609
+Name: 22, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viridis</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">newcolors1</span> <span class="o">=</span> <span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+<span class="n">newcolors2</span> <span class="o">=</span> <span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+<span class="n">newcolors3</span> <span class="o">=</span> <span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+<span class="n">newcolors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">newcolors1</span><span class="p">,</span> <span class="n">newcolors2</span><span class="p">,</span> <span class="n">newcolors3</span><span class="p">))</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">ListedColormap</span><span class="p">(</span><span class="n">newcolors</span><span class="p">)</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_over</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">202</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">128</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">cmap</span><span class="o">.</span><span class="n">set_under</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">128</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">cmap</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>from_list</strong> </div><div class="cmap"><img alt="from_list colormap" title="from_list" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAGHRFWHRUaXRsZQBmcm9tX2xpc3QgY29sb3JtYXBDL89FAAAAHnRFWHREZXNjcmlwdGlvbgBmcm9tX2xpc3QgY29sb3JtYXABtCnOAAAAMHRFWHRBdXRob3IATWF0cGxvdGxpYiB2My40LjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmes1mPdAAAAMnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHYzLjQuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Jw/PoAAAJzSURBVHic7dZLctswEAVADGTnZDlC7n8TCVmQoEhaEquS5eve0MR8QJe9ePW7/ow2VbVW/fnaj++tV6uq3XtfZnbvx/rP+UN/9eVsu75+7Dv216G/nfur2pj1evN8Ux9bvf1jffc77vurve477Tv3799HLXtHnfbUrNfy7Kf5evbN2ef959pzZu4f/Wfv+3p9rB92zO/vu5+rHb6ttff3j60+Xu/f33GYH8d7DveP5+yr/e3cM3bnrdXWu5zXrl7zvc3zsZ1t/wb9ceitGm35s49Dva/1vvbM+m327c57jdbbWt/mn+e9Htv816y3Oftot938V79v9+xnb+1xmL+19bwerbfl2Vpr33VvvWbPun99zvrctcwu98+z77pvu5baOr/Wf9W9vTL3vzP3v6+Pj/Xr/Z/nr/f/5/zV/f+9/7Nbfa5fzl/u/3zB9f6L+Yv9l/MXX3D9/Z/n+8X9t7qaBwDiCAAAEEgAAIBAAgAABBIAACCQAAAAgQQAAAgkAABAIAEAAAIJAAAQSAAAgEACAAAEEgAAIJAAAACBBAAACCQAAEAgAQAAAgkAABBIAACAQAIAAAQSAAAgkAAAAIEEAAAIJAAAQCABAAACCQAAEEgAAIBAAgAABBIAACCQAAAAgQQAAAgkAABAIAEAAAIJAAAQSAAAgEACAAAEEgAAIJAAAACBBAAACCQAAEAgAQAAAgkAABBIAACAQAIAAAQSAAAgkAAAAIEEAAAIJAAAQCABAAACCQAAEEgAAIBAAgAABBIAACCQAAAAgQQAAAgkAABAIAEAAAIJAAAQSAAAgEACAAAEEgAAIJAAAACBBAAACPQXS8p/h1f/h1wAAAAASUVORK5CYII="></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#00000080" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000080;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#ca002080" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #ca002080;"></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">demo</span><span class="o">.</span><span class="n">Vx</span><span class="p">)</span> <span class="k">as</span> <span class="n">v_src</span><span class="p">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">v_src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="n">v_src</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    
+<span class="n">cbar</span> <span class="o">=</span>  <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">),</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;speed (m/d)&#39;</span><span class="p">)</span>
+<span class="n">on_ice</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:purple&#39;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;purple: selected off-ice area&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_sobel_filter_6_0.png" src="../../_images/metric_sobel_filter_6_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">ax1</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">gftt</span><span class="o">.</span><span class="n">plot_off_ice_errors</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># limrange = (0, 3)</span>
+<span class="c1"># ax1[0].set_xlim(limrange)</span>
+<span class="c1"># ax1[0].set_ylim(limrange)</span>
+<span class="c1"># ax1[1].set_xlim(limrange)</span>
+<span class="c1"># ax1[1].set_ylim(limrange)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_sobel_filter_7_0.png" src="../../_images/metric_sobel_filter_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+
+<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">ax2</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">6</span><span class="p">]</span>
+    
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">)</span> <span class="k">as</span> <span class="n">vx_src</span><span class="p">:</span>
+        <span class="n">show</span><span class="p">(</span><span class="n">vx_src</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([])</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([])</span>
+        
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="c1"># fig.savefig(&#39;tmp.png&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_sobel_filter_8_0.png" src="../../_images/metric_sobel_filter_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax3</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">26</span><span class="p">))</span>
+
+<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">ax3</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">6</span><span class="p">]</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">Software</span> <span class="o">==</span> <span class="s1">&#39;GIV&#39;</span><span class="p">:</span>
+        <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">wfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;u_&#39;</span><span class="p">,</span> <span class="s1">&#39;pkr_&#39;</span><span class="p">),</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="c1"># gftt.plot_off_ice_errors(vx, vy, z, thres_idx, ax=ax_sel, zoom=True)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> <span class="nb">min</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])),</span> <span class="nb">max</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> 
+                              <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+    
+    <span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SS-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span>
+    <span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SS-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span>
+    <span class="n">label</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> $S_x$ = </span><span class="si">{:6.3f}</span><span class="s1"> | $S_y$ = </span><span class="si">{:6.3f}</span><span class="s1"> (m/day)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SS-x&#39;</span><span class="p">],</span> 
+                                                                   <span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SS-y&#39;</span><span class="p">])</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="c1"># ax_sel.xaxis.set_ticklabels([])</span>
+    <span class="c1"># ax_sel.yaxis.set_ticklabels([])</span>
+    
+
+        
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;tmp.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_sobel_filter_9_0.png" src="../../_images/metric_sobel_filter_9_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../results_agu21.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Chip (px)</th>
+      <th>Resolution (px)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>Software</th>
+      <th>Vx</th>
+      <th>Vy</th>
+      <th>OIE-x</th>
+      <th>OIE-y</th>
+      <th>SS-x</th>
+      <th>SS-y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.41748046875</td>
+      <td>0.4541015625</td>
+      <td>1.166369</td>
+      <td>1.127073</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.41748046875</td>
+      <td>0.47607421875</td>
+      <td>2.158645</td>
+      <td>2.070151</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.673828125</td>
+      <td>0.5712890625</td>
+      <td>1.714556</td>
+      <td>1.417194</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.40283203125</td>
+      <td>0.41015625</td>
+      <td>1.410858</td>
+      <td>1.372895</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.3515625</td>
+      <td>0.29296875</td>
+      <td>2.057519</td>
+      <td>2.450102</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.615234375</td>
+      <td>0.556640625</td>
+      <td>2.446684</td>
+      <td>2.084638</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.3826904296875</td>
+      <td>0.380859375</td>
+      <td>1.63463</td>
+      <td>1.529421</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.3826904296875</td>
+      <td>0.369873046875</td>
+      <td>2.254367</td>
+      <td>2.527121</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.59326171875</td>
+      <td>0.5419921875</td>
+      <td>2.994531</td>
+      <td>2.803851</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.2783203125</td>
+      <td>0.27099609375</td>
+      <td>0.62458</td>
+      <td>0.556641</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>1</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.08056640625</td>
+      <td>0.087890625</td>
+      <td>0.9375</td>
+      <td>0.867603</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>1</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.47607421875</td>
+      <td>0.46142578125</td>
+      <td>0.850114</td>
+      <td>0.719117</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.22705078125</td>
+      <td>0.230712890625</td>
+      <td>0.726908</td>
+      <td>0.660968</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.087890625</td>
+      <td>0.087890625</td>
+      <td>1.056314</td>
+      <td>1.056517</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.44677734375</td>
+      <td>0.380859375</td>
+      <td>1.313631</td>
+      <td>1.141075</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.2197265625</td>
+      <td>0.2508544921875</td>
+      <td>0.855555</td>
+      <td>0.897867</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.087890625</td>
+      <td>0.087890625</td>
+      <td>1.028525</td>
+      <td>1.533353</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.439453125</td>
+      <td>0.391845703125</td>
+      <td>1.687681</td>
+      <td>1.583285</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.23354190774032246</td>
+      <td>0.27751872601547506</td>
+      <td>2.309538</td>
+      <td>2.666533</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.8132470090927522</td>
+      <td>0.5755648147529258</td>
+      <td>3.83209</td>
+      <td>3.621216</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.25120065569949007</td>
+      <td>0.399150050012882</td>
+      <td>2.791979</td>
+      <td>3.616469</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.23569657242438996</td>
+      <td>0.38808508659307606</td>
+      <td>3.829151</td>
+      <td>4.109152</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.6140104136459059</td>
+      <td>0.7672143993258354</td>
+      <td>4.842514</td>
+      <td>6.934244</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.3672571186496647</td>
+      <td>0.4704818177042076</td>
+      <td>3.573858</td>
+      <td>4.022872</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.28039634227752686</td>
+      <td>0.2815014123916626</td>
+      <td>0.903663</td>
+      <td>0.73403</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>LS8-20180304-20180405</td>
+      <td>65</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.15759776532649994</td>
+      <td>0.17998206615447998</td>
+      <td>0.39487</td>
+      <td>0.331545</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.5472662448883057</td>
+      <td>0.47937440872192383</td>
+      <td>1.278607</td>
+      <td>1.003679</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>LS8-20180304-20180405</td>
+      <td>65</td>
+      <td>1</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>0.5794689655303955</td>
+      <td>0.5242738723754883</td>
+      <td>1.055869</td>
+      <td>0.939092</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>LoG</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>0.4641949534416199</td>
+      <td>0.46929478645324707</td>
+      <td>1.020549</td>
+      <td>0.8851</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>LoG</td>
+      <td>affine adaptive</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>0.7480487823486328</td>
+      <td>0.9187874794006348</td>
+      <td>2.355224</td>
+      <td>2.479468</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>1.0400390625</td>
+      <td>1.1572265625</td>
+      <td>4.14838</td>
+      <td>3.802956</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.703125</td>
+      <td>0.6884765625</td>
+      <td>2.202143</td>
+      <td>2.200681</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>1.0107421875</td>
+      <td>0.8056640625</td>
+      <td>3.562433</td>
+      <td>3.283342</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.7763671875</td>
+      <td>0.7177734375</td>
+      <td>2.759822</td>
+      <td>2.894911</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.65185546875</td>
+      <td>0.72509765625</td>
+      <td>2.4052</td>
+      <td>2.317973</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.380859375</td>
+      <td>0.46875</td>
+      <td>1.5285</td>
+      <td>1.593922</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.3515625</td>
+      <td>0.380859375</td>
+      <td>1.584471</td>
+      <td>1.508149</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.2490234375</td>
+      <td>0.3369140625</td>
+      <td>1.286396</td>
+      <td>1.426851</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.2197265625</td>
+      <td>0.322265625</td>
+      <td>0.982647</td>
+      <td>1.07484</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.146484375</td>
+      <td>0.2490234375</td>
+      <td>0.878906</td>
+      <td>1.058343</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.1171875</td>
+      <td>0.234375</td>
+      <td>0.709202</td>
+      <td>0.796961</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>LS8-20180304-20180405</td>
+      <td>64</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.1171875</td>
+      <td>0.205078125</td>
+      <td>0.615932</td>
+      <td>0.774014</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax4</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">26</span><span class="p">))</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">ax4</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">6</span><span class="p">]</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">Software</span> <span class="o">==</span> <span class="s1">&#39;GIV&#39;</span><span class="p">:</span>
+        <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">wfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;u_&#39;</span><span class="p">,</span> <span class="s1">&#39;pkr_&#39;</span><span class="p">),</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="c1"># gftt.plot_off_ice_errors(vx, vy, z, thres_idx, ax=ax_sel, zoom=True)</span>
+    <span class="c1"># ax_sel.set_xlim(-0.5, 0.5)</span>
+    <span class="c1"># ax_sel.set_ylim(-0.5, 0.5)</span>
+    
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> <span class="nb">min</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])),</span> <span class="nb">max</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> 
+                              <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> $e_x$ = </span><span class="si">{:6.3f}</span><span class="s1"> | $e_y$ = </span><span class="si">{:6.3f}</span><span class="s1"> (m/day)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">sx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> 
+                                                                   <span class="nb">max</span><span class="p">(</span><span class="n">sy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]))</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="c1"># ax_sel.xaxis.set_ticklabels([])</span>
+    <span class="c1"># ax_sel.yaxis.set_ticklabels([])</span>
+        
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_sobel_filter_14_0.png" src="../../_images/metric_sobel_filter_14_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="c1"># demo.plot.scatter(x=&#39;OIE-x&#39;, y=&#39;SS-x&#39;, c=&#39;Software&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/metric_sobel_filter_19_1.png" src="../../_images/metric_sobel_filter_19_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-y&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-y&#39;, ylabel=&#39;SS-y&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/metric_sobel_filter_20_1.png" src="../../_images/metric_sobel_filter_20_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/metric_sobel_filter_21_1.png" src="../../_images/metric_sobel_filter_21_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/metric_sobel_filter_22_1.png" src="../../_images/metric_sobel_filter_22_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/metric_sobel_filter_23_1.png" src="../../_images/metric_sobel_filter_23_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;SS-x&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.04</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_sobel_filter_24_0.png" src="../../_images/metric_sobel_filter_24_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sx</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(460472,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([4.31833e+05, 1.39620e+04, 5.53700e+03, 3.39800e+03, 2.84900e+03,
+        1.85200e+03, 3.43000e+02, 2.54000e+02, 1.63000e+02, 1.73000e+02]),
+ array([ 0.       ,  5.6459966, 11.291993 , 16.93799  , 22.583986 ,
+        28.229982 , 33.87598  , 39.521976 , 45.167973 , 50.81397  ,
+        56.459965 ], dtype=float32),
+ &lt;BarContainer object of 10 artists&gt;)
+</pre></div>
+</div>
+<img alt="../../_images/metric_sobel_filter_32_1.png" src="../../_images/metric_sobel_filter_32_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sx</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-.conda-eztrack-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-.conda-eztrack-py",
+            path: "./notebooks/sobel_filter"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-.conda-eztrack-py'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Whyjay Zheng, Shashank Bhushan, Max Van Wyk de Vries, Will Kochtitzky, David Shean<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

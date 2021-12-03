@@ -1,0 +1,1137 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First test: Use vmap with no preprocessing &#8212; Pejzero</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-tf-test/notebooks/agu21_bookeeping/feature_tracking_agu.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/tentative.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Pejzero</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   Gftt: an open-source tool for evaluating remotely sensed glacier velocity products
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../stable_area_error_assessment/metric_off-ice-error.html">
+   Metric: post-correction off-ice errors
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/agu21_bookeeping/feature_tracking_agu.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-tf-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-tf-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/agu21_bookeeping/feature_tracking_agu.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-tf-test/edit/master/jupyter-book/notebooks/agu21_bookeeping/feature_tracking_agu.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-tf-test/master?urlpath=lab/tree/jupyter-book/notebooks/agu21_bookeeping/feature_tracking_agu.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   First test: Use vmap with no preprocessing
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#second-test-fix-vmap-to-no-processing-and-using-naof-from-gftt-giv">
+   Second test: Fix vmap to no-processing and using NAOF from gftt/GIV
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apply-fix-to-2-to-2-bounds">
+   Apply fix to -2 to 2 bounds
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#autorift-processing">
+   AutoRIFT processing
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gaussian-filter-for-autorift">
+     Gaussian filter for autoRIFT
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> /nobackup/sbhusha1/feature_tracking_wg/agu/
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/feature_tracking_wg/agu
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span><span class="o">,</span><span class="nn">glob</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">pygeotools.lib</span> <span class="kn">import</span> <span class="n">geolib</span><span class="p">,</span> <span class="n">iolib</span><span class="p">,</span> <span class="n">warplib</span><span class="p">,</span> <span class="n">malib</span><span class="p">,</span> <span class="n">timelib</span><span class="p">,</span> <span class="n">filtlib</span>
+
+<span class="kn">from</span> <span class="nn">imview</span> <span class="kn">import</span> <span class="n">pltlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gftt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_410</span><span class="o">/</span><span class="mf">439970588.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">gftt</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;gftt&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="first-test-use-vmap-with-no-preprocessing">
+<h1>First test: Use vmap with no preprocessing<a class="headerlink" href="#first-test-use-vmap-with-no-preprocessing" title="Permalink to this headline">¶</a></h1>
+<p>In stereo_corr switch, use <code class="docutils literal notranslate"><span class="pre">--prefilter-mode</span></code> as 0</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_vm</span> <span class="o">=</span> <span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/agu/vmap_results/parabolic_results/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_vmap_minm_65px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_vmap_minm_65px_spm1-F_vm.tif&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">sample_vm</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/sw/imview/imview/lib/pltlib.py:149: MatplotlibDeprecationWarning: You are modifying the state of a globally registered colormap. This has been deprecated since 3.3 and in 3.6, you will not be able to modify a registered colormap in-place. To remove this warning, you can make a copy of the colormap first. cmap = mpl.cm.get_cmap(&quot;cpt_rainbow&quot;).copy()
+  cmap.set_bad(&#39;k&#39;, alpha=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_5_2.png" src="../../_images/feature_tracking_agu_5_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="second-test-fix-vmap-to-no-processing-and-using-naof-from-gftt-giv">
+<h1>Second test: Fix vmap to no-processing and using NAOF from gftt/GIV<a class="headerlink" href="#second-test-fix-vmap-to-no-processing-and-using-naof-from-gftt-giv" title="Permalink to this headline">¶</a></h1>
+<p>There stereo_corr <code class="docutils literal notranslate"><span class="pre">prefilter-mode</span></code> switch still remains at 0</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">write_naof</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="n">outfn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;_naof2.tif&quot;</span>
+    <span class="n">iolib</span><span class="o">.</span><span class="n">writeGTiff</span><span class="p">(</span><span class="n">gftt</span><span class="o">.</span><span class="n">preprocess</span><span class="o">.</span><span class="n">naof2</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">ds</span><span class="p">)),</span><span class="n">outfn</span><span class="p">,</span><span class="n">src_ds</span><span class="o">=</span><span class="n">ds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fn_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;data/*/*/*.TIF&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;data/s2/*.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">fn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fn_list</span><span class="p">):</span>
+    <span class="n">write_naof</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;_naof2.tif&quot;</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">malib</span><span class="o">.</span><span class="n">get_stats_dict</span><span class="p">(</span><span class="n">ma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;count&#39;: 15467760,
+ &#39;min&#39;: -2.8284271247461907,
+ &#39;max&#39;: 2.8284271247461903,
+ &#39;ptp&#39;: 5.6568542494923815,
+ &#39;mean&#39;: -0.07562263185627734,
+ &#39;std&#39;: 2.1629146125489087,
+ &#39;nmad&#39;: 3.2801369911153926,
+ &#39;med&#39;: -0.2782893663747771,
+ &#39;median&#39;: -0.2782893663747771,
+ &#39;p16&#39;: -2.52409872039908,
+ &#39;p84&#39;: 2.5172717954386927,
+ &#39;spread&#39;: 2.5206852579188865,
+ &#39;mode&#39;: -2.341640786499874}
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_10_1.png" src="../../_images/feature_tracking_agu_10_1.png" />
+</div>
+</div>
+<p>Investigate</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">vx_seed</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="s1">&#39;/nobackupp11/sbhusha1/hma/jpl/HMA_G0240_0000_vx_masked.tif&#39;</span><span class="p">)</span>
+<span class="n">vy_seed</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="s1">&#39;/nobackupp11/sbhusha1/hma/jpl/HMA_G0240_0000_vy_masked.tif&#39;</span><span class="p">)</span>
+<span class="n">vx_clim</span> <span class="o">=</span> <span class="n">malib</span><span class="o">.</span><span class="n">calcperc_sym</span><span class="p">(</span><span class="n">vx_seed</span><span class="p">,(</span><span class="mi">5</span><span class="p">,</span><span class="mi">95</span><span class="p">))</span>
+<span class="n">vy_clim</span> <span class="o">=</span> <span class="n">malib</span><span class="o">.</span><span class="n">calcperc_sym</span><span class="p">(</span><span class="n">vy_seed</span><span class="p">,(</span><span class="mi">5</span><span class="p">,</span><span class="mi">95</span><span class="p">))</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">vx_seed</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">clim</span><span class="o">=</span><span class="n">vx_clim</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">vy_seed</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">clim</span><span class="o">=</span><span class="n">vy_clim</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/sw/imview/imview/lib/pltlib.py:149: MatplotlibDeprecationWarning: You are modifying the state of a globally registered colormap. This has been deprecated since 3.3 and in 3.6, you will not be able to modify a registered colormap in-place. To remove this warning, you can make a copy of the colormap first. cmap = mpl.cm.get_cmap(&quot;RdBu&quot;).copy()
+  cmap.set_bad(&#39;k&#39;, alpha=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_12_2.png" src="../../_images/feature_tracking_agu_12_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Since we are likely upsampling here, use cubicspline</span>
+<span class="n">vx_ds_clip</span><span class="p">,</span> <span class="n">vy_ds_clip</span> <span class="o">=</span> <span class="n">warplib</span><span class="o">.</span><span class="n">memwarp_multi_fn</span><span class="p">([</span><span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vx.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vy.tif&#39;</span><span class="p">],</span> <span class="n">extent</span><span class="o">=</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> \
+        <span class="n">t_srs</span><span class="o">=</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">res</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="s1">&#39;cubicspline&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warping all inputs to the following:
+Resolution: 30.0
+Extent: [600000.0, 6717980.0, 641580.0, 6755180.0]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: cubicspline
+
+1 of 2: /nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vx.tif
+nl: 1240 ns: 1386 res: 30.000
+0...10...20...30...40...50...60...70...80...90...100 - done.
+0...10...20...30...40...50...60...70...80...90...2 of 2: /nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vy.tif
+nl: 1240 ns: 1386 res: 30.000
+100 - done.
+0...10...20...30...40...50...60...70...80...90...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">vx_clim</span> <span class="o">=</span> <span class="n">malib</span><span class="o">.</span><span class="n">calcperc_sym</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vx_ds_clip</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">95</span><span class="p">))</span>
+<span class="n">vy_clim</span> <span class="o">=</span> <span class="n">malib</span><span class="o">.</span><span class="n">calcperc_sym</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vy_ds_clip</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">95</span><span class="p">))</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vx_ds_clip</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">clim</span><span class="o">=</span><span class="n">vx_clim</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vy_ds_clip</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">clim</span><span class="o">=</span><span class="n">vy_clim</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_14_1.png" src="../../_images/feature_tracking_agu_14_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds1_clip_fn</span> <span class="o">=</span> <span class="s1">&#39;/nobackup/sbhusha1/feature_tracking_wg/agu/vmap_results/parabolic_results/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_naof2__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_naof2_vmap_minm_65px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_naof2_warp.tif&#39;</span>
+<span class="n">ds2_clip_fn</span> <span class="o">=</span> <span class="s1">&#39;/nobackup/sbhusha1/feature_tracking_wg/agu/vmap_results/parabolic_results/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_naof2__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_naof2_vmap_minm_65px_spm1/LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_naof2_warp.tif&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Get vx and vy arrays</span>
+<span class="n">vx</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vx_ds_clip</span><span class="p">)</span>
+<span class="n">vy</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vy_ds_clip</span><span class="p">)</span>
+
+<span class="c1">#Determine time interval between inputs</span>
+<span class="c1">#Use to scaling of known low-res velocities</span>
+<span class="n">t_factor</span> <span class="o">=</span> <span class="n">timelib</span><span class="o">.</span><span class="n">get_t_factor_fn</span><span class="p">(</span><span class="n">ds1_clip_fn</span><span class="p">,</span><span class="n">ds2_clip_fn</span><span class="p">)</span>
+                                   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outprefix</span> <span class="o">=</span> <span class="s1">&#39;/nobackup/sbhusha1/feature_tracking_wg/agu/vmap_results/parabolic_results/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_naof2__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_naof2_vmap_minm_65px_spm1/vmap&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds1_clip</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">ds1_clip_fn</span><span class="p">)</span>
+<span class="n">ds1_res</span> <span class="o">=</span> <span class="n">geolib</span><span class="o">.</span><span class="n">get_res</span><span class="p">(</span><span class="n">ds1_clip</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1">#Compute L_sub res - use this for output dimensions</span>
+<span class="n">L_sub_fn</span> <span class="o">=</span> <span class="n">outprefix</span><span class="o">+</span><span class="s1">&#39;-L_sub.tif&#39;</span> 
+<span class="n">L_sub_ds</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">L_sub_fn</span><span class="p">)</span>
+<span class="n">L_sub_x_scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ds1_clip</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">)</span> <span class="o">/</span> <span class="n">L_sub_ds</span><span class="o">.</span><span class="n">RasterXSize</span>
+<span class="n">L_sub_y_scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ds1_clip</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">)</span> <span class="o">/</span> <span class="n">L_sub_ds</span><span class="o">.</span><span class="n">RasterYSize</span>
+<span class="n">L_sub_scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">L_sub_x_scale</span><span class="p">,</span> <span class="n">L_sub_y_scale</span><span class="p">])</span>
+<span class="n">L_sub_res</span> <span class="o">=</span> <span class="n">ds1_res</span> <span class="o">*</span> <span class="n">L_sub_scale</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx_fn</span> <span class="o">=</span> <span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vx.tif&#39;</span>
+<span class="n">vy_fn</span> <span class="o">=</span> <span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vy.tif&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx_ds_clip</span><span class="p">,</span> <span class="n">vy_ds_clip</span> <span class="o">=</span> <span class="n">warplib</span><span class="o">.</span><span class="n">memwarp_multi_fn</span><span class="p">([</span><span class="n">vx_fn</span><span class="p">,</span> <span class="n">vy_fn</span><span class="p">],</span> <span class="n">extent</span><span class="o">=</span><span class="n">ds1_clip</span><span class="p">,</span> \
+                        <span class="n">t_srs</span><span class="o">=</span><span class="n">ds1_clip</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="n">L_sub_res</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="s1">&#39;cubicspline&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warping all inputs to the following:
+Resolution: 30.617283950617285
+Extent: [584872.5, 6717982.5, 641572.5, 6755182.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: cubicspline
+
+1 of 2: /nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vx.tif
+nl: 1215 ns: 1852 res: 30.617
+100 - done.
+0...10...20...30...40...50...60...70...80...90...2 of 2: /nobackupp11/sbhusha1/feature_tracking_wg/its_live/ALA_G0120_0000_vy.tif
+nl: 1215 ns: 1852 res: 30.617
+100 - done.
+0...10...20...30...40...50...60...70...80...90...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Get vx and vy arrays</span>
+<span class="n">vx</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vx_ds_clip</span><span class="p">)</span>
+<span class="n">vy</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">vy_ds_clip</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">t_factor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1">#Compute expected offset in scaled pixels </span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">vx</span><span class="o">*</span><span class="n">t_factor</span><span class="p">)</span><span class="o">/</span><span class="n">L_sub_res</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="n">vy</span><span class="o">*</span><span class="n">t_factor</span><span class="p">)</span><span class="o">/</span><span class="n">L_sub_res</span>
+    <span class="n">search_window_area_thresh</span> <span class="o">=</span> <span class="mi">0</span> 
+    <span class="n">search_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">dy</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">dx</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">dy</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+    <span class="n">dx_p</span> <span class="o">=</span> <span class="n">malib</span><span class="o">.</span><span class="n">calcperc</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">perc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">))</span>
+    <span class="n">dy_p</span> <span class="o">=</span> <span class="n">malib</span><span class="o">.</span><span class="n">calcperc</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="n">perc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">))</span>
+    <span class="n">search_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx_p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dy_p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dx_p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dy_p</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">search_window_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">search_window</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">search_window</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">search_window</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">-</span><span class="n">search_window</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">search_window_area</span> <span class="o">&lt;</span> <span class="n">search_window_area_thresh</span><span class="p">:</span>
+        <span class="n">stereo_opt</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;--corr-seed-mode&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">])</span>
+        <span class="n">stereo_opt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;--corr-search&#39;</span><span class="p">)</span>
+        <span class="n">stereo_opt</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">search_window</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_window</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.30577144, -0.65654204,  0.46730137,  0.15505057])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.02827767, 0.0258065 , 0.02333992, ..., 0.001103  , 0.00130124,
+        0.00146829],
+       [0.02683745, 0.02435377, 0.02190476, ..., 0.00106578, 0.00127113,
+        0.0014481 ],
+       [0.02526965, 0.02281743, 0.02042676, ..., 0.00100947, 0.00121381,
+        0.00139198],
+       ...,
+       [0.00200018, 0.00258677, 0.00329909, ..., 0.01054674, 0.00943394,
+        0.0083348 ],
+       [0.00155301, 0.00206789, 0.00270361, ..., 0.01079707, 0.00959602,
+        0.00841052],
+       [0.00109934, 0.0015692 , 0.00215184, ..., 0.01105945, 0.00979689,
+        0.00854888]], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="o">~</span><span class="n">dx</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_24_1.png" src="../../_images/feature_tracking_agu_24_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nl</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="n">dx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ndv</span> <span class="o">=</span> <span class="o">-</span><span class="mf">9999.0</span>
+<span class="c1">#Use GDT_Byte or GDT_Int16 to save space?</span>
+<span class="n">dtype</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_Float32</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">gdal_opt</span>
+<span class="c1">#d_sub_ds = iolib.gtif_drv.Create(d_sub_fn, ns, nl, 3, dtype, opt)</span>
+<span class="c1">#d_sub_ds.GetRasterBand(1).WriteArray(np.rint(dx.filled(ndv)).astype(np.int32))</span>
+<span class="c1">#d_sub_ds.GetRasterBand(2).WriteArray(np.rint(dy.filled(ndv)).astype(np.int32))</span>
+<span class="c1">#d_sub_ds.GetRasterBand(3).WriteArray((~dx.mask).astype(np.int32))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_sub_ds</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">gtif_drv</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">d_sub_fn</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">nl</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
+<span class="n">d_sub_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">dx</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">ndv</span><span class="p">)))</span>
+<span class="n">d_sub_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">dy</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">ndv</span><span class="p">)))</span>
+<span class="n">d_sub_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">((</span><span class="o">~</span><span class="n">dx</span><span class="o">.</span><span class="n">mask</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d_sub_ds</span><span class="o">.</span><span class="n">RasterCount</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">d_sub_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">band</span><span class="o">.</span><span class="n">SetNoDataValue</span><span class="p">(</span><span class="n">ndv</span><span class="p">)</span>
+<span class="n">d_sub_ds</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">malib</span><span class="o">.</span><span class="n">get_stats_dict</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">d_sub_fn</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;count&#39;: 2250180,
+ &#39;min&#39;: -1.0,
+ &#39;max&#39;: 1.0,
+ &#39;ptp&#39;: 2.0,
+ &#39;mean&#39;: 0.0017678585713142949,
+ &#39;std&#39;: 0.05798989241288846,
+ &#39;nmad&#39;: 0.0,
+ &#39;med&#39;: 0.0,
+ &#39;median&#39;: 0.0,
+ &#39;p16&#39;: 0.0,
+ &#39;p84&#39;: 0.0,
+ &#39;spread&#39;: 0.0,
+ &#39;mode&#39;: -0.0}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">d_sub_fn</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/sw/imview/imview/lib/pltlib.py:149: MatplotlibDeprecationWarning: You are modifying the state of a globally registered colormap. This has been deprecated since 3.3 and in 3.6, you will not be able to modify a registered colormap in-place. To remove this warning, you can make a copy of the colormap first. cmap = mpl.cm.get_cmap(&quot;cpt_rainbow&quot;).copy()
+  cmap.set_bad(&#39;k&#39;, alpha=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_28_2.png" src="../../_images/feature_tracking_agu_28_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_fn</span> <span class="o">=</span> <span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/agu/vmap_results/parabolic_results/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_vmap_minm_39px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180405_20180417_01_T1_B8_s_vmap_minm_39px_spm1-F_vm.tif&#39;</span>
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">test_fn</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_29_1.png" src="../../_images/feature_tracking_agu_29_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;COMPRESS=LZW&#39;, &#39;TILED=YES&#39;, &#39;BIGTIFF=IF_SAFER&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_agu_32_1.png" src="../../_images/feature_tracking_agu_32_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="apply-fix-to-2-to-2-bounds">
+<h1>Apply fix to -2 to 2 bounds<a class="headerlink" href="#apply-fix-to-2-to-2-bounds" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">naof_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/nobackupp11/sbhusha1/feature_tracking_wg/agu/data/l8/pair1/*naof2.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">naof_ds_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">naof_files</span><span class="p">]</span>
+<span class="n">naof_ma_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span> <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">naof_ds_list</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">malib</span><span class="o">.</span><span class="n">get_stats_dict</span><span class="p">(</span><span class="n">naof_ma_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;count&#39;: 18748800,
+ &#39;min&#39;: -2.8284271247461907,
+ &#39;max&#39;: 2.8284271247461903,
+ &#39;ptp&#39;: 5.6568542494923815,
+ &#39;mean&#39;: -0.008471727112946083,
+ &#39;std&#39;: 2.155124986699454,
+ &#39;nmad&#39;: 3.4077719070017736,
+ &#39;med&#39;: -0.032866948731870294,
+ &#39;median&#39;: -0.032866948731870294,
+ &#39;p16&#39;: -2.4987313251190546,
+ &#39;p84&#39;: 2.5072644173154566,
+ &#39;spread&#39;: 2.5029978712172554,
+ &#39;mode&#39;: -2.341640786499874}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">naof_ma</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">naof_ma_list</span><span class="p">):</span>
+    <span class="n">min_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">naof_ma</span><span class="p">)</span>
+    <span class="n">max_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">naof_ma</span><span class="p">)</span>
+    <span class="n">naof_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">naof_ma</span><span class="o">-</span><span class="n">min_</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">max_</span><span class="o">-</span><span class="n">min_</span><span class="p">)</span>
+    <span class="c1">#naof_ma = (naof_ma+(-1*min_))*100</span>
+    <span class="n">outnaof</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">naof_files</span><span class="p">[</span><span class="n">idx</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_positive.tif&#39;</span>
+    <span class="n">iolib</span><span class="o">.</span><span class="n">writeGTiff</span><span class="p">(</span><span class="n">naof_norm</span><span class="p">,</span><span class="n">outnaof</span><span class="p">,</span><span class="n">src_ds</span><span class="o">=</span><span class="n">naof_ds_list</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> widget
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">naof_norm</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/sw/imview/imview/lib/pltlib.py:149: MatplotlibDeprecationWarning: You are modifying the state of a globally registered colormap. This has been deprecated since 3.3 and in 3.6, you will not be able to modify a registered colormap in-place. To remove this warning, you can make a copy of the colormap first. cmap = mpl.cm.get_cmap(&quot;gray&quot;).copy()
+  cmap.set_bad(&#39;k&#39;, alpha=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "9f5e075fb22b4673b014b56f41feede0", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">malib</span><span class="o">.</span><span class="n">get_stats_dict</span><span class="p">(</span><span class="n">naof_ma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;count&#39;: 9374400,
+ &#39;min&#39;: 0.0,
+ &#39;max&#39;: 565.6854249492382,
+ &#39;ptp&#39;: 565.6854249492382,
+ &#39;mean&#39;: 284.2045510430394,
+ &#39;std&#39;: 215.4652970798704,
+ &#39;nmad&#39;: 340.9351257633956,
+ &#39;med&#39;: 286.1073220057784,
+ &#39;median&#39;: 286.1073220057784,
+ &#39;p16&#39;: 33.35145679712961,
+ &#39;p84&#39;: 533.6602097859097,
+ &#39;spread&#39;: 250.15437649439005,
+ &#39;mode&#39;: 282.8427124746191}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span> <span class="o">=</span> <span class="mf">284.2045510430394</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">215.4652970798704</span>
+<span class="p">(</span><span class="n">mean</span><span class="o">+</span><span class="mf">2.5</span><span class="o">*</span><span class="n">sigma</span><span class="p">,</span><span class="n">mean</span><span class="o">-</span><span class="mf">2.5</span><span class="o">*</span><span class="n">sigma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(822.8677937427153, -254.45869165663657)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_</span> <span class="o">=</span> <span class="mf">565.6854249492382</span>
+<span class="n">naof_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">naof_ma</span><span class="o">-</span><span class="n">min_</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">max_</span><span class="o">-</span><span class="n">min_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">naof_norm</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/sw/imview/imview/lib/pltlib.py:149: MatplotlibDeprecationWarning: You are modifying the state of a globally registered colormap. This has been deprecated since 3.3 and in 3.6, you will not be able to modify a registered colormap in-place. To remove this warning, you can make a copy of the colormap first. cmap = mpl.cm.get_cmap(&quot;gray&quot;).copy()
+  cmap.set_bad(&#39;k&#39;, alpha=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "559489b3508442c998d2e0c625ff253a", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+<div class="section" id="autorift-processing">
+<h1>AutoRIFT processing<a class="headerlink" href="#autorift-processing" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">autoRIFT</span> <span class="kn">import</span> <span class="n">autoRIFT</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is the Open Source version of ISCE.
+Some of the workflows depend on a separate licensed package.
+To obtain the licensed package, please make a request for ISCE
+through the website: https://download.jpl.nasa.gov/ops/request/index.cfm.
+Alternatively, if you are a member, or can become a member of WinSAR
+you may be able to obtain access to a version of the licensed sofware at
+https://winsar.unavco.org/software/isce
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">autoRIFT</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="o">.</span><span class="n">pre</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gaussian-filter-for-autorift">
+<h2>Gaussian filter for autoRIFT<a class="headerlink" href="#gaussian-filter-for-autorift" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fn_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../data/*/*/*s.TIF&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../data/s2/*s.tif&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">fn_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fn_list</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;../data/l8/pair1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s.TIF&#39;,
+ &#39;../data/l8/pair1/LC08_L1TP_061018_20180405_20180417_01_T1_B8_s.TIF&#39;,
+ &#39;../data/l8/pair2/LC08_L1TP_062017_20180802_20180814_01_T1_B8_s.TIF&#39;,
+ &#39;../data/l8/pair2/LC08_L1TP_062017_20180818_20180829_01_T1_B8_s.TIF&#39;,
+ &#39;../data/s2/T07VFH_20180304T204329_B04_s.tif&#39;,
+ &#39;../data/s2/T07VFH_20180314T204219_B04_s.tif&#39;,
+ &#39;../data/s2/T07VFH_20180508T204021_B04_s.tif&#39;,
+ &#39;../data/s2/T07VFH_20180627T204021_B04_s.tif&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">filtlib</span><span class="o">.</span><span class="n">highpass</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">size</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: IERSStaleWarning: leap-second file is expired. [astropy.utils.iers.iers]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> widget
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "9453c51450fd4583b8c97b5f326b5beb", "version_major": 2, "version_minor": 0}
+</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/sw/imview/imview/lib/pltlib.py:149: MatplotlibDeprecationWarning: You are modifying the state of a globally registered colormap. This has been deprecated since 3.3 and in 3.6, you will not be able to modify a registered colormap in-place. To remove this warning, you can make a copy of the colormap first. cmap = mpl.cm.get_cmap(&quot;gray&quot;).copy()
+  cmap.set_bad(&#39;k&#39;, alpha=1)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prep_autorift_hp</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="n">ma</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">ds_getma</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="n">outfn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_gauss_hp.tif&#39;</span>
+    <span class="n">iolib</span><span class="o">.</span><span class="n">writeGTiff</span><span class="p">(</span><span class="n">filtlib</span><span class="o">.</span><span class="n">highpass</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">25</span><span class="p">),</span><span class="n">outfn</span><span class="p">,</span><span class="n">src_ds</span><span class="o">=</span><span class="n">ds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">fn</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fn_list</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;****IDX </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> ****&quot;</span><span class="p">)</span>
+    <span class="n">prep_autorift_hp</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>****IDX 0 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 1 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 2 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 3 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 4 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 5 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 6 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+****IDX 7 ****
+Applying gaussian smoothing filter with size 25 and sigma 4.000 (sum 0.996)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> autorift_results/
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/nobackupp11/sbhusha1/feature_tracking_wg/agu/autorift_results
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]),(</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]),(</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span> <span class="p">(</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span><span class="n">fn_list</span><span class="p">[</span><span class="mi">7</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">skip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span><span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nopreproc</span> <span class="o">=</span> <span class="s1">&#39;autoRIFT_noPreproc.txt&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">nopreproc</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">pair</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">skip_size</span> <span class="ow">in</span> <span class="n">skip</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">kernel_size</span> <span class="ow">in</span> <span class="n">kernel</span><span class="p">:</span>
+                <span class="n">outjob</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;autoRIFT_vmap.py </span><span class="si">{</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> -skip_rate </span><span class="si">{</span><span class="n">skip_size</span><span class="si">}</span><span class="s2"> -convert8bit -contrast_filter none -fix_chipsize_range &#39;</span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2">&#39; -dt day</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outjob</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nopreproc</span> <span class="o">=</span> <span class="s1">&#39;autoRIFT_naof.txt&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">nopreproc</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">pair</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">skip_size</span> <span class="ow">in</span> <span class="n">skip</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">kernel_size</span> <span class="ow">in</span> <span class="n">kernel</span><span class="p">:</span>
+                <span class="n">f1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_naof2.tif&#39;</span>
+                <span class="n">f2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_naof2.tif&#39;</span>
+                <span class="n">outjob</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;autoRIFT_vmap.py </span><span class="si">{</span><span class="n">f1</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">f2</span><span class="si">}</span><span class="s2"> -skip_rate </span><span class="si">{</span><span class="n">skip_size</span><span class="si">}</span><span class="s2"> -convert8bit -contrast_filter none -fix_chipsize_range &#39;</span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2">&#39; -dt day</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outjob</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nopreproc</span> <span class="o">=</span> <span class="s1">&#39;autoRIFT_gauss.txt&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">nopreproc</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">pair</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">skip_size</span> <span class="ow">in</span> <span class="n">skip</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">kernel_size</span> <span class="ow">in</span> <span class="n">kernel</span><span class="p">:</span>
+                <span class="n">f1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_gauss_hp.tif&#39;</span>
+                <span class="n">f2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_gauss_hp.tif&#39;</span>
+                <span class="n">outjob</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;autoRIFT_vmap.py </span><span class="si">{</span><span class="n">f1</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">f2</span><span class="si">}</span><span class="s2"> -skip_rate </span><span class="si">{</span><span class="n">skip_size</span><span class="si">}</span><span class="s2"> -convert8bit -contrast_filter none -fix_chipsize_range &#39;</span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2">&#39; -dt day</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outjob</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/agu21_bookeeping"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Whyjay Zheng, Shashank Bhushan, Max Van Wyk de Vries, Will Kochtitzky, David Shean<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
