@@ -1,0 +1,4 @@
+format: jb-article
+root: index
+sections:
+- file: notebooks/stable_area_error_assessment/metric_off-ice-error

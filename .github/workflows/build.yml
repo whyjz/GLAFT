@@ -1,0 +1,38 @@
+name: build-docs
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build-docs:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: s-weigand/setup-conda@v1
+      with:
+        update-conda: true
+        conda-channels: conda-forge
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python --version
+        conda env create -f environment.yml
+    - name: Build book
+      run: |
+        source activate gftt
+        jupyter-book build ./jupyter-book
+    - name: Deploy to gh-pages
+      if: github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3.8.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./jupyter-book/_build/html
