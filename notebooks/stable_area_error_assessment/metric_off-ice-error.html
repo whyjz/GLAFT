@@ -298,12 +298,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -317,6 +311,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
 </pre></div>
 </div>
 </div>
@@ -565,20 +560,14 @@ Name: 30, dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">off_ice_errors</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">off_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vx, vy = gftt.off_ice_errors(vxfile=demo.Vx, vyfile=demo.Vy, off_ice_area=in_shp)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-0.05859375, -0.02929688, -0.05859375, ...,  0.        ,
-        0.        , -0.01464844], dtype=float32)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vx</span>
 </pre></div>
 </div>
 </div>
@@ -615,7 +604,7 @@ Name: 30, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.9746])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.9743])
 </pre></div>
 </div>
 </div>
@@ -630,8 +619,8 @@ Name: 30, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vx std: 0.366720  m/day
-Vy std: 0.393508  m/day
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vx std: 0.369894  m/day
+Vy std: 0.381828  m/day
 </pre></div>
 </div>
 </div>
@@ -645,8 +634,8 @@ Vy std: 0.393508  m/day
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vx std: 0.040693  m/day
-Vy std: 0.052400  m/day
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vx std: 0.040846  m/day
+Vy std: 0.052887  m/day
 </pre></div>
 </div>
 </div>
@@ -1276,7 +1265,7 @@ Vy std: 0.069133  m/day
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_39_0.png" src="../../_images/metric_off-ice-error_39_0.png" />
+<img alt="../../_images/metric_off-ice-error_40_0.png" src="../../_images/metric_off-ice-error_40_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1336,7 +1325,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
   self._setitem_single_column(loc, value, pi)
 </pre></div>
 </div>
-<img alt="../../_images/metric_off-ice-error_40_1.png" src="../../_images/metric_off-ice-error_40_1.png" />
+<img alt="../../_images/metric_off-ice-error_41_1.png" src="../../_images/metric_off-ice-error_41_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1970,7 +1959,203 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_43_0.png" src="../../_images/metric_off-ice-error_43_0.png" />
+<img alt="../../_images/metric_off-ice-error_44_0.png" src="../../_images/metric_off-ice-error_44_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">132</span><span class="p">]]</span>
+<span class="n">demo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Chip (px)</th>
+      <th>Resolution (px)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>Software</th>
+      <th>Vx</th>
+      <th>Vy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>18</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>16</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>LS8-20180304-20180405</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">17</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="c1"># axes_settings = {&#39;linewidth&#39;   : 2, &#39;labelsize&#39;: 14}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax_agu</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">10.3</span><span class="p">))</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="c1"># label = &#39;-&#39;.join((row.Software, row[&#39;Chip (px)&#39;], row[&#39;Resolution (px)&#39;], row.Prefilter)) + &#39;\n&#39; + row.Subpixel</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span>
+    <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">ax_agu</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">Software</span> <span class="o">==</span> <span class="s1">&#39;GIV&#39;</span><span class="p">:</span>
+        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">off_ice_errors</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">wfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;u_&#39;</span><span class="p">,</span> <span class="s1">&#39;pkr_&#39;</span><span class="p">),</span> <span class="n">off_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">thres_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">off_ice_errors</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">off_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="c1"># gftt.plot_off_ice_errors(vx, vy, z, thres_idx, ax=ax_sel, zoom=True)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="nb">min</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> <span class="nb">min</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])),</span> <span class="nb">max</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]),</span> 
+                              <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:salmon&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+    
+    <span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]))</span>
+    <span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">])</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">thres_idx</span><span class="p">]))</span>
+    <span class="c1"># label += &#39;\n $e_x$ = {:6.3f} | $e_y$ = {:6.3f} &#39;.format(demo.loc[idx, &#39;OIE-x&#39;], </span>
+    <span class="c1">#                                                         demo.loc[idx, &#39;OIE-y&#39;])</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="c1"># ax_sel.xaxis.set_ticklabels([])</span>
+    <span class="c1"># ax_sel.yaxis.set_ticklabels([])</span>
+    
+
+        
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    
+<span class="n">ax_agu</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Off-ice error: y direction (m/day)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+<span class="n">ax_agu</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice error: x direction (m/day)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;OIE-9panels-AGU21_updated.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">450</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/metric_off-ice-error_47_0.png" src="../../_images/metric_off-ice-error_47_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2028,7 +2213,7 @@ Name: 18, dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7fccc322a220&gt;
 </pre></div>
 </div>
-<img alt="../../_images/metric_off-ice-error_46_1.png" src="../../_images/metric_off-ice-error_46_1.png" />
+<img alt="../../_images/metric_off-ice-error_51_1.png" src="../../_images/metric_off-ice-error_51_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2320,7 +2505,7 @@ Name: 72, dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7fccc31be160&gt;
 </pre></div>
 </div>
-<img alt="../../_images/metric_off-ice-error_60_1.png" src="../../_images/metric_off-ice-error_60_1.png" />
+<img alt="../../_images/metric_off-ice-error_65_1.png" src="../../_images/metric_off-ice-error_65_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2357,7 +2542,7 @@ Name: 72, dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7fccc30eeeb0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/metric_off-ice-error_61_1.png" src="../../_images/metric_off-ice-error_61_1.png" />
+<img alt="../../_images/metric_off-ice-error_66_1.png" src="../../_images/metric_off-ice-error_66_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
