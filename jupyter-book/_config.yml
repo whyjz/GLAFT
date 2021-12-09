@@ -7,7 +7,7 @@ html:
   use_edit_page_button: true
   use_repository_button: true
   use_issues_button: true
-  baseurl: https://whyjz.github.io/glacier-tf-test
+  baseurl: https://whyjz.github.io/glacier-ft-test
 
 # bibtex_bibfiles:
 #  - refs.bib
@@ -15,7 +15,7 @@ html:
 # bibtex_reference_style: author_year
 
 repository:
-  url: https://github.com/whyjz/glacier-tf-test
+  url: https://github.com/whyjz/glacier-ft-test
   branch: master
   path_to_book: jupyter-book
 
