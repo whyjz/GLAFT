@@ -10,7 +10,7 @@ Whyjay Zheng<sup>1</sup>, Shashank Bhushan<sup>2</sup>, Maximillian S Van Wyk de
 
 <sup>4</sup>University of Ottawa, Department of Geography, Environment and Geomatics, Ottawa, Canada
 
-Corresponding author and email: Whyjay Zheng <whyjz@berkeley.edu>
+Corresponding author and email: Whyjay Zheng (whyjz@berkeley.edu)
 
 ## Abstract
 
@@ -23,3 +23,7 @@ This work is supported by the NSF Earth Cube Program under awards 1928406, 19283
 ## Plain language summary
 
 There are many ways to measure how quickly glaciers move including using GPS and satellites. Here, we compare a variety of methods to measure glacier motion to determine which method(s) perform the best in mapping glacier movement. We develop a software package called “gftt” to help execute our work and share our methods with the scientific community.
+
+## How to cite
+
+doi:10.1002/essoar.10509355.1
