@@ -1,4 +1,4 @@
-title          : Pejzero
+title          : GFTT
 author         : Whyjay Zheng, Shashank Bhushan, Max Van Wyk de Vries, Will Kochtitzky, David Shean
 copyright      : "2021"  
 logo           : tentative.png
@@ -19,10 +19,10 @@ repository:
   branch: master
   path_to_book: jupyter-book
 
-launch_buttons:
-  notebook_interface: "jupyterlab" # The interface interactive links will activate ["classic", "jupyterlab"]
-  binderhub_url: "https://mybinder.org"
-  # thebe: true
+# launch_buttons:
+#   notebook_interface: "jupyterlab" # The interface interactive links will activate ["classic", "jupyterlab"]
+#   binderhub_url: "https://mybinder.org"
+#   thebe: true
   
 execute:
   execute_notebooks : 'off'
