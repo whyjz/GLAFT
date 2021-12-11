@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Metric: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth &#8212; GFTT</title>
+    <title>Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth &#8212; GFTT</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,9 +51,10 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/synthetic_displacement/metric_synthetic.html" />
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/synthetic_displacement/validation_synthetic.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Validation #1: Compare GNSS data with metrics" href="../velocity_gps_comparison/validation_gnss_comparison.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -97,7 +98,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../stable_area_error_assessment/metric_off-ice-error.html">
    Metric #1: Off-ice errors
@@ -111,6 +112,16 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../multiple_metrics/oie-vs-sobel.html">
    Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../velocity_gps_comparison/validation_gnss_comparison.html">
+   Validation #1: Compare GNSS data with metrics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth
   </a>
  </li>
 </ul>
@@ -154,7 +165,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/notebooks/synthetic_displacement/metric_synthetic.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/notebooks/synthetic_displacement/validation_synthetic.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -174,10 +185,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/synthetic_displacement/metric_synthetic.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/synthetic_displacement/validation_synthetic.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/synthetic_displacement/metric_synthetic.ipynb"><button
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/synthetic_displacement/validation_synthetic.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -197,7 +208,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/synthetic_displacement/metric_synthetic.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/synthetic_displacement/validation_synthetic.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -235,8 +246,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#information-and-map-area">
-     1. Information and map area
+    <a class="reference internal nav-link" href="#information-map-area-importing-modules">
+     1. Information, map area, importing modules
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -272,15 +283,15 @@
         
               <div>
                 
-  <div class="section" id="metric-feature-tracking-over-a-known-synthetic-pixel-offset-then-calculate-the-difference-between-results-and-the-ground-truth">
-<h1>Metric: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth<a class="headerlink" href="#metric-feature-tracking-over-a-known-synthetic-pixel-offset-then-calculate-the-difference-between-results-and-the-ground-truth" title="Permalink to this headline">¶</a></h1>
-<p>This method only uses <strong>one source image</strong> from the planned feature tracking pair. A arbitrary, synthetic pixel offset is applied to that image. The original image and the processed image form a pair, and we perform feature tracking using this pair. we calculate the difference between the offsets found by the FT algorithm and the ground truth (which is the arbitrary pixel offset). Similar to the post-correction off-ice errors, this difference can be used as a metric for determining the ideal FT parameters for the planned feature tracking pair.</p>
-<p>Unlike the post-correction off-ice errors, this method requires no additional information and can be applied to any kind of source images. We create an offset field and applies it to a source image, creating the second, synthetic image to be used in the feature tracking algorithm. Then we run FT using this pair and compare the results with the ground truch (i.e. the original offset field).</p>
+  <div class="section" id="validation-2-feature-tracking-over-a-known-synthetic-pixel-offset-then-calculate-the-difference-between-results-and-the-ground-truth">
+<h1>Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth<a class="headerlink" href="#validation-2-feature-tracking-over-a-known-synthetic-pixel-offset-then-calculate-the-difference-between-results-and-the-ground-truth" title="Permalink to this headline">¶</a></h1>
+<p>– To be updated in the future work –</p>
+<p>This method uses <strong>one source image</strong> from the planned feature tracking pair. A arbitrary, synthetic pixel offset is applied to that image. The original image and the processed image form a pair, and we perform feature tracking using this pair. we calculate the difference between the offsets found by the FT algorithm and the ground truth (which is the arbitrary pixel offset). The statistics of this difference can be compared with the metrics to determine whether these metrics really indicate better FT parameter combinations.</p>
 <div class="section" id="requirements-and-limits">
 <h2>Requirements and Limits<a class="headerlink" href="#requirements-and-limits" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>There are several steps needed to bo done before running FT. Users have to determine a few parameters for creating the synthetic offset field and create the second image.</p></li>
-<li><p>Since it does not use the actual results from the planned feature tracking pair, this metric may fail to find the best parameter set for the actual pair when surface conditions change during the pair period (e.g. from snow melt).</p></li>
+<li><p>Since it does not use the actual results from the planned feature tracking pair, there is a concern that this metric may fail to find the best parameter set for the actual pair when surface conditions change during the pair period (e.g. from snow melt).</p></li>
 </ul>
 </div>
 <div class="section" id="procedure">
@@ -294,12 +305,12 @@
 </div>
 <div class="section" id="analysis">
 <h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="information-and-map-area">
-<h3>1. Information and map area<a class="headerlink" href="#information-and-map-area" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="information-map-area-importing-modules">
+<h3>1. Information, map area, importing modules<a class="headerlink" href="#information-map-area-importing-modules" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Test area: Kaskawulsh</p></li>
-<li><p>Test package: CARST (and Vmap)</p></li>
-<li><p>Test source image: 20180304 (Landsat 8)</p></li>
+<li><p>Test area: <strong>Kaskawulsh Glacier</strong></p></li>
+<li><p>Test packages: <strong>CARST and Vmap</strong></p></li>
+<li><p>Test pair: <strong>Landsat 8 20180304</strong></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -346,7 +357,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_5_0.png" src="../../_images/metric_synthetic_5_0.png" />
+<img alt="../../_images/validation_synthetic_5_0.png" src="../../_images/validation_synthetic_5_0.png" />
 </div>
 </div>
 </div>
@@ -385,7 +396,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_8_0.png" src="../../_images/metric_synthetic_8_0.png" />
+<img alt="../../_images/validation_synthetic_8_0.png" src="../../_images/validation_synthetic_8_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -403,7 +414,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_10_0.png" src="../../_images/metric_synthetic_10_0.png" />
+<img alt="../../_images/validation_synthetic_10_0.png" src="../../_images/validation_synthetic_10_0.png" />
 </div>
 </div>
 <p>Note that this should look really like the source image as the amount of offset is all within 1 pixel. We can save this image as a geotiff and perform feature tracking using whatever package to be tested.</p>
@@ -588,7 +599,7 @@ nl: 303 ns: 465 res: 120.000
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_21_0.png" src="../../_images/metric_synthetic_21_0.png" />
+<img alt="../../_images/validation_synthetic_21_0.png" src="../../_images/validation_synthetic_21_0.png" />
 </div>
 </div>
 </div>
@@ -651,7 +662,7 @@ KDE Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_24_0.png" src="../../_images/metric_synthetic_24_0.png" />
+<img alt="../../_images/validation_synthetic_24_0.png" src="../../_images/validation_synthetic_24_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -709,7 +720,7 @@ Vy std: 0.033561  pixels
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-10.0, 10.0)
 </pre></div>
 </div>
-<img alt="../../_images/metric_synthetic_31_1.png" src="../../_images/metric_synthetic_31_1.png" />
+<img alt="../../_images/validation_synthetic_31_1.png" src="../../_images/validation_synthetic_31_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -719,7 +730,7 @@ Vy std: 0.033561  pixels
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_32_0.png" src="../../_images/metric_synthetic_32_0.png" />
+<img alt="../../_images/validation_synthetic_32_0.png" src="../../_images/validation_synthetic_32_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -729,7 +740,7 @@ Vy std: 0.033561  pixels
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_synthetic_33_0.png" src="../../_images/metric_synthetic_33_0.png" />
+<img alt="../../_images/validation_synthetic_33_0.png" src="../../_images/validation_synthetic_33_0.png" />
 </div>
 </div>
 </div>
@@ -760,7 +771,14 @@ Vy std: 0.033561  pixels
               
         
             <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../velocity_gps_comparison/validation_gnss_comparison.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Validation #1: Compare GNSS data with metrics</p>
+        </div>
+    </a>
 </div>
         
         </div>
