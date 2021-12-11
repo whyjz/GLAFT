@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; GFTT</title>
+    <title>Metric #2: Flow statistics on Sobel-filtered images &#8212; GFTT</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -52,6 +54,8 @@
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/sobel_filter/metric_sobel_filter.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)" href="../multiple_metrics/oie-vs-sobel.html" />
+    <link rel="prev" title="Metric #1: Off-ice errors" href="../stable_area_error_assessment/metric_off-ice-error.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -95,10 +99,20 @@
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../stable_area_error_assessment/metric_off-ice-error.html">
    Metric #1: Off-ice errors
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Metric #2: Flow statistics on Sobel-filtered images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../multiple_metrics/oie-vs-sobel.html">
+   Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)
   </a>
  </li>
 </ul>
@@ -206,7 +220,44 @@
                 <i class="fas fa-list"></i> Contents
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements-and-limits">
+   Requirements and Limits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#procedure">
+   Procedure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-information-importing-modules">
+     1. Basic information, importing modules
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-feature-tracking-data-list-and-on-ice-area-shapefile">
+     2. Load the feature tracking data list and on-ice area shapefile
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#demo-for-a-single-test">
+     3. Demo for a single test
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#off-ice-error-for-42-tests-using-the-same-landsat-8-pair">
+     4. Off-ice error for 42 tests using the same Landsat 8 pair
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
             </nav>
@@ -218,7 +269,33 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="metric-2-flow-statistics-on-sobel-filtered-images">
+<h1>Metric #2: Flow statistics on Sobel-filtered images<a class="headerlink" href="#metric-2-flow-statistics-on-sobel-filtered-images" title="Permalink to this headline">¶</a></h1>
+<p>Sobel filter can highlight high-frequency variations on an image. Thus, we can apply sobel filter on the feature tracking results and calculate statistics of the on-ice pixels, which could serve as a metric to evaluate detail richness.</p>
+<div class="section" id="requirements-and-limits">
+<h2>Requirements and Limits<a class="headerlink" href="#requirements-and-limits" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Have to prepare polygon(s) to select on-ice pixels.</p></li>
+</ul>
+</div>
+<div class="section" id="procedure">
+<h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Prepare the feature tracking results as Geotiff files, ideally <span class="math notranslate nohighlight">\(V_x\)</span> as one file and <span class="math notranslate nohighlight">\(V_y\)</span> as the other. The unit for pixel value is flexible, from pixels, pixels/day, pixels/year, to meters, meters/day, to meters/year. <strong>In this notebook, all of the feature tracking data use meters/day as the unit of the pixel value.</strong></p></li>
+<li><p>Locate on-ice area and make an ESRI shapefile (polygon format) for that. Future development includes the RGI glacier outline as the on-ice area as well.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">gftt.sobel_scattering</span></code> and <code class="docutils literal notranslate"><span class="pre">gftt.plot_off_ice_errors</span></code> to calculate, analyze, and visualize the flow statistics.</p></li>
+</ol>
+</div>
+<div class="section" id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="basic-information-importing-modules">
+<h3>1. Basic information, importing modules<a class="headerlink" href="#basic-information-importing-modules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Test area: <strong>Kaskawulsh Glacier</strong></p></li>
+<li><p>Test packages: <strong>CARST, Vmap, GIV, autoRIFT</strong></p></li>
+<li><p>Test pair: <strong>Landsat 8 20180304-20180405</strong></p></li>
+</ul>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Developer&#39;s setting</span>
 <span class="o">%</span><span class="k">load_ext</span> autoreload
@@ -230,7 +307,9 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gftt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span><span class="p">,</span> <span class="n">cm</span>
 <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
 <span class="kn">import</span> <span class="nn">rasterio</span>
@@ -238,13 +317,15 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="c1"># import seaborn as sns</span>
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="load-the-feature-tracking-data-list-and-on-ice-area-shapefile">
+<h3>2. Load the feature tracking data list and on-ice area shapefile<a class="headerlink" href="#load-the-feature-tracking-data-list-and-on-ice-area-shapefile" title="Permalink to this headline">¶</a></h3>
+<p>Each row is a feature tracking test using a specific parameter combination described in each field.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_agu21.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
@@ -920,6 +1001,7 @@
 </table>
 </div></div></div>
 </div>
+<p>Load the off-ice area shapefile.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># on-ice area</span>
@@ -929,6 +1011,9 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="demo-for-a-single-test">
+<h3>3. Demo for a single test<a class="headerlink" href="#demo-for-a-single-test" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Example results</span>
@@ -948,13 +1033,14 @@ Vx                 /home/jovyan/Projects/PX_comparison/PX/GIV/u_l...
 Vy                 /home/jovyan/Projects/PX_comparison/PX/GIV/v_l...
 OIE-x                                             0.6140104136459059
 OIE-y                                             0.7672143993258354
-SS-x                                                 17.388386174019
-SS-y                                               19.71987637543609
+SS-x                                              4.8425141531327425
+SS-y                                               6.934244151078591
 Name: 22, dtype: object
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now make a special <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap designed for Kaskawulsh:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">viridis</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
@@ -972,6 +1058,7 @@ Name: 22, dtype: object
 <div class="cell_output docutils container">
 <div class="output text_html"><div style="vertical-align: middle;"><strong>from_list</strong> </div><div class="cmap"><img alt="from_list colormap" title="from_list" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAGHRFWHRUaXRsZQBmcm9tX2xpc3QgY29sb3JtYXBDL89FAAAAHnRFWHREZXNjcmlwdGlvbgBmcm9tX2xpc3QgY29sb3JtYXABtCnOAAAAMHRFWHRBdXRob3IATWF0cGxvdGxpYiB2My40LjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmes1mPdAAAAMnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHYzLjQuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Jw/PoAAAJzSURBVHic7dZLctswEAVADGTnZDlC7n8TCVmQoEhaEquS5eve0MR8QJe9ePW7/ow2VbVW/fnaj++tV6uq3XtfZnbvx/rP+UN/9eVsu75+7Dv216G/nfur2pj1evN8Ux9bvf1jffc77vurve477Tv3799HLXtHnfbUrNfy7Kf5evbN2ef959pzZu4f/Wfv+3p9rB92zO/vu5+rHb6ttff3j60+Xu/f33GYH8d7DveP5+yr/e3cM3bnrdXWu5zXrl7zvc3zsZ1t/wb9ceitGm35s49Dva/1vvbM+m327c57jdbbWt/mn+e9Htv816y3Oftot938V79v9+xnb+1xmL+19bwerbfl2Vpr33VvvWbPun99zvrctcwu98+z77pvu5baOr/Wf9W9vTL3vzP3v6+Pj/Xr/Z/nr/f/5/zV/f+9/7Nbfa5fzl/u/3zB9f6L+Yv9l/MXX3D9/Z/n+8X9t7qaBwDiCAAAEEgAAIBAAgAABBIAACCQAAAAgQQAAAgkAABAIAEAAAIJAAAQSAAAgEACAAAEEgAAIJAAAACBBAAACCQAAEAgAQAAAgkAABBIAACAQAIAAAQSAAAgkAAAAIEEAAAIJAAAQCABAAACCQAAEEgAAIBAAgAABBIAACCQAAAAgQQAAAgkAABAIAEAAAIJAAAQSAAAgEACAAAEEgAAIJAAAACBBAAACCQAAEAgAQAAAgkAABBIAACAQAIAAAQSAAAgkAAAAIEEAAAIJAAAQCABAAACCQAAEEgAAIBAAgAABBIAACCQAAAAgQQAAAgkAABAIAEAAAIJAAAQSAAAgEACAAAEEgAAIJAAAACBBAAACPQXS8p/h1f/h1wAAAAASUVORK5CYII="></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#00000080" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000080;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#ca002080" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #ca002080;"></div></div></div></div>
 </div>
+<p>The velocity x component looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -983,14 +1070,15 @@ Name: 22, dtype: object
 <span class="n">cbar</span> <span class="o">=</span>  <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">),</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">)</span>
 <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;speed (m/d)&#39;</span><span class="p">)</span>
 <span class="n">on_ice</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:purple&#39;</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;purple: selected off-ice area&#39;</span><span class="p">);</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;purple: selected on-ice area&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_6_0.png" src="../../_images/metric_sobel_filter_6_0.png" />
+<img alt="../../_images/metric_sobel_filter_12_0.png" src="../../_images/metric_sobel_filter_12_0.png" />
 </div>
 </div>
+<p>Now we can call the <code class="docutils literal notranslate"><span class="pre">sobel_scattering</span></code> function from GFTT and calculate flow statistics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
@@ -1009,9 +1097,14 @@ Name: 22, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_7_0.png" src="../../_images/metric_sobel_filter_7_0.png" />
+<img alt="../../_images/metric_sobel_filter_14_0.png" src="../../_images/metric_sobel_filter_14_0.png" />
 </div>
 </div>
+<p>Here, x-axis is the (Sobel-flavored) gradient of flow speed along the x direction (m/day, per pixel), y-axis is the (Sobel-flavored) gradient of flow speed along the y direction (m/day, per pixel). Again, we randomly select 10,000 pixels and color code them based on the Gaussian kernel density estimate, and the other pixels are plotting as gray points. Transparent color points have a kernel density below a chosen confidence level, which is 3.0 by default and corresponds to a confidence level of 99.7%.</p>
+</div>
+<div class="section" id="off-ice-error-for-42-tests-using-the-same-landsat-8-pair">
+<h3>4. Off-ice error for 42 tests using the same Landsat 8 pair<a class="headerlink" href="#off-ice-error-for-42-tests-using-the-same-landsat-8-pair" title="Permalink to this headline">¶</a></h3>
+<p>Here’s what the data (<span class="math notranslate nohighlight">\(V_x\)</span> of all 42 tests) look like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
@@ -1038,9 +1131,10 @@ Name: 22, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_8_0.png" src="../../_images/metric_sobel_filter_8_0.png" />
+<img alt="../../_images/metric_sobel_filter_16_0.png" src="../../_images/metric_sobel_filter_16_0.png" />
 </div>
 </div>
+<p>flow speed gradient plots for all 42 tests:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax3</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">26</span><span class="p">))</span>
@@ -1080,24 +1174,19 @@ Name: 22, dtype: object
     
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;tmp.png&#39;</span><span class="p">)</span>
+<span class="c1"># fig.savefig(&#39;tmp.png&#39;)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_9_0.png" src="../../_images/metric_sobel_filter_9_0.png" />
+<img alt="../../_images/metric_sobel_filter_18_0.png" src="../../_images/metric_sobel_filter_18_0.png" />
 </div>
 </div>
+<p>Results are attached to the right of the metadata sheet. (<code class="docutils literal notranslate"><span class="pre">SS-x</span></code> and <code class="docutils literal notranslate"><span class="pre">SS-y</span></code>)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../results_agu21.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># demo.to_csv(&#39;../results_agu21.csv&#39;, index=False)</span>
+<span class="n">demo</span>
 </pre></div>
 </div>
 </div>
@@ -1147,8 +1236,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.41748046875</td>
       <td>0.4541015625</td>
-      <td>1.166369</td>
-      <td>1.127073</td>
+      <td>1.18154</td>
+      <td>1.08438</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1162,8 +1251,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.41748046875</td>
       <td>0.47607421875</td>
-      <td>2.158645</td>
-      <td>2.070151</td>
+      <td>2.097337</td>
+      <td>2.092728</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1177,8 +1266,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.673828125</td>
       <td>0.5712890625</td>
-      <td>1.714556</td>
-      <td>1.417194</td>
+      <td>1.935036</td>
+      <td>1.365687</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1192,8 +1281,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.40283203125</td>
       <td>0.41015625</td>
-      <td>1.410858</td>
-      <td>1.372895</td>
+      <td>1.425196</td>
+      <td>1.408842</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1207,8 +1296,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.3515625</td>
       <td>0.29296875</td>
-      <td>2.057519</td>
-      <td>2.450102</td>
+      <td>2.154491</td>
+      <td>2.66219</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1222,8 +1311,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.615234375</td>
       <td>0.556640625</td>
-      <td>2.446684</td>
-      <td>2.084638</td>
+      <td>2.614244</td>
+      <td>2.271689</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1237,8 +1326,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.3826904296875</td>
       <td>0.380859375</td>
-      <td>1.63463</td>
-      <td>1.529421</td>
+      <td>1.671977</td>
+      <td>1.564445</td>
     </tr>
     <tr>
       <th>7</th>
@@ -1252,8 +1341,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.3826904296875</td>
       <td>0.369873046875</td>
-      <td>2.254367</td>
-      <td>2.527121</td>
+      <td>2.24912</td>
+      <td>2.432743</td>
     </tr>
     <tr>
       <th>8</th>
@@ -1267,8 +1356,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.59326171875</td>
       <td>0.5419921875</td>
-      <td>2.994531</td>
-      <td>2.803851</td>
+      <td>3.108024</td>
+      <td>2.969232</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1282,8 +1371,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.2783203125</td>
       <td>0.27099609375</td>
-      <td>0.62458</td>
-      <td>0.556641</td>
+      <td>0.563537</td>
+      <td>0.546919</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1297,8 +1386,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.08056640625</td>
       <td>0.087890625</td>
-      <td>0.9375</td>
-      <td>0.867603</td>
+      <td>0.908676</td>
+      <td>0.952261</td>
     </tr>
     <tr>
       <th>11</th>
@@ -1312,8 +1401,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.47607421875</td>
       <td>0.46142578125</td>
-      <td>0.850114</td>
-      <td>0.719117</td>
+      <td>0.827864</td>
+      <td>0.703735</td>
     </tr>
     <tr>
       <th>12</th>
@@ -1327,8 +1416,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.22705078125</td>
       <td>0.230712890625</td>
-      <td>0.726908</td>
-      <td>0.660968</td>
+      <td>0.697764</td>
+      <td>0.744409</td>
     </tr>
     <tr>
       <th>13</th>
@@ -1342,8 +1431,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.087890625</td>
       <td>0.087890625</td>
-      <td>1.056314</td>
-      <td>1.056517</td>
+      <td>1.087147</td>
+      <td>1.139381</td>
     </tr>
     <tr>
       <th>14</th>
@@ -1357,8 +1446,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.44677734375</td>
       <td>0.380859375</td>
-      <td>1.313631</td>
-      <td>1.141075</td>
+      <td>1.296407</td>
+      <td>1.169676</td>
     </tr>
     <tr>
       <th>15</th>
@@ -1372,8 +1461,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.2197265625</td>
       <td>0.2508544921875</td>
-      <td>0.855555</td>
-      <td>0.897867</td>
+      <td>0.79928</td>
+      <td>0.838055</td>
     </tr>
     <tr>
       <th>16</th>
@@ -1387,8 +1476,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.087890625</td>
       <td>0.087890625</td>
-      <td>1.028525</td>
-      <td>1.533353</td>
+      <td>1.066422</td>
+      <td>1.817949</td>
     </tr>
     <tr>
       <th>17</th>
@@ -1402,8 +1491,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.439453125</td>
       <td>0.391845703125</td>
-      <td>1.687681</td>
-      <td>1.583285</td>
+      <td>1.657411</td>
+      <td>1.476661</td>
     </tr>
     <tr>
       <th>18</th>
@@ -1417,8 +1506,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.23354190774032246</td>
       <td>0.27751872601547506</td>
-      <td>2.309538</td>
-      <td>2.666533</td>
+      <td>2.299084</td>
+      <td>2.762638</td>
     </tr>
     <tr>
       <th>19</th>
@@ -1432,8 +1521,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.8132470090927522</td>
       <td>0.5755648147529258</td>
-      <td>3.83209</td>
-      <td>3.621216</td>
+      <td>3.790005</td>
+      <td>3.805339</td>
     </tr>
     <tr>
       <th>20</th>
@@ -1447,8 +1536,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.25120065569949007</td>
       <td>0.399150050012882</td>
-      <td>2.791979</td>
-      <td>3.616469</td>
+      <td>2.954767</td>
+      <td>3.609543</td>
     </tr>
     <tr>
       <th>21</th>
@@ -1462,8 +1551,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.23569657242438996</td>
       <td>0.38808508659307606</td>
-      <td>3.829151</td>
-      <td>4.109152</td>
+      <td>3.729291</td>
+      <td>3.935045</td>
     </tr>
     <tr>
       <th>22</th>
@@ -1477,8 +1566,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.6140104136459059</td>
       <td>0.7672143993258354</td>
-      <td>4.842514</td>
-      <td>6.934244</td>
+      <td>4.718767</td>
+      <td>7.490996</td>
     </tr>
     <tr>
       <th>23</th>
@@ -1492,8 +1581,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.3672571186496647</td>
       <td>0.4704818177042076</td>
-      <td>3.573858</td>
-      <td>4.022872</td>
+      <td>3.483378</td>
+      <td>3.683116</td>
     </tr>
     <tr>
       <th>24</th>
@@ -1507,8 +1596,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>0.28039634227752686</td>
       <td>0.2815014123916626</td>
-      <td>0.903663</td>
-      <td>0.73403</td>
+      <td>0.923123</td>
+      <td>0.758888</td>
     </tr>
     <tr>
       <th>25</th>
@@ -1522,8 +1611,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>0.15759776532649994</td>
       <td>0.17998206615447998</td>
-      <td>0.39487</td>
-      <td>0.331545</td>
+      <td>0.40022</td>
+      <td>0.349594</td>
     </tr>
     <tr>
       <th>26</th>
@@ -1537,8 +1626,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>0.5472662448883057</td>
       <td>0.47937440872192383</td>
-      <td>1.278607</td>
-      <td>1.003679</td>
+      <td>1.376809</td>
+      <td>1.014373</td>
     </tr>
     <tr>
       <th>27</th>
@@ -1552,8 +1641,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>0.5794689655303955</td>
       <td>0.5242738723754883</td>
-      <td>1.055869</td>
-      <td>0.939092</td>
+      <td>0.961011</td>
+      <td>0.852205</td>
     </tr>
     <tr>
       <th>28</th>
@@ -1567,8 +1656,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
       <td>0.4641949534416199</td>
       <td>0.46929478645324707</td>
-      <td>1.020549</td>
-      <td>0.8851</td>
+      <td>1.167096</td>
+      <td>0.997308</td>
     </tr>
     <tr>
       <th>29</th>
@@ -1582,8 +1671,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
       <td>0.7480487823486328</td>
       <td>0.9187874794006348</td>
-      <td>2.355224</td>
-      <td>2.479468</td>
+      <td>2.444094</td>
+      <td>2.615486</td>
     </tr>
     <tr>
       <th>30</th>
@@ -1597,8 +1686,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>1.0400390625</td>
       <td>1.1572265625</td>
-      <td>4.14838</td>
-      <td>3.802956</td>
+      <td>3.922282</td>
+      <td>3.656597</td>
     </tr>
     <tr>
       <th>31</th>
@@ -1612,8 +1701,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.703125</td>
       <td>0.6884765625</td>
-      <td>2.202143</td>
-      <td>2.200681</td>
+      <td>2.24078</td>
+      <td>2.218066</td>
     </tr>
     <tr>
       <th>32</th>
@@ -1627,8 +1716,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>1.0107421875</td>
       <td>0.8056640625</td>
-      <td>3.562433</td>
-      <td>3.283342</td>
+      <td>3.357018</td>
+      <td>3.06709</td>
     </tr>
     <tr>
       <th>33</th>
@@ -1642,8 +1731,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.7763671875</td>
       <td>0.7177734375</td>
-      <td>2.759822</td>
-      <td>2.894911</td>
+      <td>2.929688</td>
+      <td>2.955937</td>
     </tr>
     <tr>
       <th>34</th>
@@ -1657,8 +1746,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.65185546875</td>
       <td>0.72509765625</td>
+      <td>2.25605</td>
       <td>2.4052</td>
-      <td>2.317973</td>
     </tr>
     <tr>
       <th>35</th>
@@ -1672,8 +1761,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.380859375</td>
       <td>0.46875</td>
-      <td>1.5285</td>
-      <td>1.593922</td>
+      <td>1.532985</td>
+      <td>1.591767</td>
     </tr>
     <tr>
       <th>36</th>
@@ -1687,8 +1776,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.3515625</td>
       <td>0.380859375</td>
-      <td>1.584471</td>
-      <td>1.508149</td>
+      <td>1.557426</td>
+      <td>1.438235</td>
     </tr>
     <tr>
       <th>37</th>
@@ -1702,8 +1791,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.2490234375</td>
       <td>0.3369140625</td>
-      <td>1.286396</td>
-      <td>1.426851</td>
+      <td>1.207941</td>
+      <td>1.308229</td>
     </tr>
     <tr>
       <th>38</th>
@@ -1717,8 +1806,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.2197265625</td>
       <td>0.322265625</td>
-      <td>0.982647</td>
-      <td>1.07484</td>
+      <td>0.969899</td>
+      <td>1.08438</td>
     </tr>
     <tr>
       <th>39</th>
@@ -1732,8 +1821,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.146484375</td>
       <td>0.2490234375</td>
-      <td>0.878906</td>
-      <td>1.058343</td>
+      <td>0.894395</td>
+      <td>1.013392</td>
     </tr>
     <tr>
       <th>40</th>
@@ -1747,8 +1836,8 @@ Name: 22, dtype: object
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.1171875</td>
       <td>0.234375</td>
-      <td>0.709202</td>
-      <td>0.796961</td>
+      <td>0.512486</td>
+      <td>0.62286</td>
     </tr>
     <tr>
       <th>41</th>
@@ -1763,12 +1852,13 @@ Name: 22, dtype: object
       <td>0.1171875</td>
       <td>0.205078125</td>
       <td>0.615932</td>
-      <td>0.774014</td>
+      <td>0.816117</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<p>And here’s another figure showing the full extent of the flow velocity gradient plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax4</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">26</span><span class="p">))</span>
@@ -1806,163 +1896,9 @@ Name: 22, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_14_0.png" src="../../_images/metric_sobel_filter_14_0.png" />
+<img alt="../../_images/metric_sobel_filter_22_0.png" src="../../_images/metric_sobel_filter_22_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;SS-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SS-x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;SS-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SS-y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span>
-<span class="c1"># demo.plot.scatter(x=&#39;OIE-x&#39;, y=&#39;SS-x&#39;, c=&#39;Software&#39;)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
-</pre></div>
-</div>
-<img alt="../../_images/metric_sobel_filter_19_1.png" src="../../_images/metric_sobel_filter_19_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-y&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-y&#39;, ylabel=&#39;SS-y&#39;&gt;
-</pre></div>
-</div>
-<img alt="../../_images/metric_sobel_filter_20_1.png" src="../../_images/metric_sobel_filter_20_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># font = {&#39;family&#39; : &#39;normal&#39;,</span>
-<span class="c1">#         &#39;weight&#39; : &#39;bold&#39;,</span>
-<span class="c1">#         &#39;size&#39;   : 22}</span>
-<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax6</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
-<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
-<span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;On-ice edge richness (m/day)&#39;</span><span class="p">)</span>
-<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
-<span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
-<span class="c1"># legend.set_size(10)</span>
-<span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;OIE-vs-SS_updated.svg&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_21_0.png" src="../../_images/metric_sobel_filter_21_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
-</pre></div>
-</div>
-<img alt="../../_images/metric_sobel_filter_22_1.png" src="../../_images/metric_sobel_filter_22_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE-x&#39;, ylabel=&#39;SS-x&#39;&gt;
-</pre></div>
-</div>
-<img alt="../../_images/metric_sobel_filter_23_1.png" src="../../_images/metric_sobel_filter_23_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;SS-x&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
-    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;SS-x&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.04</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/metric_sobel_filter_24_0.png" src="../../_images/metric_sobel_filter_24_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span>
-<span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">sobel_scattering</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">demo</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sx</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(460472,)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sx</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([4.31833e+05, 1.39620e+04, 5.53700e+03, 3.39800e+03, 2.84900e+03,
-        1.85200e+03, 3.43000e+02, 2.54000e+02, 1.63000e+02, 1.73000e+02]),
- array([ 0.       ,  5.6459966, 11.291993 , 16.93799  , 22.583986 ,
-        28.229982 , 33.87598  , 39.521976 , 45.167973 , 50.81397  ,
-        56.459965 ], dtype=float32),
- &lt;BarContainer object of 10 artists&gt;)
-</pre></div>
-</div>
-<img alt="../../_images/metric_sobel_filter_32_1.png" src="../../_images/metric_sobel_filter_32_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">sx</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
-</pre></div>
 </div>
 </div>
 </div>
@@ -1991,7 +1927,21 @@ Name: 22, dtype: object
               
         
             <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../stable_area_error_assessment/metric_off-ice-error.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Metric #1: Off-ice errors</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../multiple_metrics/oie-vs-sobel.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
         
         </div>

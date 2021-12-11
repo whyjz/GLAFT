@@ -54,6 +54,7 @@
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/stable_area_error_assessment/metric_off-ice-error.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Metric #2: Flow statistics on Sobel-filtered images" href="../sobel_filter/metric_sobel_filter.html" />
     <link rel="prev" title="Gftt: an open-source tool for evaluating remotely sensed glacier velocity products" href="../../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -102,6 +103,16 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Metric #1: Off-ice errors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sobel_filter/metric_sobel_filter.html">
+   Metric #2: Flow statistics on Sobel-filtered images
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../multiple_metrics/oie-vs-sobel.html">
+   Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)
   </a>
  </li>
 </ul>
@@ -275,7 +286,7 @@
                 
   <div class="section" id="metric-1-off-ice-errors">
 <h1>Metric #1: Off-ice errors<a class="headerlink" href="#metric-1-off-ice-errors" title="Permalink to this headline">¶</a></h1>
-<p>Assume that the off-ice area has a ground truth of zero horizontal motion (<span class="math notranslate nohighlight">\(V = V_x = V_y = 0\)</span>), then we can calculate the difference between the feature tracking results and the ground truth (i.e. zero) over the office area on an image.</p>
+<p>Assume that the off-ice area has a ground truth of zero horizontal motion (<span class="math notranslate nohighlight">\(V = V_x = V_y = 0\)</span>), then we can calculate the difference between the feature tracking results and the ground truth (i.e. zero) over the off-ice area on an image, which could serve as a metric to evaluate the overall uncertainty of velocity values.</p>
 <div class="section" id="requirements-and-limits">
 <h2>Requirements and Limits<a class="headerlink" href="#requirements-and-limits" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -2153,6 +2164,13 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Gftt: an open-source tool for evaluating remotely sensed glacier velocity products</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="../sobel_filter/metric_sobel_filter.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Metric #2: Flow statistics on Sobel-filtered images</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
         
