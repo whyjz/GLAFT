@@ -137,7 +137,25 @@ def plot_off_ice_errors(vx, vy, z, thres_idx, ax=None, zoom=True):
         ax.set_xlim((min(vx[idx]), max(vx[idx])))
         ax.set_ylim((min(vy[idx]), max(vy[idx])))
     
-def sobel_scattering(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100):
+def sobel_test(vxfile=None, vyfile=None):
+    with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
+        vx_full = srcx.read(1)
+        vy_full = srcy.read(1)
+    
+    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+    vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+        
+    mag_full = np.hypot(vx_full, vy_full)
+    smx = sobel(mag_full,axis=0,mode='constant')
+    smy = sobel(mag_full,axis=1,mode='constant')
+    # Get square root of sum of squares
+    sobelm = np.hypot(smx,smy)
+    sobelaz = np.arctan(smy / smx)
+    
+    return sobelm, sobelaz
+    
+def sobel_scattering(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100, return_sobelimage=False):
     """
 
     """ 
@@ -241,8 +259,11 @@ def sobel_scattering(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thr
 
         ax.scatter(sx[idx], sy[idx], c=z[idx], **pt_style)
         ax.scatter(sx[~idx], sy[~idx], color=viridis(0), alpha=0.4, **pt_style)
-
-    return sx, sy, z, thres_idx
+        
+    if return_sobelimage:
+        return sx, sy, z, thres_idx, sobelx, sobely
+    else:
+        return sx, sy, z, thres_idx
     
 
     
