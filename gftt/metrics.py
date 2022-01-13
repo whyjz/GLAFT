@@ -153,7 +153,7 @@ def sobel_test(vxfile=None, vyfile=None):
     sobelm = np.hypot(smx,smy)
     sobelaz = np.arctan(smy / smx)
     
-    return sobelm, sobelaz
+    return smx, smy, sobelm, sobelaz
     
 def sobel_scattering(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100, return_sobelimage=False):
     """
