@@ -147,6 +147,7 @@ def sobel_test(vxfile=None, vyfile=None):
     vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
         
     mag_full = np.hypot(vx_full, vy_full)
+    # Looks like the axis is reversed here
     smx = sobel(mag_full,axis=0,mode='constant')
     smy = sobel(mag_full,axis=1,mode='constant')
     # Get square root of sum of squares
@@ -154,6 +155,160 @@ def sobel_test(vxfile=None, vyfile=None):
     sobelaz = np.arctan(smy / smx)
     
     return smx, smy, sobelm, sobelaz
+    
+def sobel_test2(vxfile=None, vyfile=None):
+    '''
+    Adopting the concept of strain rate.
+    Tensile is defined positive?
+    '''
+    with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
+        vx_full = srcx.read(1)
+        vy_full = srcy.read(1)
+    
+    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+    vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    # =========== Note: this is to transform from image axis to cartesian axis
+    vy_full = np.flipud(vy_full)
+    # ===========
+        
+    # mag_full = np.hypot(vx_full, vy_full)
+
+    exx = sobel(vx_full, axis=1, mode='constant')
+    eyy = sobel(vy_full, axis=0, mode='constant')
+    duydx = sobel(vy_full, axis=1, mode='constant')
+    # =========== transfer back to image axis
+    eyy = np.flipud(eyy)
+    duydx = np.flipud(duydx)
+    # ===========
+    
+    # =========== Note: this is to correct a reversed Sobel filter along the y direction.
+    vx_full = np.flipud(vx_full)
+    # ===========
+    duxdy = sobel(vx_full, axis=0, mode='constant')
+    # =========== transfer back to image axis
+    duxdy = np.flipud(duxdy)
+    
+    exy = 0.5 * (duxdy + duydx)
+    
+    theta = 0.5 * np.arctan(2 * exy / (exx - eyy))
+    e1 = 0.5 * (exx + eyy) + (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
+    e2 = 0.5 * (exx + eyy) - (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
+
+    # smx = sobel(mag_full,axis=0,mode='constant')
+    # smy = sobel(mag_full,axis=1,mode='constant')
+    # Get square root of sum of squares
+    # sobelm = np.hypot(smx,smy)
+    # sobelaz = np.arctan(smy / smx)
+    
+    return exx, eyy, exy, duxdy, duydx, theta, e1, e2
+
+def sobel_strain_test(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100, return_sobelimage=False):
+    """
+
+    """ 
+    shapefile = gpd.read_file(on_ice_area)
+    geoms = shapefile.geometry.values
+    geoms = [mapping(geoms[i]) for i in range(len(geoms))]
+    with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
+        vx_full = srcx.read(1)
+        vy_full = srcy.read(1)
+    if wfile is not None:
+        with rasterio.open(wfile) as srcw:
+            w_full = srcw.read(1)
+    else:
+        w_full = None
+        
+    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+    vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    # =========== Note: this is to transform from image axis to cartesian axis
+    vy_full = np.flipud(vy_full)
+    # ===========
+        
+    # mag_full = np.hypot(vx_full, vy_full)
+
+    exx = sobel(vx_full, axis=1, mode='constant')
+    eyy = sobel(vy_full, axis=0, mode='constant')
+    duydx = sobel(vy_full, axis=1, mode='constant')
+    # =========== transfer back to image axis
+    eyy = np.flipud(eyy)
+    duydx = np.flipud(duydx)
+    # ===========
+    
+    # =========== Note: this is to correct a reversed Sobel filter along the y direction.
+    vx_full = np.flipud(vx_full)
+    # ===========
+    duxdy = sobel(vx_full, axis=0, mode='constant')
+    # =========== transfer back to image axis
+    duxdy = np.flipud(duxdy)
+    
+    exy = 0.5 * (duxdy + duydx)
+    
+    theta = 0.5 * np.arctan(2 * exy / (exx - eyy))
+    e1 = 0.5 * (exx + eyy) + (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
+    e2 = 0.5 * (exx + eyy) - (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
+    
+    e1_masked = mask_by_shp(shapefile['geometry'], e1, rasterio.open(vxfile))
+    e2_masked = mask_by_shp(shapefile['geometry'], e2, rasterio.open(vxfile))
+    
+    e_NaN_pts_idx     = np.logical_or(np.isnan(e1_masked), np.isnan(e2_masked))
+    # sobel_outlier_pts_idx = np.logical_or(sx_full > max_s, sy_full > max_s)
+    # sobel_bad_pts_idx = np.logical_or(sobel_NaN_pts_idx, sobel_outlier_pts_idx)
+    e1_masked = e1_masked[~e_NaN_pts_idx]
+    e2_masked = e2_masked[~e_NaN_pts_idx]
+    
+    # if w_full is not None:
+    #     w_full = w_full[~sobel_bad_pts_idx]
+    #     xy_full = np.vstack([sx_full, sy_full, w_full])
+    # else:
+    #     xy_full = np.vstack([sx_full, sy_full])
+    
+    e_full = np.vstack([e1_masked, e2_masked])
+    
+    if len(e1_masked) > max_n:
+        ## See https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html#numpy.random.Generator.choice
+        rng = np.random.default_rng()
+        e = rng.choice(e_full, size=max_n, replace=False, axis=1)
+    else:
+        e = e_full
+    
+    # if wfile is not None:
+    #     w = xy[2, :]
+    #     w = np.where(w < 0, 0, w)
+    #     kernel = gaussian_kde(xy[:2, :], weights=w)
+    #     z = kernel(xy[:2, :])
+    # else:
+    kernel = gaussian_kde(e)
+    z = kernel(e)
+    
+    e1s = e[0, :]
+    e2s = e[1, :]
+            
+    thres_multiplier = np.e ** (thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
+    thres = max(z) / thres_multiplier
+    thres_idx = z >= thres
+    idx = thres_idx    # alias
+    
+    if plot:
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+        viridis = cm.get_cmap('viridis', 12)
+        pt_style = {'s': 6, 'edgecolor': None}
+
+        if e1_masked is not None:
+            ax.scatter(e1_masked, e2_masked, color='xkcd:gray', alpha=0.2, **pt_style)
+
+        ax.scatter(e1s[idx], e2s[idx], c=z[idx], **pt_style)
+        ax.scatter(e1s[~idx], e2s[~idx], color=viridis(0), alpha=0.4, **pt_style)
+        
+    if return_sobelimage:
+        return e1s, e2s, z, thres_idx, exx, eyy, exy, duxdy, duydx, theta, e1, e2
+    else:
+        return e1s, e2s, z, thres_idx
+    
+
     
 def sobel_scattering(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100, return_sobelimage=False):
     """
