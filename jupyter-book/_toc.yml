@@ -2,7 +2,7 @@ format: jb-article
 root: index
 sections:
 - file: notebooks/stable_area_error_assessment/metric_off-ice-error
-- file: notebooks/sobel_filter/metric_sobel_filter
+- file: notebooks/along_flow_shear_strain/sobel_filter_AGU
 - file: notebooks/multiple_metrics/oie-vs-sobel
 - file: notebooks/velocity_gps_comparison/validation_gnss_comparison
 - file: notebooks/synthetic_displacement/validation_synthetic.ipynb
