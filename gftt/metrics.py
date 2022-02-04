@@ -203,25 +203,20 @@ def sobel_test2(vxfile=None, vyfile=None):
     
     return exx, eyy, exy, duxdy, duydx, theta, e1, e2
 
-def sobel_strain_test(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100, return_sobelimage=False):
-    """
-
-    """ 
-    shapefile = gpd.read_file(on_ice_area)
-    geoms = shapefile.geometry.values
-    geoms = [mapping(geoms[i]) for i in range(len(geoms))]
+def sobel_test3(vxfile=None, vyfile=None):
+    '''
+    Adopting the concept of strain rate.
+    Tensile is defined positive?
+    Rotated to the along-flow direction.
+    '''
     with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
         vx_full = srcx.read(1)
         vy_full = srcy.read(1)
-    if wfile is not None:
-        with rasterio.open(wfile) as srcw:
-            w_full = srcw.read(1)
-    else:
-        w_full = None
-        
+    
     nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
     vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
     vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    theta = np.arctan2(vx_full, vy_full)   # along-flow direction (azimuth angle, clockwise from north)
     # =========== Note: this is to transform from image axis to cartesian axis
     vy_full = np.flipud(vy_full)
     # ===========
@@ -245,18 +240,82 @@ def sobel_strain_test(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, th
     
     exy = 0.5 * (duxdy + duydx)
     
+    exx_rot = exx * np.cos(theta) ** 2 + eyy * np.sin(theta) **2 + exy * np.sin(2 * theta)
+    eyy_rot = exx * np.sin(theta) ** 2 + eyy * np.cos(theta) **2 - exy * np.sin(2 * theta)
+    exy_rot = 0.5 * (eyy - exx) * np.sin(2 * theta) +  exy * np.cos(2 * theta)
+    
+    return exx, eyy, exy, duxdy, duydx, theta, exx_rot, eyy_rot, exy_rot
+
+
+def sobel_strain_test(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, max_s=100, return_sobelimage=False):
+    """
+
+    """ 
+    shapefile = gpd.read_file(on_ice_area)
+    geoms = shapefile.geometry.values
+    geoms = [mapping(geoms[i]) for i in range(len(geoms))]
+    with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
+        vx_full = srcx.read(1)
+        vy_full = srcy.read(1)
+        transform = srcx.transform
+        dx = transform[0]
+        dy = abs(transform[4])
+    if wfile is not None:
+        with rasterio.open(wfile) as srcw:
+            w_full = srcw.read(1)
+    else:
+        w_full = None
+        
+    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+    vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
+    flow_theta = np.arctan2(vx_full, vy_full)   # along-flow direction (azimuth angle, clockwise from north)
+    # =========== Note: this is to transform from image axis to cartesian axis
+    vy_full = np.flipud(vy_full)
+    # ===========
+        
+    # mag_full = np.hypot(vx_full, vy_full)
+
+    exx = sobel(vx_full, axis=1, mode='constant')
+    eyy = sobel(vy_full, axis=0, mode='constant')
+    duydx = sobel(vy_full, axis=1, mode='constant')
+    # =========== transfer back to image axis
+    eyy = np.flipud(eyy)
+    duydx = np.flipud(duydx)
+    # ===========
+    
+    # =========== Note: this is to correct a reversed Sobel filter along the y direction.
+    vx_full = np.flipud(vx_full)
+    # ===========
+    duxdy = sobel(vx_full, axis=0, mode='constant')
+    # =========== transfer back to image axis
+    duxdy = np.flipud(duxdy)
+    
+    # exx /= dx
+    # eyy /= dy
+    # duxdy /= dy
+    # duydx /= dx
+    
+    exy = 0.5 * (duxdy + duydx)
+    
+    exx_rot = exx * np.cos(flow_theta) ** 2 + eyy * np.sin(flow_theta) **2 + exy * np.sin(2 * flow_theta)
+    eyy_rot = exx * np.sin(flow_theta) ** 2 + eyy * np.cos(flow_theta) **2 - exy * np.sin(2 * flow_theta)
+    exy_rot = 0.5 * (eyy - exx) * np.sin(2 * flow_theta) +  exy * np.cos(2 * flow_theta)
+    
     theta = 0.5 * np.arctan(2 * exy / (exx - eyy))
     e1 = 0.5 * (exx + eyy) + (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
     e2 = 0.5 * (exx + eyy) - (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
     
     e1_masked = mask_by_shp(shapefile['geometry'], e1, rasterio.open(vxfile))
     e2_masked = mask_by_shp(shapefile['geometry'], e2, rasterio.open(vxfile))
+    exy_rot_masked = mask_by_shp(shapefile['geometry'], exy_rot, rasterio.open(vxfile))
     
-    e_NaN_pts_idx     = np.logical_or(np.isnan(e1_masked), np.isnan(e2_masked))
+    e_NaN_pts_idx     = np.isnan(e1_masked)
     # sobel_outlier_pts_idx = np.logical_or(sx_full > max_s, sy_full > max_s)
     # sobel_bad_pts_idx = np.logical_or(sobel_NaN_pts_idx, sobel_outlier_pts_idx)
     e1_masked = e1_masked[~e_NaN_pts_idx]
     e2_masked = e2_masked[~e_NaN_pts_idx]
+    exy_rot_masked = exy_rot_masked[~e_NaN_pts_idx]
     
     # if w_full is not None:
     #     w_full = w_full[~sobel_bad_pts_idx]
@@ -304,7 +363,7 @@ def sobel_strain_test(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, th
         ax.scatter(e1s[~idx], e2s[~idx], color=viridis(0), alpha=0.4, **pt_style)
         
     if return_sobelimage:
-        return e1s, e2s, z, thres_idx, exx, eyy, exy, duxdy, duydx, theta, e1, e2
+        return e1s, e2s, z, thres_idx, exx, eyy, exy, duxdy, duydx, theta, e1, e2, exy_rot, exy_rot_masked
     else:
         return e1s, e2s, z, thres_idx
     
