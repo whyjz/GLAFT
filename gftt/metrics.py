@@ -363,7 +363,7 @@ def sobel_strain_test(vxfile=None, vyfile=None, wfile=None, on_ice_area=None, th
         ax.scatter(e1s[~idx], e2s[~idx], color=viridis(0), alpha=0.4, **pt_style)
         
     if return_sobelimage:
-        return e1s, e2s, z, thres_idx, exx, eyy, exy, duxdy, duydx, theta, e1, e2, exy_rot, exy_rot_masked
+        return e1s, e2s, z, thres_idx, exx, eyy, exy, duxdy, duydx, theta, e1, e2, exy_rot, exy_rot_masked, exx_rot, eyy_rot
     else:
         return e1s, e2s, z, thres_idx
     
