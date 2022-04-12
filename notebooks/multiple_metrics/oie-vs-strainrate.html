@@ -350,10 +350,11 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;slope_max-normal-E&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;slope_max-normal-E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;slope_min-shear-E&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;slope_min-shear-E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mf">0.5</span>
-<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span>
-<span class="n">demo</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -386,32 +387,268 @@ const thebe_selector_output = ".output, .cell_output"
       <th>Vy</th>
       <th>OIE-x</th>
       <th>OIE-y</th>
-      <th>SS-x</th>
-      <th>SS-y</th>
-      <th>e_ratio</th>
+      <th>slope_max-shear-E</th>
+      <th>slope_min-normal-E</th>
+      <th>E_ratio</th>
       <th>OIE</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>1</td>
+      <td>Sen2-20180304-20180314</td>
+      <td>48</td>
+      <td>12</td>
       <td>Gau</td>
       <td>16-node oversampling</td>
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.417480</td>
-      <td>0.454102</td>
-      <td>1.1663688</td>
-      <td>1.1270733</td>
-      <td>0.530711</td>
-      <td>0.435406</td>
+      <td>0.503906</td>
+      <td>0.546875</td>
+      <td>0.071212</td>
+      <td>0.147663</td>
+      <td>0.482265</td>
+      <td>0.524951</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>48</td>
+      <td>12</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.421875</td>
+      <td>0.429688</td>
+      <td>0.057826</td>
+      <td>0.101876</td>
+      <td>0.567611</td>
+      <td>0.425763</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>48</td>
+      <td>12</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>2.367188</td>
+      <td>2.390625</td>
+      <td>0.080115</td>
+      <td>0.158693</td>
+      <td>0.504841</td>
+      <td>2.378877</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>48</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.562500</td>
+      <td>0.546875</td>
+      <td>0.062518</td>
+      <td>0.120220</td>
+      <td>0.520035</td>
+      <td>0.554632</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>48</td>
+      <td>1</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.421875</td>
+      <td>0.453125</td>
+      <td>0.035411</td>
+      <td>0.073263</td>
+      <td>0.483342</td>
+      <td>0.437221</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>64</td>
+      <td>8</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.331250</td>
+      <td>0.531250</td>
+      <td>0.157609</td>
+      <td>0.332714</td>
+      <td>0.473707</td>
+      <td>0.419496</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>32</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.256250</td>
+      <td>0.337500</td>
+      <td>0.187083</td>
+      <td>0.390503</td>
+      <td>0.479083</td>
+      <td>0.294082</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>32</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.162500</td>
+      <td>0.246875</td>
+      <td>0.687276</td>
+      <td>1.228652</td>
+      <td>0.559374</td>
+      <td>0.200293</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>64</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.168750</td>
+      <td>0.250000</td>
+      <td>0.176882</td>
+      <td>0.374439</td>
+      <td>0.472391</td>
+      <td>0.205396</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>64</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>0.140625</td>
+      <td>0.218750</td>
+      <td>0.345746</td>
+      <td>0.598284</td>
+      <td>0.577896</td>
+      <td>0.175390</td>
+    </tr>
+  </tbody>
+</table>
+<p>172 rows × 14 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LS8-20180304-20180405&#39;</span><span class="p">,</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span><span class="p">]</span>
+<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">datestrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="c1"># demo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Chip (px)</th>
+      <th>Resolution (px)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>Software</th>
+      <th>Vx</th>
+      <th>Vy</th>
+      <th>OIE-x</th>
+      <th>OIE-y</th>
+      <th>slope_max-shear-E</th>
+      <th>slope_min-normal-E</th>
+      <th>E_ratio</th>
+      <th>OIE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>18</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>1</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.454102</td>
+      <td>0.454102</td>
+      <td>0.114285</td>
+      <td>0.215343</td>
+      <td>0.530711</td>
+      <td>0.454102</td>
+    </tr>
+    <tr>
+      <th>19</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>1</td>
@@ -420,15 +657,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.417480</td>
-      <td>0.476074</td>
-      <td>2.158645</td>
-      <td>2.0701513</td>
+      <td>0.461426</td>
+      <td>0.446777</td>
+      <td>0.085723</td>
+      <td>0.166247</td>
       <td>0.515636</td>
-      <td>0.445816</td>
+      <td>0.454042</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>20</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>1</td>
@@ -437,15 +674,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.673828</td>
-      <td>0.571289</td>
-      <td>1.7145556</td>
-      <td>1.4171938</td>
+      <td>0.659180</td>
+      <td>0.615234</td>
+      <td>0.149702</td>
+      <td>0.300377</td>
       <td>0.498380</td>
-      <td>0.620444</td>
+      <td>0.636828</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>21</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>4</td>
@@ -454,15 +691,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
+      <td>0.399170</td>
       <td>0.402832</td>
-      <td>0.410156</td>
-      <td>1.4108583</td>
-      <td>1.3728955</td>
+      <td>0.129019</td>
+      <td>0.242519</td>
       <td>0.531994</td>
-      <td>0.406478</td>
+      <td>0.400997</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>22</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>4</td>
@@ -471,15 +708,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.351562</td>
-      <td>0.292969</td>
-      <td>2.057519</td>
-      <td>2.4501016</td>
+      <td>0.369873</td>
+      <td>0.380859</td>
+      <td>0.099402</td>
+      <td>0.169246</td>
       <td>0.587326</td>
-      <td>0.320931</td>
+      <td>0.375326</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>23</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>4</td>
@@ -488,15 +725,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.615234</td>
+      <td>0.633545</td>
       <td>0.556641</td>
-      <td>2.4466836</td>
-      <td>2.0846379</td>
+      <td>0.182328</td>
+      <td>0.347317</td>
       <td>0.524962</td>
-      <td>0.585205</td>
+      <td>0.593849</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>24</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>8</td>
@@ -507,13 +744,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.382690</td>
       <td>0.380859</td>
-      <td>1.6346304</td>
-      <td>1.5294207</td>
+      <td>0.151278</td>
+      <td>0.291048</td>
       <td>0.519771</td>
       <td>0.381774</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>25</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>8</td>
@@ -523,14 +760,14 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.382690</td>
-      <td>0.369873</td>
-      <td>2.2543666</td>
-      <td>2.5271208</td>
+      <td>0.373535</td>
+      <td>0.123341</td>
+      <td>0.205130</td>
       <td>0.601282</td>
-      <td>0.376227</td>
+      <td>0.378085</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>26</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>8</td>
@@ -541,13 +778,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.593262</td>
       <td>0.541992</td>
-      <td>2.994531</td>
-      <td>2.8038511</td>
+      <td>0.199948</td>
+      <td>0.383666</td>
       <td>0.521151</td>
       <td>0.567048</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>27</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>1</td>
@@ -556,15 +793,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.278320</td>
-      <td>0.270996</td>
-      <td>0.62458026</td>
-      <td>0.5566406</td>
+      <td>0.212402</td>
+      <td>0.263672</td>
+      <td>0.121248</td>
+      <td>0.253366</td>
       <td>0.478549</td>
-      <td>0.274634</td>
+      <td>0.236653</td>
     </tr>
     <tr>
-      <th>10</th>
+      <th>28</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>1</td>
@@ -573,15 +810,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.080566</td>
       <td>0.087891</td>
-      <td>0.9375</td>
-      <td>0.8676031</td>
+      <td>0.102539</td>
+      <td>0.088615</td>
+      <td>0.171083</td>
       <td>0.517966</td>
-      <td>0.084149</td>
+      <td>0.094933</td>
     </tr>
     <tr>
-      <th>11</th>
+      <th>29</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>1</td>
@@ -590,15 +827,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.476074</td>
-      <td>0.461426</td>
-      <td>0.85011435</td>
-      <td>0.71911746</td>
+      <td>0.483398</td>
+      <td>0.468750</td>
+      <td>0.171040</td>
+      <td>0.357975</td>
       <td>0.477798</td>
-      <td>0.468693</td>
+      <td>0.476018</td>
     </tr>
     <tr>
-      <th>12</th>
+      <th>30</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>4</td>
@@ -607,15 +844,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.227051</td>
-      <td>0.230713</td>
-      <td>0.72690797</td>
-      <td>0.66096765</td>
+      <td>0.249023</td>
+      <td>0.219727</td>
+      <td>0.127490</td>
+      <td>0.306342</td>
       <td>0.416168</td>
-      <td>0.228875</td>
+      <td>0.233917</td>
     </tr>
     <tr>
-      <th>13</th>
+      <th>31</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>4</td>
@@ -625,14 +862,14 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.087891</td>
-      <td>0.087891</td>
-      <td>1.0563139</td>
-      <td>1.056517</td>
+      <td>0.102539</td>
+      <td>0.097063</td>
+      <td>0.183970</td>
       <td>0.527601</td>
-      <td>0.087891</td>
+      <td>0.094933</td>
     </tr>
     <tr>
-      <th>14</th>
+      <th>32</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>4</td>
@@ -641,15 +878,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>CARST</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.446777</td>
-      <td>0.380859</td>
-      <td>1.3136308</td>
-      <td>1.1410748</td>
+      <td>0.454102</td>
+      <td>0.384521</td>
+      <td>0.184943</td>
+      <td>0.384224</td>
       <td>0.481342</td>
-      <td>0.412504</td>
+      <td>0.417866</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>33</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>8</td>
@@ -660,13 +897,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.219727</td>
       <td>0.250854</td>
-      <td>0.8555553</td>
-      <td>0.8978668</td>
+      <td>0.167112</td>
+      <td>0.378077</td>
       <td>0.442005</td>
       <td>0.234775</td>
     </tr>
     <tr>
-      <th>16</th>
+      <th>34</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>8</td>
@@ -677,13 +914,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.087891</td>
       <td>0.087891</td>
-      <td>1.0285248</td>
-      <td>1.5333527</td>
+      <td>0.124270</td>
+      <td>0.223833</td>
       <td>0.555192</td>
       <td>0.087891</td>
     </tr>
     <tr>
-      <th>17</th>
+      <th>35</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>8</td>
@@ -693,14 +930,14 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
       <td>0.439453</td>
-      <td>0.391846</td>
-      <td>1.6876811</td>
-      <td>1.5832853</td>
+      <td>0.390015</td>
+      <td>0.208516</td>
+      <td>0.430810</td>
       <td>0.484009</td>
-      <td>0.414967</td>
+      <td>0.413997</td>
     </tr>
     <tr>
-      <th>18</th>
+      <th>72</th>
       <td>LS8-20180304-20180405</td>
       <td>multi</td>
       <td>16</td>
@@ -711,13 +948,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.233542</td>
       <td>0.277519</td>
-      <td>2.30953814171093</td>
-      <td>2.666533414036157</td>
+      <td>0.143882</td>
+      <td>0.270795</td>
       <td>0.531331</td>
       <td>0.254583</td>
     </tr>
     <tr>
-      <th>19</th>
+      <th>73</th>
       <td>LS8-20180304-20180405</td>
       <td>multi</td>
       <td>4</td>
@@ -726,15 +963,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>GIV</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.813247</td>
-      <td>0.575565</td>
-      <td>3.8320897472339714</td>
-      <td>3.621215692378167</td>
+      <td>1.784523</td>
+      <td>0.787125</td>
+      <td>0.107815</td>
+      <td>0.190197</td>
       <td>0.566861</td>
-      <td>0.684161</td>
+      <td>1.185176</td>
     </tr>
     <tr>
-      <th>20</th>
+      <th>74</th>
       <td>LS8-20180304-20180405</td>
       <td>multi</td>
       <td>16</td>
@@ -745,13 +982,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.251201</td>
       <td>0.399150</td>
-      <td>2.7919786561561706</td>
-      <td>3.6164688755112606</td>
+      <td>0.085135</td>
+      <td>0.166961</td>
       <td>0.509911</td>
       <td>0.316649</td>
     </tr>
     <tr>
-      <th>21</th>
+      <th>75</th>
       <td>LS8-20180304-20180405</td>
       <td>multi</td>
       <td>4</td>
@@ -760,15 +997,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>GIV</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.235697</td>
-      <td>0.388085</td>
-      <td>3.8291508956475058</td>
-      <td>4.109152174462436</td>
+      <td>0.268755</td>
+      <td>0.425298</td>
+      <td>0.087768</td>
+      <td>0.138464</td>
       <td>0.633869</td>
-      <td>0.302441</td>
+      <td>0.338084</td>
     </tr>
     <tr>
-      <th>22</th>
+      <th>76</th>
       <td>LS8-20180304-20180405</td>
       <td>multi</td>
       <td>16</td>
@@ -779,13 +1016,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
       <td>0.614010</td>
       <td>0.767214</td>
-      <td>4.8425141531327425</td>
-      <td>6.934244151078591</td>
+      <td>0.058008</td>
+      <td>0.108511</td>
       <td>0.534581</td>
       <td>0.686351</td>
     </tr>
     <tr>
-      <th>23</th>
+      <th>77</th>
       <td>LS8-20180304-20180405</td>
       <td>multi</td>
       <td>4</td>
@@ -794,15 +1031,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>GIV</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.367257</td>
-      <td>0.470482</td>
-      <td>3.57385820317995</td>
-      <td>4.022871859404343</td>
+      <td>1.396579</td>
+      <td>0.823658</td>
+      <td>0.091033</td>
+      <td>0.125862</td>
       <td>0.723281</td>
-      <td>0.415678</td>
+      <td>1.072522</td>
     </tr>
     <tr>
-      <th>24</th>
+      <th>96</th>
       <td>LS8-20180304-20180405</td>
       <td>31</td>
       <td>1</td>
@@ -811,15 +1048,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>Vmap</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.280396</td>
-      <td>0.281501</td>
-      <td>0.90366274</td>
-      <td>0.7340296</td>
+      <td>0.273239</td>
+      <td>0.280686</td>
+      <td>0.267526</td>
+      <td>0.601357</td>
       <td>0.444871</td>
-      <td>0.280948</td>
+      <td>0.276938</td>
     </tr>
     <tr>
-      <th>25</th>
+      <th>97</th>
       <td>LS8-20180304-20180405</td>
       <td>65</td>
       <td>1</td>
@@ -828,15 +1065,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>Vmap</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.157598</td>
-      <td>0.179982</td>
-      <td>0.3948701</td>
-      <td>0.33154497</td>
+      <td>0.150785</td>
+      <td>0.172327</td>
+      <td>0.345938</td>
+      <td>0.712365</td>
       <td>0.485619</td>
-      <td>0.168418</td>
+      <td>0.161197</td>
     </tr>
     <tr>
-      <th>26</th>
+      <th>104</th>
       <td>LS8-20180304-20180405</td>
       <td>31</td>
       <td>1</td>
@@ -845,15 +1082,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>Vmap</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.547266</td>
-      <td>0.479374</td>
-      <td>1.2786075</td>
-      <td>1.0036786</td>
+      <td>0.565962</td>
+      <td>0.482096</td>
+      <td>0.161461</td>
+      <td>0.337151</td>
       <td>0.478898</td>
-      <td>0.512197</td>
+      <td>0.522348</td>
     </tr>
     <tr>
-      <th>27</th>
+      <th>105</th>
       <td>LS8-20180304-20180405</td>
       <td>65</td>
       <td>1</td>
@@ -862,15 +1099,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>Vmap</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.579469</td>
-      <td>0.524274</td>
-      <td>1.0558692</td>
-      <td>0.93909174</td>
+      <td>0.568555</td>
+      <td>0.531316</td>
+      <td>0.118273</td>
+      <td>0.247823</td>
       <td>0.477247</td>
-      <td>0.551181</td>
+      <td>0.549620</td>
     </tr>
     <tr>
-      <th>28</th>
+      <th>112</th>
       <td>LS8-20180304-20180405</td>
       <td>31</td>
       <td>1</td>
@@ -879,15 +1116,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>Vmap</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>0.464195</td>
-      <td>0.469295</td>
-      <td>1.0205486</td>
-      <td>0.8850996</td>
+      <td>0.445703</td>
+      <td>0.456409</td>
+      <td>0.171088</td>
+      <td>0.217051</td>
       <td>0.788237</td>
-      <td>0.466738</td>
+      <td>0.451024</td>
     </tr>
     <tr>
-      <th>29</th>
+      <th>113</th>
       <td>LS8-20180304-20180405</td>
       <td>31</td>
       <td>1</td>
@@ -896,15 +1133,32 @@ const thebe_selector_output = ".output, .cell_output"
       <td>Vmap</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>0.748049</td>
-      <td>0.918787</td>
-      <td>2.3552241</td>
-      <td>2.4794679</td>
+      <td>0.773066</td>
+      <td>0.933086</td>
+      <td>0.109889</td>
+      <td>0.163345</td>
       <td>0.672740</td>
-      <td>0.829034</td>
+      <td>0.849315</td>
     </tr>
     <tr>
-      <th>30</th>
+      <th>114</th>
+      <td>LS8-20180304-20180405</td>
+      <td>31</td>
+      <td>1</td>
+      <td>LoG</td>
+      <td>affine</td>
+      <td>Vmap</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
+      <td>0.641545</td>
+      <td>0.693905</td>
+      <td>0.119110</td>
+      <td>0.156283</td>
+      <td>0.762148</td>
+      <td>0.667211</td>
+    </tr>
+    <tr>
+      <th>124</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>4</td>
@@ -913,15 +1167,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>autoRIFT</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>1.040039</td>
-      <td>1.157227</td>
-      <td>4.14838</td>
-      <td>3.8029556</td>
+      <td>1.127930</td>
+      <td>1.201172</td>
+      <td>0.060577</td>
+      <td>0.133201</td>
       <td>0.454784</td>
-      <td>1.097069</td>
+      <td>1.163975</td>
     </tr>
     <tr>
-      <th>31</th>
+      <th>125</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>8</td>
@@ -932,13 +1186,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.703125</td>
       <td>0.688477</td>
-      <td>2.202143</td>
-      <td>2.200681</td>
+      <td>0.095157</td>
+      <td>0.331496</td>
       <td>0.287052</td>
       <td>0.695762</td>
     </tr>
     <tr>
-      <th>32</th>
+      <th>126</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>4</td>
@@ -947,15 +1201,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>autoRIFT</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>1.010742</td>
-      <td>0.805664</td>
-      <td>3.5624325</td>
-      <td>3.283342</td>
+      <td>0.966797</td>
+      <td>0.776367</td>
+      <td>0.058237</td>
+      <td>0.125891</td>
       <td>0.462598</td>
-      <td>0.902396</td>
+      <td>0.866366</td>
     </tr>
     <tr>
-      <th>33</th>
+      <th>127</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>8</td>
@@ -964,15 +1218,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>autoRIFT</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.776367</td>
+      <td>0.791016</td>
       <td>0.717773</td>
-      <td>2.7598217</td>
-      <td>2.8949108</td>
+      <td>0.052193</td>
+      <td>0.174266</td>
       <td>0.299500</td>
-      <td>0.746496</td>
+      <td>0.753505</td>
     </tr>
     <tr>
-      <th>34</th>
+      <th>128</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>4</td>
@@ -981,15 +1235,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>autoRIFT</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.651855</td>
-      <td>0.725098</td>
-      <td>2.4052002</td>
-      <td>2.3179734</td>
+      <td>0.637207</td>
+      <td>0.747070</td>
+      <td>0.063376</td>
+      <td>0.140939</td>
       <td>0.449671</td>
-      <td>0.687502</td>
+      <td>0.689955</td>
     </tr>
     <tr>
-      <th>35</th>
+      <th>129</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>8</td>
@@ -1000,13 +1254,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.380859</td>
       <td>0.468750</td>
-      <td>1.5284997</td>
-      <td>1.5939224</td>
+      <td>0.172960</td>
+      <td>0.446702</td>
       <td>0.387193</td>
       <td>0.422526</td>
     </tr>
     <tr>
-      <th>36</th>
+      <th>130</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>4</td>
@@ -1015,15 +1269,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>autoRIFT</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.351562</td>
-      <td>0.380859</td>
-      <td>1.5844707</td>
-      <td>1.5081489</td>
+      <td>0.366211</td>
+      <td>0.410156</td>
+      <td>0.060108</td>
+      <td>0.139389</td>
       <td>0.431223</td>
-      <td>0.365918</td>
+      <td>0.387561</td>
     </tr>
     <tr>
-      <th>37</th>
+      <th>131</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>8</td>
@@ -1034,13 +1288,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.249023</td>
       <td>0.336914</td>
-      <td>1.2863964</td>
-      <td>1.426851</td>
+      <td>0.146364</td>
+      <td>0.183168</td>
       <td>0.799069</td>
       <td>0.289654</td>
     </tr>
     <tr>
-      <th>38</th>
+      <th>132</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>4</td>
@@ -1051,13 +1305,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.219727</td>
       <td>0.322266</td>
-      <td>0.98264706</td>
-      <td>1.0748401</td>
+      <td>0.113782</td>
+      <td>0.250486</td>
       <td>0.454247</td>
       <td>0.266102</td>
     </tr>
     <tr>
-      <th>39</th>
+      <th>133</th>
       <td>LS8-20180304-20180405</td>
       <td>32</td>
       <td>8</td>
@@ -1068,13 +1322,13 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.146484</td>
       <td>0.249023</td>
-      <td>0.87890625</td>
-      <td>1.0583433</td>
+      <td>0.429712</td>
+      <td>0.953052</td>
       <td>0.450880</td>
       <td>0.190992</td>
     </tr>
     <tr>
-      <th>40</th>
+      <th>134</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>4</td>
@@ -1083,15 +1337,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>autoRIFT</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.117188</td>
-      <td>0.234375</td>
-      <td>0.70920223</td>
-      <td>0.7969612</td>
+      <td>0.131836</td>
+      <td>0.219727</td>
+      <td>0.195349</td>
+      <td>0.364615</td>
       <td>0.535768</td>
-      <td>0.165728</td>
+      <td>0.170199</td>
     </tr>
     <tr>
-      <th>41</th>
+      <th>135</th>
       <td>LS8-20180304-20180405</td>
       <td>64</td>
       <td>8</td>
@@ -1102,8 +1356,8 @@ const thebe_selector_output = ".output, .cell_output"
       <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
       <td>0.117188</td>
       <td>0.205078</td>
-      <td>0.6159315</td>
-      <td>0.77401435</td>
+      <td>0.463152</td>
+      <td>1.010741</td>
       <td>0.458230</td>
       <td>0.155024</td>
     </tr>
@@ -1116,38 +1370,25 @@ const thebe_selector_output = ".output, .cell_output"
 <h3>3. Sobel flow statistics VS Off-ice error<a class="headerlink" href="#sobel-flow-statistics-vs-off-ice-error" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE&#39;, ylabel=&#39;e_ratio&#39;&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE&#39;, ylabel=&#39;E_ratio&#39;&gt;
 </pre></div>
 </div>
-<img alt="../../_images/oie-vs-strainrate_6_1.png" src="../../_images/oie-vs-strainrate_6_1.png" />
+<img alt="../../_images/oie-vs-strainrate_7_1.png" src="../../_images/oie-vs-strainrate_7_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE&#39;, ylabel=&#39;e_ratio&#39;&gt;
-</pre></div>
-</div>
-<img alt="../../_images/oie-vs-strainrate_8_1.png" src="../../_images/oie-vs-strainrate_8_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE&#39;, ylabel=&#39;e_ratio&#39;&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE&#39;, ylabel=&#39;E_ratio&#39;&gt;
 </pre></div>
 </div>
 <img alt="../../_images/oie-vs-strainrate_9_1.png" src="../../_images/oie-vs-strainrate_9_1.png" />
@@ -1155,18 +1396,31 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
-    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/oie-vs-strainrate_10_0.png" src="../../_images/oie-vs-strainrate_10_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;OIE&#39;, ylabel=&#39;E_ratio&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/oie-vs-strainrate_10_1.png" src="../../_images/oie-vs-strainrate_10_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_11_0.png" src="../../_images/oie-vs-strainrate_11_0.png" />
 </div>
 </div>
 </div>
@@ -1183,7 +1437,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 <span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax6</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
@@ -1196,7 +1450,98 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/oie-vs-strainrate_12_0.png" src="../../_images/oie-vs-strainrate_12_0.png" />
+<img alt="../../_images/oie-vs-strainrate_13_0.png" src="../../_images/oie-vs-strainrate_13_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">datestrs</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax6</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
+<span class="c1"># legend.set_size(10)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="c1"># fig.savefig(&#39;OIE-vs-SS_updated.svg&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_15_0.png" src="../../_images/oie-vs-strainrate_15_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_16_0.png" src="../../_images/oie-vs-strainrate_16_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">datestrs</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax6</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
+<span class="c1"># legend.set_size(10)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="c1"># fig.savefig(&#39;OIE-vs-SS_updated.svg&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_17_0.png" src="../../_images/oie-vs-strainrate_17_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">datestrs</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax6</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
+<span class="c1"># legend.set_size(10)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="c1"># fig.savefig(&#39;OIE-vs-SS_updated.svg&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_18_0.png" src="../../_images/oie-vs-strainrate_18_0.png" />
 </div>
 </div>
 </div>
