@@ -37,9 +37,12 @@
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -354,6 +357,12 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;slope_min-shear-E&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;slope_min-shear-E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OIE-y&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mf">0.5</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt0_velodiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt0_velodiff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt1_velodiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt1_velodiff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt2_velodiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt2_velodiff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -387,10 +396,14 @@ const thebe_selector_output = ".output, .cell_output"
       <th>Vy</th>
       <th>OIE-x</th>
       <th>OIE-y</th>
-      <th>slope_max-shear-E</th>
-      <th>slope_min-normal-E</th>
+      <th>slope_max-normal-E</th>
+      <th>slope_min-shear-E</th>
       <th>E_ratio</th>
+      <th>pt0_velodiff</th>
+      <th>pt1_velodiff</th>
+      <th>pt2_velodiff</th>
       <th>OIE</th>
+      <th>label</th>
     </tr>
   </thead>
   <tbody>
@@ -409,7 +422,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.071212</td>
       <td>0.147663</td>
       <td>0.482265</td>
+      <td>0.216982</td>
+      <td>-0.092441</td>
+      <td>1.060998</td>
       <td>0.524951</td>
+      <td>CARST-48-12-Gau-16-node ov</td>
     </tr>
     <tr>
       <th>1</th>
@@ -426,7 +443,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.057826</td>
       <td>0.101876</td>
       <td>0.567611</td>
+      <td>0.088073</td>
+      <td>-0.072740</td>
+      <td>NaN</td>
       <td>0.425763</td>
+      <td>CARST-48-12-NAOF-16-node ov</td>
     </tr>
     <tr>
       <th>2</th>
@@ -443,7 +464,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.080115</td>
       <td>0.158693</td>
       <td>0.504841</td>
+      <td>-0.093135</td>
+      <td>-0.192217</td>
+      <td>4.459473</td>
       <td>2.378877</td>
+      <td>CARST-48-12-None-16-node ov</td>
     </tr>
     <tr>
       <th>3</th>
@@ -460,7 +485,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.062518</td>
       <td>0.120220</td>
       <td>0.520035</td>
+      <td>0.145684</td>
+      <td>-0.092441</td>
+      <td>1.038921</td>
       <td>0.554632</td>
+      <td>CARST-48-1-Gau-16-node ov</td>
     </tr>
     <tr>
       <th>4</th>
@@ -477,10 +506,18 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.035411</td>
       <td>0.073263</td>
       <td>0.483342</td>
+      <td>0.033875</td>
+      <td>-0.072740</td>
+      <td>7.325274</td>
       <td>0.437221</td>
+      <td>CARST-48-1-NAOF-16-node ov</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -511,7 +548,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.157609</td>
       <td>0.332714</td>
       <td>0.473707</td>
+      <td>-0.012847</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>0.419496</td>
+      <td>autoRIFT-64-8-Gau-pyrUP</td>
     </tr>
     <tr>
       <th>168</th>
@@ -528,7 +569,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.187083</td>
       <td>0.390503</td>
       <td>0.479083</td>
+      <td>-0.031182</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>0.294082</td>
+      <td>autoRIFT-32-4-NAOF-pyrUP</td>
     </tr>
     <tr>
       <th>169</th>
@@ -545,7 +590,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.687276</td>
       <td>1.228652</td>
       <td>0.559374</td>
+      <td>-0.040190</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>0.200293</td>
+      <td>autoRIFT-32-8-NAOF-pyrUP</td>
     </tr>
     <tr>
       <th>170</th>
@@ -562,7 +611,11 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.176882</td>
       <td>0.374439</td>
       <td>0.472391</td>
+      <td>-0.057866</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>0.205396</td>
+      <td>autoRIFT-64-4-NAOF-pyrUP</td>
     </tr>
     <tr>
       <th>171</th>
@@ -579,11 +632,15 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.345746</td>
       <td>0.598284</td>
       <td>0.577896</td>
+      <td>-0.048853</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>0.175390</td>
+      <td>autoRIFT-64-8-NAOF-pyrUP</td>
     </tr>
   </tbody>
 </table>
-<p>172 rows × 14 columns</p>
+<p>172 rows × 18 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -594,776 +651,6 @@ const thebe_selector_output = ".output, .cell_output"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Chip (px)</th>
-      <th>Resolution (px)</th>
-      <th>Prefilter</th>
-      <th>Subpixel</th>
-      <th>Software</th>
-      <th>Vx</th>
-      <th>Vy</th>
-      <th>OIE-x</th>
-      <th>OIE-y</th>
-      <th>slope_max-shear-E</th>
-      <th>slope_min-normal-E</th>
-      <th>E_ratio</th>
-      <th>OIE</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>18</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>1</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.454102</td>
-      <td>0.454102</td>
-      <td>0.114285</td>
-      <td>0.215343</td>
-      <td>0.530711</td>
-      <td>0.454102</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>1</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.461426</td>
-      <td>0.446777</td>
-      <td>0.085723</td>
-      <td>0.166247</td>
-      <td>0.515636</td>
-      <td>0.454042</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>1</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.659180</td>
-      <td>0.615234</td>
-      <td>0.149702</td>
-      <td>0.300377</td>
-      <td>0.498380</td>
-      <td>0.636828</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>4</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.399170</td>
-      <td>0.402832</td>
-      <td>0.129019</td>
-      <td>0.242519</td>
-      <td>0.531994</td>
-      <td>0.400997</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>4</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.369873</td>
-      <td>0.380859</td>
-      <td>0.099402</td>
-      <td>0.169246</td>
-      <td>0.587326</td>
-      <td>0.375326</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>4</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.633545</td>
-      <td>0.556641</td>
-      <td>0.182328</td>
-      <td>0.347317</td>
-      <td>0.524962</td>
-      <td>0.593849</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>8</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.382690</td>
-      <td>0.380859</td>
-      <td>0.151278</td>
-      <td>0.291048</td>
-      <td>0.519771</td>
-      <td>0.381774</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>8</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.382690</td>
-      <td>0.373535</td>
-      <td>0.123341</td>
-      <td>0.205130</td>
-      <td>0.601282</td>
-      <td>0.378085</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>8</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.593262</td>
-      <td>0.541992</td>
-      <td>0.199948</td>
-      <td>0.383666</td>
-      <td>0.521151</td>
-      <td>0.567048</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>1</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.212402</td>
-      <td>0.263672</td>
-      <td>0.121248</td>
-      <td>0.253366</td>
-      <td>0.478549</td>
-      <td>0.236653</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>1</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.087891</td>
-      <td>0.102539</td>
-      <td>0.088615</td>
-      <td>0.171083</td>
-      <td>0.517966</td>
-      <td>0.094933</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>1</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.483398</td>
-      <td>0.468750</td>
-      <td>0.171040</td>
-      <td>0.357975</td>
-      <td>0.477798</td>
-      <td>0.476018</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>4</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.249023</td>
-      <td>0.219727</td>
-      <td>0.127490</td>
-      <td>0.306342</td>
-      <td>0.416168</td>
-      <td>0.233917</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>4</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.087891</td>
-      <td>0.102539</td>
-      <td>0.097063</td>
-      <td>0.183970</td>
-      <td>0.527601</td>
-      <td>0.094933</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>4</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.454102</td>
-      <td>0.384521</td>
-      <td>0.184943</td>
-      <td>0.384224</td>
-      <td>0.481342</td>
-      <td>0.417866</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>8</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.219727</td>
-      <td>0.250854</td>
-      <td>0.167112</td>
-      <td>0.378077</td>
-      <td>0.442005</td>
-      <td>0.234775</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>8</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.087891</td>
-      <td>0.087891</td>
-      <td>0.124270</td>
-      <td>0.223833</td>
-      <td>0.555192</td>
-      <td>0.087891</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>8</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.439453</td>
-      <td>0.390015</td>
-      <td>0.208516</td>
-      <td>0.430810</td>
-      <td>0.484009</td>
-      <td>0.413997</td>
-    </tr>
-    <tr>
-      <th>72</th>
-      <td>LS8-20180304-20180405</td>
-      <td>multi</td>
-      <td>16</td>
-      <td>NAOF</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.233542</td>
-      <td>0.277519</td>
-      <td>0.143882</td>
-      <td>0.270795</td>
-      <td>0.531331</td>
-      <td>0.254583</td>
-    </tr>
-    <tr>
-      <th>73</th>
-      <td>LS8-20180304-20180405</td>
-      <td>multi</td>
-      <td>4</td>
-      <td>NAOF</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>1.784523</td>
-      <td>0.787125</td>
-      <td>0.107815</td>
-      <td>0.190197</td>
-      <td>0.566861</td>
-      <td>1.185176</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>LS8-20180304-20180405</td>
-      <td>multi</td>
-      <td>16</td>
-      <td>Gau</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.251201</td>
-      <td>0.399150</td>
-      <td>0.085135</td>
-      <td>0.166961</td>
-      <td>0.509911</td>
-      <td>0.316649</td>
-    </tr>
-    <tr>
-      <th>75</th>
-      <td>LS8-20180304-20180405</td>
-      <td>multi</td>
-      <td>4</td>
-      <td>Gau</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.268755</td>
-      <td>0.425298</td>
-      <td>0.087768</td>
-      <td>0.138464</td>
-      <td>0.633869</td>
-      <td>0.338084</td>
-    </tr>
-    <tr>
-      <th>76</th>
-      <td>LS8-20180304-20180405</td>
-      <td>multi</td>
-      <td>16</td>
-      <td>None</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.614010</td>
-      <td>0.767214</td>
-      <td>0.058008</td>
-      <td>0.108511</td>
-      <td>0.534581</td>
-      <td>0.686351</td>
-    </tr>
-    <tr>
-      <th>77</th>
-      <td>LS8-20180304-20180405</td>
-      <td>multi</td>
-      <td>4</td>
-      <td>None</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>1.396579</td>
-      <td>0.823658</td>
-      <td>0.091033</td>
-      <td>0.125862</td>
-      <td>0.723281</td>
-      <td>1.072522</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>LS8-20180304-20180405</td>
-      <td>31</td>
-      <td>1</td>
-      <td>Gau</td>
-      <td>parabolic</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.273239</td>
-      <td>0.280686</td>
-      <td>0.267526</td>
-      <td>0.601357</td>
-      <td>0.444871</td>
-      <td>0.276938</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>LS8-20180304-20180405</td>
-      <td>65</td>
-      <td>1</td>
-      <td>Gau</td>
-      <td>parabolic</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.150785</td>
-      <td>0.172327</td>
-      <td>0.345938</td>
-      <td>0.712365</td>
-      <td>0.485619</td>
-      <td>0.161197</td>
-    </tr>
-    <tr>
-      <th>104</th>
-      <td>LS8-20180304-20180405</td>
-      <td>31</td>
-      <td>1</td>
-      <td>None</td>
-      <td>parabolic</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.565962</td>
-      <td>0.482096</td>
-      <td>0.161461</td>
-      <td>0.337151</td>
-      <td>0.478898</td>
-      <td>0.522348</td>
-    </tr>
-    <tr>
-      <th>105</th>
-      <td>LS8-20180304-20180405</td>
-      <td>65</td>
-      <td>1</td>
-      <td>None</td>
-      <td>parabolic</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/pa...</td>
-      <td>0.568555</td>
-      <td>0.531316</td>
-      <td>0.118273</td>
-      <td>0.247823</td>
-      <td>0.477247</td>
-      <td>0.549620</td>
-    </tr>
-    <tr>
-      <th>112</th>
-      <td>LS8-20180304-20180405</td>
-      <td>31</td>
-      <td>1</td>
-      <td>LoG</td>
-      <td>parabolic</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>0.445703</td>
-      <td>0.456409</td>
-      <td>0.171088</td>
-      <td>0.217051</td>
-      <td>0.788237</td>
-      <td>0.451024</td>
-    </tr>
-    <tr>
-      <th>113</th>
-      <td>LS8-20180304-20180405</td>
-      <td>31</td>
-      <td>1</td>
-      <td>LoG</td>
-      <td>affine adaptive</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>0.773066</td>
-      <td>0.933086</td>
-      <td>0.109889</td>
-      <td>0.163345</td>
-      <td>0.672740</td>
-      <td>0.849315</td>
-    </tr>
-    <tr>
-      <th>114</th>
-      <td>LS8-20180304-20180405</td>
-      <td>31</td>
-      <td>1</td>
-      <td>LoG</td>
-      <td>affine</td>
-      <td>Vmap</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/Vmap/su...</td>
-      <td>0.641545</td>
-      <td>0.693905</td>
-      <td>0.119110</td>
-      <td>0.156283</td>
-      <td>0.762148</td>
-      <td>0.667211</td>
-    </tr>
-    <tr>
-      <th>124</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>4</td>
-      <td>None</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>1.127930</td>
-      <td>1.201172</td>
-      <td>0.060577</td>
-      <td>0.133201</td>
-      <td>0.454784</td>
-      <td>1.163975</td>
-    </tr>
-    <tr>
-      <th>125</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>8</td>
-      <td>None</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.703125</td>
-      <td>0.688477</td>
-      <td>0.095157</td>
-      <td>0.331496</td>
-      <td>0.287052</td>
-      <td>0.695762</td>
-    </tr>
-    <tr>
-      <th>126</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>4</td>
-      <td>None</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.966797</td>
-      <td>0.776367</td>
-      <td>0.058237</td>
-      <td>0.125891</td>
-      <td>0.462598</td>
-      <td>0.866366</td>
-    </tr>
-    <tr>
-      <th>127</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>8</td>
-      <td>None</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.791016</td>
-      <td>0.717773</td>
-      <td>0.052193</td>
-      <td>0.174266</td>
-      <td>0.299500</td>
-      <td>0.753505</td>
-    </tr>
-    <tr>
-      <th>128</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>4</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.637207</td>
-      <td>0.747070</td>
-      <td>0.063376</td>
-      <td>0.140939</td>
-      <td>0.449671</td>
-      <td>0.689955</td>
-    </tr>
-    <tr>
-      <th>129</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>8</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.380859</td>
-      <td>0.468750</td>
-      <td>0.172960</td>
-      <td>0.446702</td>
-      <td>0.387193</td>
-      <td>0.422526</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>4</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.366211</td>
-      <td>0.410156</td>
-      <td>0.060108</td>
-      <td>0.139389</td>
-      <td>0.431223</td>
-      <td>0.387561</td>
-    </tr>
-    <tr>
-      <th>131</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>8</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.249023</td>
-      <td>0.336914</td>
-      <td>0.146364</td>
-      <td>0.183168</td>
-      <td>0.799069</td>
-      <td>0.289654</td>
-    </tr>
-    <tr>
-      <th>132</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>4</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.219727</td>
-      <td>0.322266</td>
-      <td>0.113782</td>
-      <td>0.250486</td>
-      <td>0.454247</td>
-      <td>0.266102</td>
-    </tr>
-    <tr>
-      <th>133</th>
-      <td>LS8-20180304-20180405</td>
-      <td>32</td>
-      <td>8</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.146484</td>
-      <td>0.249023</td>
-      <td>0.429712</td>
-      <td>0.953052</td>
-      <td>0.450880</td>
-      <td>0.190992</td>
-    </tr>
-    <tr>
-      <th>134</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>4</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.131836</td>
-      <td>0.219727</td>
-      <td>0.195349</td>
-      <td>0.364615</td>
-      <td>0.535768</td>
-      <td>0.170199</td>
-    </tr>
-    <tr>
-      <th>135</th>
-      <td>LS8-20180304-20180405</td>
-      <td>64</td>
-      <td>8</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.117188</td>
-      <td>0.205078</td>
-      <td>0.463152</td>
-      <td>1.010741</td>
-      <td>0.458230</td>
-      <td>0.155024</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </div>
 <div class="section" id="sobel-flow-statistics-vs-off-ice-error">
@@ -1465,7 +752,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
-<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="c1"># ax6.set_xlim(0, 1.2)</span>
 <span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
 <span class="c1"># legend.set_size(10)</span>
 <span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1506,7 +793,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
-<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="c1"># ax6.set_xlim(0, 1.2)</span>
 <span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
 <span class="c1"># legend.set_size(10)</span>
 <span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1521,6 +808,22 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax5</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Chip (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+    <span class="n">ax5</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_18_0.png" src="../../_images/oie-vs-strainrate_18_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">datestrs</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
 <span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
 <span class="n">matplotlib</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
@@ -1531,7 +834,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">demo</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;OIE&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax6</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Off-ice area error (m/day)&#39;</span><span class="p">)</span>
 <span class="n">ax6</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;e_ratio&#39;</span><span class="p">)</span>
-<span class="n">ax6</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="c1"># ax6.set_xlim(0, 1.2)</span>
 <span class="n">legend</span> <span class="o">=</span> <span class="n">ax6</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span>
 <span class="c1"># legend.set_size(10)</span>
 <span class="n">legend</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1541,7 +844,94 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/oie-vs-strainrate_18_0.png" src="../../_images/oie-vs-strainrate_18_0.png" />
+<img alt="../../_images/oie-vs-strainrate_19_0.png" src="../../_images/oie-vs-strainrate_19_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># demo = df</span>
+<span class="n">demo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">datestrs</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">pt</span> <span class="o">=</span> <span class="s1">&#39;pt0_velodiff&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax7</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">demo</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">demo</span><span class="p">[</span><span class="n">pt</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:khaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="n">pt</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="c1"># ax0.annotate(&#39;BlaBlaBla2&#39;, xy=(&#39;2017-07-02 16:30:00&#39;, ymax), xytext=(10, 25), textcoords=&#39;offset points&#39;,</span>
+<span class="c1">#              rotation=90, va=&#39;bottom&#39;, ha=&#39;center&#39;, annotation_clip=False, arrowprops=arrowprops)</span>
+<span class="c1"># row[&#39;label&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_21_0.png" src="../../_images/oie-vs-strainrate_21_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>147
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax7</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">demo</span><span class="p">[</span><span class="n">pt</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:khaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="n">pt</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_23_0.png" src="../../_images/oie-vs-strainrate_23_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax7</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">],</span> <span class="n">demo</span><span class="p">[</span><span class="n">pt</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:khaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="n">pt</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_24_0.png" src="../../_images/oie-vs-strainrate_24_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># demo = df.loc[df[&#39;Date&#39;] == datestrs[0]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax7</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">demo</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">demo</span><span class="p">[</span><span class="n">pt</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;xkcd:khaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;OIE&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="n">pt</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/oie-vs-strainrate_26_0.png" src="../../_images/oie-vs-strainrate_26_0.png" />
 </div>
 </div>
 </div>
