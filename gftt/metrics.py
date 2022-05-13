@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 
 
-def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000):
+def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, peak_loc=False):
     """
     vfile: str, geotiff file path
     vxfile: str, geotiff file path
@@ -111,7 +111,12 @@ def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_are
             ax.scatter(vx[idx], vy[idx], c=z[idx], **pt_style)
             ax.scatter(vx[~idx], vy[~idx], color=viridis(0), alpha=0.4, **pt_style)
             
-        return vx, vy, z, thres_idx
+        if peak_loc:
+            peak_x = vx[np.argmax(z)]
+            peak_y = vy[np.argmax(z)]
+            return vx, vy, z, thres_idx, peak_x, peak_y
+        else:
+            return vx, vy, z, thres_idx
     
     elif case == 2:
         
