@@ -244,7 +244,7 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="section" id="make-manifest-file">
 <h1>Make manifest file<a class="headerlink" href="#make-manifest-file" title="Permalink to this headline">¶</a></h1>
-<p>This notebook creates <code class="docutils literal notranslate"><span class="pre">manifest_agu21.csv</span></code>, the metadata of the files to be used in the AGU 2021 fall meeting.</p>
+<p>This notebook creates <code class="docutils literal notranslate"><span class="pre">manifest.csv</span></code>, the necessary metadata of the files to be used in study.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -255,174 +255,296 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Chip (px)&#39;</span><span class="p">,</span> <span class="s1">&#39;Resolution (px)&#39;</span><span class="p">,</span> <span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="s1">&#39;Subpixel&#39;</span><span class="p">,</span> <span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="s1">&#39;Vx&#39;</span><span class="p">,</span> <span class="s1">&#39;Vy&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_row</span><span class="p">(</span><span class="n">date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">chip</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+               <span class="n">pixel_spacing</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prefilter</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+               <span class="n">subpixel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">software</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span>               <span class="n">date</span><span class="p">,</span>      
+           <span class="s1">&#39;Duration (days)&#39;</span><span class="p">:</span>    <span class="n">duration</span><span class="p">,</span>
+           <span class="s1">&#39;Template size (px)&#39;</span><span class="p">:</span> <span class="n">chip</span><span class="p">,</span>
+           <span class="s1">&#39;Template size (m)&#39;</span><span class="p">:</span>  <span class="nb">int</span><span class="p">(</span><span class="n">chip</span><span class="p">)</span> <span class="o">*</span> <span class="n">pixel_spacing</span><span class="p">,</span>
+           <span class="s1">&#39;Pixel spacing (px)&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
+           <span class="s1">&#39;Pixel spacing (m)&#39;</span><span class="p">:</span>  <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">*</span> <span class="n">pixel_spacing</span><span class="p">,</span>
+           <span class="s1">&#39;Prefilter&#39;</span><span class="p">:</span>          <span class="n">prefilter</span><span class="p">,</span> 
+           <span class="s1">&#39;Subpixel&#39;</span><span class="p">:</span>           <span class="n">subpixel</span><span class="p">,</span> 
+           <span class="s1">&#39;Software&#39;</span><span class="p">:</span>           <span class="n">software</span><span class="p">,</span>
+           <span class="s1">&#39;Vx&#39;</span><span class="p">:</span>                 <span class="n">i</span><span class="p">,</span>                
+           <span class="s1">&#39;Vy&#39;</span><span class="p">:</span>                 <span class="n">j</span><span class="p">,</span>
+          <span class="p">}</span>
+    <span class="k">return</span> <span class="n">row</span>
+
+<span class="k">def</span> <span class="nf">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180304-20180405&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">32</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;pixel_spacing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">16</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;pixel_spacing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;pixel_spacing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;pixel_spacing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">return</span> <span class="n">kargs</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Duration (days)&#39;</span><span class="p">,</span> <span class="s1">&#39;Template size (px)&#39;</span><span class="p">,</span> <span class="s1">&#39;Template size (m)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pixel spacing (px)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pixel spacing (m)&#39;</span><span class="p">,</span> <span class="s1">&#39;Prefilter&#39;</span><span class="p">,</span> <span class="s1">&#39;Subpixel&#39;</span><span class="p">,</span> <span class="s1">&#39;Software&#39;</span><span class="p">,</span> <span class="s1">&#39;Vx&#39;</span><span class="p">,</span> <span class="s1">&#39;Vy&#39;</span><span class="p">])</span>
 
 <span class="n">carst_vxs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/CARST/*/*velo-raw_vx.tif&#39;</span><span class="p">))</span>
 <span class="n">carst_vys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/CARST/*/*velo-raw_vy.tif&#39;</span><span class="p">))</span>
 
+<span class="c1">## parsing CARST products</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">carst_vxs</span><span class="p">,</span> <span class="n">carst_vys</span><span class="p">):</span>
+    <span class="n">kargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;software&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CARST&#39;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">date_raw</span> <span class="o">=</span>  <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">chip</span> <span class="o">=</span>      <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
-    <span class="n">res</span> <span class="o">=</span>       <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">:]</span>
-    <span class="n">prefilter</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">5</span><span class="p">]</span>
-    <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;16-node oversampling&#39;</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;chip&#39;</span><span class="p">]</span> <span class="o">=</span>      <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span>       <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">:]</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;16-node oversampling&#39;</span>
     <span class="k">if</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;20180314&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;20180405&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180304-20180405&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;20180627&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;20180818&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange date string!&#39;</span><span class="p">)</span>
-    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span>      <span class="n">date</span><span class="p">,</span>      <span class="s1">&#39;Chip (px)&#39;</span><span class="p">:</span> <span class="n">chip</span><span class="p">,</span>     <span class="s1">&#39;Resolution (px)&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
-           <span class="s1">&#39;Prefilter&#39;</span><span class="p">:</span> <span class="n">prefilter</span><span class="p">,</span> <span class="s1">&#39;Subpixel&#39;</span><span class="p">:</span>  <span class="n">subpixel</span><span class="p">,</span> <span class="s1">&#39;Software&#39;</span><span class="p">:</span>        <span class="s1">&#39;CARST&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;Vx&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>                <span class="s1">&#39;Vy&#39;</span><span class="p">:</span> <span class="n">j</span><span class="p">}</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
+    <span class="n">row</span> <span class="o">=</span> <span class="n">create_row</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+    <span class="c1"># df = df.append(row, ignore_index=True)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">## parsing GIV products</span>
 <span class="n">giv_vxs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/GIV/u*.tif&#39;</span><span class="p">))</span>
 <span class="n">giv_vys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/GIV/v*.tif&#39;</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">giv_vxs</span><span class="p">,</span> <span class="n">giv_vys</span><span class="p">):</span>
+    <span class="n">kargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;software&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;GIV&#39;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">date_raw</span> <span class="o">=</span>  <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">chip</span> <span class="o">=</span>      <span class="s1">&#39;multi&#39;</span>
+    <span class="c1"># chip =      &#39;multi&#39;</span>
     <span class="n">res_raw</span> <span class="o">=</span>   <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
     <span class="n">prefilter_raw</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;interest point groups&#39;</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;interest point groups&#39;</span>
     <span class="k">if</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;s12&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;l12&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180304-20180405&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;s34&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;l34&#39;</span><span class="p">:</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span>
+        <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange date string!&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">res_raw</span> <span class="o">==</span> <span class="s1">&#39;50&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;s12&#39;</span> <span class="ow">or</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;s34&#39;</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>    <span class="c1"># 50 m posting (acutal number is 54-40 m)</span>
+            <span class="n">res_px</span> <span class="o">=</span> <span class="s1">&#39;4.003&#39;</span>
+            <span class="n">res_m</span> <span class="o">=</span> <span class="s1">&#39;40.03&#39;</span>
         <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;l12&#39;</span> <span class="ow">or</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;l34&#39;</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;4&#39;</span>    <span class="c1"># 60 m posting</span>
+            <span class="n">res_px</span> <span class="o">=</span> <span class="s1">&#39;4.009&#39;</span>
+            <span class="n">res_m</span> <span class="o">=</span> <span class="s1">&#39;60.14&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #1&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">res_raw</span> <span class="o">==</span> <span class="s1">&#39;200&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;s12&#39;</span> <span class="ow">or</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;s34&#39;</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;20&#39;</span>   <span class="c1"># 200 m posting (actual number is 219-160 m)</span>
+            <span class="n">res_px</span> <span class="o">=</span> <span class="s1">&#39;16.04&#39;</span>
+            <span class="n">res_m</span> <span class="o">=</span> <span class="s1">&#39;160.4&#39;</span>
         <span class="k">elif</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;l12&#39;</span> <span class="ow">or</span> <span class="n">date_raw</span> <span class="o">==</span> <span class="s1">&#39;l34&#39;</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;16&#39;</span>   <span class="c1"># 240 m posting</span>
+            <span class="n">res_px</span> <span class="o">=</span> <span class="s1">&#39;15.13&#39;</span>
+            <span class="n">res_m</span> <span class="o">=</span> <span class="s1">&#39;242.1&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #2&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange resolution!&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">prefilter_raw</span> <span class="o">==</span> <span class="s1">&#39;gaus&#39;</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;Gau&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Gau&#39;</span>
     <span class="k">elif</span> <span class="n">prefilter_raw</span> <span class="o">==</span> <span class="s1">&#39;NAOF&#39;</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;NAOF&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;NAOF&#39;</span>
     <span class="k">elif</span> <span class="n">prefilter_raw</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange prefilter!&#39;</span><span class="p">)</span>
-    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span>      <span class="n">date</span><span class="p">,</span>      <span class="s1">&#39;Chip (px)&#39;</span><span class="p">:</span> <span class="n">chip</span><span class="p">,</span>     <span class="s1">&#39;Resolution (px)&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
-           <span class="s1">&#39;Prefilter&#39;</span><span class="p">:</span> <span class="n">prefilter</span><span class="p">,</span> <span class="s1">&#39;Subpixel&#39;</span><span class="p">:</span>  <span class="n">subpixel</span><span class="p">,</span> <span class="s1">&#39;Software&#39;</span><span class="p">:</span>        <span class="s1">&#39;GIV&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;Vx&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>                <span class="s1">&#39;Vy&#39;</span><span class="p">:</span> <span class="n">j</span><span class="p">}</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span>               <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span>      
+           <span class="s1">&#39;Duration (days)&#39;</span><span class="p">:</span>    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">],</span>
+           <span class="s1">&#39;Template size (px)&#39;</span><span class="p">:</span> <span class="s1">&#39;varying: multi-pass&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Template size (m)&#39;</span><span class="p">:</span>  <span class="s1">&#39;varying: multi-pass&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Pixel spacing (px)&#39;</span><span class="p">:</span> <span class="n">res_px</span><span class="p">,</span>
+           <span class="s1">&#39;Pixel spacing (m)&#39;</span><span class="p">:</span>  <span class="n">res_m</span><span class="p">,</span>
+           <span class="s1">&#39;Prefilter&#39;</span><span class="p">:</span>          <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">],</span> 
+           <span class="s1">&#39;Subpixel&#39;</span><span class="p">:</span>           <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">],</span> 
+           <span class="s1">&#39;Software&#39;</span><span class="p">:</span>           <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;software&#39;</span><span class="p">],</span>
+           <span class="s1">&#39;Vx&#39;</span><span class="p">:</span>                 <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">],</span>                
+           <span class="s1">&#39;Vy&#39;</span><span class="p">:</span>                 <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;j&#39;</span><span class="p">],</span>
+      <span class="p">}</span>
+    <span class="c1"># row = {&#39;Date&#39;:      date,      &#39;Chip (px)&#39;: chip,     &#39;Resolution (px)&#39;: res,</span>
+    <span class="c1">#        &#39;Prefilter&#39;: prefilter, &#39;Subpixel&#39;:  subpixel, &#39;Software&#39;:        &#39;GIV&#39;,</span>
+    <span class="c1">#        &#39;Vx&#39;: i,                &#39;Vy&#39;: j}</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     
+<span class="c1">## parsing Vmap products</span>
 <span class="n">vmap_vxs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/Vmap/**/*vx.tif&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 <span class="n">vmap_vys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/Vmap/**/*vy.tif&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vmap_vxs</span><span class="p">,</span> <span class="n">vmap_vys</span><span class="p">):</span>
-    
+    <span class="n">kargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;software&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Vmap&#39;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
     <span class="k">if</span> <span class="s1">&#39;parabolic_subpixel&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">chip</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;chip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">if</span> <span class="s1">&#39;gaussfilter&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;Gau&#39;</span>
-            <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;parabolic&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Gau&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;parabolic&#39;</span>
         <span class="k">elif</span> <span class="s1">&#39;noprefilter&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
-            <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;parabolic&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;parabolic&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #3&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="s1">&#39;subpixel_comparison&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;LoG&#39;</span>
-        <span class="n">chip</span> <span class="o">=</span> <span class="s1">&#39;31&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LoG&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;chip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;31&#39;</span>
         <span class="k">if</span> <span class="s1">&#39;spm1&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;parabolic&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;parabolic&#39;</span>
         <span class="k">elif</span> <span class="s1">&#39;spm2&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;affine adaptive&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;affine adaptive&#39;</span>
         <span class="k">elif</span> <span class="s1">&#39;spm3&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;affine&#39;</span>
+            <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;affine&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #5&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #4&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="s1">&#39;20180304&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180304-20180405&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s1">&#39;20180802&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #6&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">info</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="s1">&#39;20180304&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s1">&#39;20180508&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #7&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Something wrong! #8&#39;</span><span class="p">)</span>
         
-    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span>      <span class="n">date</span><span class="p">,</span>      <span class="s1">&#39;Chip (px)&#39;</span><span class="p">:</span> <span class="n">chip</span><span class="p">,</span>     <span class="s1">&#39;Resolution (px)&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
-           <span class="s1">&#39;Prefilter&#39;</span><span class="p">:</span> <span class="n">prefilter</span><span class="p">,</span> <span class="s1">&#39;Subpixel&#39;</span><span class="p">:</span>  <span class="n">subpixel</span><span class="p">,</span> <span class="s1">&#39;Software&#39;</span><span class="p">:</span>        <span class="s1">&#39;Vmap&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;Vx&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>                <span class="s1">&#39;Vy&#39;</span><span class="p">:</span> <span class="n">j</span><span class="p">}</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">create_row</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
+
+<span class="c1">## parsing autoRIFT products</span>
 <span class="n">autorift_vxs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/autoRIFT/**/*vx.tif&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 <span class="n">autorift_vys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/autoRIFT/**/*vy.tif&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">autorift_vxs</span><span class="p">,</span> <span class="n">autorift_vys</span><span class="p">):</span>
-    
+    <span class="n">kargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;software&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;autoRIFT&#39;</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">subpixel</span> <span class="o">=</span> <span class="s1">&#39;pyrUP&#39;</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">chip</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">4</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;subpixel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pyrUP&#39;</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;chip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">4</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
     <span class="k">if</span> <span class="s1">&#39;gauss_hp&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;Gau&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Gau&#39;</span>
     <span class="k">elif</span> <span class="s1">&#39;naof2&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;NAOF&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;NAOF&#39;</span>
     <span class="k">elif</span> <span class="s1">&#39;s__&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
-        <span class="n">prefilter</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+        <span class="n">kargs</span><span class="p">[</span><span class="s1">&#39;prefilter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange prefilter string!&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;Landsat&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
         <span class="k">if</span> <span class="s1">&#39;20180304&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180304-20180405&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s1">&#39;20180802&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange date string! (autoRIFT) #1&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="s1">&#39;S2&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
         <span class="k">if</span> <span class="s1">&#39;20180304&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s1">&#39;20180508&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span>
+            <span class="n">kargs</span> <span class="o">=</span> <span class="n">fill_satspecs_into_kargs</span><span class="p">(</span><span class="n">kargs</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange date string! (autoRIFT) #2&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Strange date string! (autoRIFT) #3&#39;</span><span class="p">)</span>
-    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span>      <span class="n">date</span><span class="p">,</span>      <span class="s1">&#39;Chip (px)&#39;</span><span class="p">:</span> <span class="n">chip</span><span class="p">,</span>     <span class="s1">&#39;Resolution (px)&#39;</span><span class="p">:</span> <span class="n">res</span><span class="p">,</span>
-           <span class="s1">&#39;Prefilter&#39;</span><span class="p">:</span> <span class="n">prefilter</span><span class="p">,</span> <span class="s1">&#39;Subpixel&#39;</span><span class="p">:</span>  <span class="n">subpixel</span><span class="p">,</span> <span class="s1">&#39;Software&#39;</span><span class="p">:</span>        <span class="s1">&#39;autoRIFT&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;Vx&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>                <span class="s1">&#39;Vy&#39;</span><span class="p">:</span> <span class="n">j</span><span class="p">}</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">create_row</span><span class="p">(</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Duration (days)</th>
+      <th>Pixel spacing (m)</th>
+      <th>Pixel spacing (px)</th>
+      <th>Prefilter</th>
+      <th>Software</th>
+      <th>Subpixel</th>
+      <th>Template size (m)</th>
+      <th>Template size (px)</th>
+      <th>Vx</th>
+      <th>Vy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>80</td>
+      <td>8</td>
+      <td>NAOF</td>
+      <td>autoRIFT</td>
+      <td>pyrUP</td>
+      <td>640</td>
+      <td>64</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -450,8 +572,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr style="text-align: right;">
       <th></th>
       <th>Date</th>
-      <th>Chip (px)</th>
-      <th>Resolution (px)</th>
+      <th>Duration (days)</th>
+      <th>Template size (px)</th>
+      <th>Template size (m)</th>
+      <th>Pixel spacing (px)</th>
+      <th>Pixel spacing (m)</th>
       <th>Prefilter</th>
       <th>Subpixel</th>
       <th>Software</th>
@@ -463,8 +588,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>0</th>
       <td>Sen2-20180304-20180314</td>
+      <td>10</td>
       <td>48</td>
+      <td>480</td>
       <td>12</td>
+      <td>120</td>
       <td>Gau</td>
       <td>16-node oversampling</td>
       <td>CARST</td>
@@ -474,8 +602,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>1</th>
       <td>Sen2-20180304-20180314</td>
+      <td>10</td>
       <td>48</td>
+      <td>480</td>
       <td>12</td>
+      <td>120</td>
       <td>NAOF</td>
       <td>16-node oversampling</td>
       <td>CARST</td>
@@ -485,8 +616,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>2</th>
       <td>Sen2-20180304-20180314</td>
+      <td>10</td>
       <td>48</td>
+      <td>480</td>
       <td>12</td>
+      <td>120</td>
       <td>None</td>
       <td>16-node oversampling</td>
       <td>CARST</td>
@@ -496,8 +630,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>3</th>
       <td>Sen2-20180304-20180314</td>
+      <td>10</td>
       <td>48</td>
+      <td>480</td>
       <td>1</td>
+      <td>10</td>
       <td>Gau</td>
       <td>16-node oversampling</td>
       <td>CARST</td>
@@ -507,8 +644,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>4</th>
       <td>Sen2-20180304-20180314</td>
+      <td>10</td>
       <td>48</td>
+      <td>480</td>
       <td>1</td>
+      <td>10</td>
       <td>NAOF</td>
       <td>16-node oversampling</td>
       <td>CARST</td>
@@ -525,12 +665,18 @@ const thebe_selector_output = ".output, .cell_output"
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
       <th>167</th>
       <td>Sen2-20180508-20180627</td>
+      <td>50</td>
       <td>64</td>
+      <td>640</td>
       <td>8</td>
+      <td>80</td>
       <td>Gau</td>
       <td>pyrUP</td>
       <td>autoRIFT</td>
@@ -540,8 +686,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>168</th>
       <td>Sen2-20180508-20180627</td>
+      <td>50</td>
       <td>32</td>
+      <td>320</td>
       <td>4</td>
+      <td>40</td>
       <td>NAOF</td>
       <td>pyrUP</td>
       <td>autoRIFT</td>
@@ -551,8 +700,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>169</th>
       <td>Sen2-20180508-20180627</td>
+      <td>50</td>
       <td>32</td>
+      <td>320</td>
       <td>8</td>
+      <td>80</td>
       <td>NAOF</td>
       <td>pyrUP</td>
       <td>autoRIFT</td>
@@ -562,8 +714,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>170</th>
       <td>Sen2-20180508-20180627</td>
+      <td>50</td>
       <td>64</td>
+      <td>640</td>
       <td>4</td>
+      <td>40</td>
       <td>NAOF</td>
       <td>pyrUP</td>
       <td>autoRIFT</td>
@@ -573,8 +728,11 @@ const thebe_selector_output = ".output, .cell_output"
     <tr>
       <th>171</th>
       <td>Sen2-20180508-20180627</td>
+      <td>50</td>
       <td>64</td>
+      <td>640</td>
       <td>8</td>
+      <td>80</td>
       <td>NAOF</td>
       <td>pyrUP</td>
       <td>autoRIFT</td>
@@ -583,12 +741,12 @@ const thebe_selector_output = ".output, .cell_output"
     </tr>
   </tbody>
 </table>
-<p>172 rows × 8 columns</p>
+<p>172 rows × 11 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;manifest_agu21.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;manifest.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
