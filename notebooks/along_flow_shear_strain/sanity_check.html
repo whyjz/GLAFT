@@ -1564,7 +1564,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># demo2 = demo.loc[np.logical_or(demo[&#39;E_ratio&#39;] &gt; 0.8 , demo[&#39;E_ratio&#39;] &lt; 0.45)]</span>
 <span class="n">demo2</span> <span class="o">=</span> <span class="n">demo</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">demo</span><span class="p">[</span><span class="s1">&#39;Software&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GIV&#39;</span><span class="p">]</span>
-<span class="n">demo2</span> <span class="o">=</span> <span class="n">demo2</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;E_ratio&#39;</span><span class="p">])</span>
+<span class="n">demo2</span> <span class="o">=</span> <span class="n">demo2</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Resolution (px)&#39;</span><span class="p">,</span> <span class="s1">&#39;E_ratio&#39;</span><span class="p">])</span>
 <span class="n">demo2</span>
 </pre></div>
 </div>
@@ -1652,27 +1652,6 @@ const thebe_selector_output = ".output, .cell_output"
       <td>NaN</td>
     </tr>
     <tr>
-      <th>79</th>
-      <td>LS8-20180802-20180818</td>
-      <td>multi</td>
-      <td>4</td>
-      <td>NAOF</td>
-      <td>interest point groups</td>
-      <td>GIV</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
-      <td>0.35642746725218655</td>
-      <td>0.35900018158445374</td>
-      <td>0.031766716830049224</td>
-      <td>0.0020364321598012602</td>
-      <td>0.1656849005339854</td>
-      <td>0.2734169800568687</td>
-      <td>0.605979</td>
-      <td>-0.388083081426158</td>
-      <td>-0.09760913648678099</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
       <th>82</th>
       <td>LS8-20180802-20180818</td>
       <td>multi</td>
@@ -1691,6 +1670,27 @@ const thebe_selector_output = ".output, .cell_output"
       <td>0.615463</td>
       <td>-0.5534357434657624</td>
       <td>-0.4430330232202381</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>LS8-20180802-20180818</td>
+      <td>multi</td>
+      <td>4</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/u_l...</td>
+      <td>/home/jovyan/Projects/PX_comparison/PX/GIV/v_l...</td>
+      <td>0.35642746725218655</td>
+      <td>0.35900018158445374</td>
+      <td>0.031766716830049224</td>
+      <td>0.0020364321598012602</td>
+      <td>0.1656849005339854</td>
+      <td>0.2734169800568687</td>
+      <td>0.605979</td>
+      <td>-0.388083081426158</td>
+      <td>-0.09760913648678099</td>
       <td>NaN</td>
     </tr>
     <tr>
