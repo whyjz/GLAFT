@@ -53,11 +53,9 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/stable_area_error_assessment/metric_off-ice-error.html" />
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/stable_area_error_assessment/AGU21_metric_off-ice-error.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metric #2: Flow statistics on Sobel-filtered images" href="../along_flow_shear_strain/sobel_filter_AGU.html" />
-    <link rel="prev" title="Gftt: an open-source tool for evaluating remotely sensed glacier velocity products" href="../../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -101,12 +99,7 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Metric #1: Off-ice errors
-  </a>
- </li>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../along_flow_shear_strain/sobel_filter_AGU.html">
    Metric #2: Flow statistics on Sobel-filtered images
@@ -168,7 +161,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/notebooks/stable_area_error_assessment/metric_off-ice-error.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/notebooks/stable_area_error_assessment/AGU21_metric_off-ice-error.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -188,10 +181,10 @@ const thebe_selector_output = ".output, .cell_output"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/stable_area_error_assessment/metric_off-ice-error.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/stable_area_error_assessment/AGU21_metric_off-ice-error.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/stable_area_error_assessment/metric_off-ice-error.ipynb"><button
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/stable_area_error_assessment/AGU21_metric_off-ice-error.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -211,7 +204,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/stable_area_error_assessment/metric_off-ice-error.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/stable_area_error_assessment/AGU21_metric_off-ice-error.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -665,7 +658,7 @@ Name: 30, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_12_0.png" src="../../_images/metric_off-ice-error_12_0.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_12_0.png" src="../../_images/AGU21_metric_off-ice-error_12_0.png" />
 </div>
 </div>
 <p>Now we can call the <code class="docutils literal notranslate"><span class="pre">off_ice_errors</span></code> function from GFTT and calculate off-ice errors:</p>
@@ -681,7 +674,7 @@ Name: 30, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_14_0.png" src="../../_images/metric_off-ice-error_14_0.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_14_0.png" src="../../_images/AGU21_metric_off-ice-error_14_0.png" />
 </div>
 </div>
 <p>Here, x-axis is <span class="math notranslate nohighlight">\(V_x\)</span> (m/day), y-axis is <span class="math notranslate nohighlight">\(V_y\)</span> (m/day). We randomly select 10,000 pixels and color code them based on the Gaussian kernel density estimate, and the other pixels are plotting as gray points. Transparent color points have a kernel density below a chosen confidence level, which is 3.0 by default and corresponds to a confidence level of 99.7%.</p>
@@ -771,7 +764,7 @@ Name: 18, dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f98d0bcbbe0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/metric_off-ice-error_21_1.png" src="../../_images/metric_off-ice-error_21_1.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_21_1.png" src="../../_images/AGU21_metric_off-ice-error_21_1.png" />
 </div>
 </div>
 </div>
@@ -1317,7 +1310,7 @@ Name: 18, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_25_0.png" src="../../_images/metric_off-ice-error_25_0.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_25_0.png" src="../../_images/AGU21_metric_off-ice-error_25_0.png" />
 </div>
 </div>
 <p>Off-ice error plots for all 42 tests:</p>
@@ -1378,7 +1371,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
   self._setitem_single_column(loc, value, pi)
 </pre></div>
 </div>
-<img alt="../../_images/metric_off-ice-error_27_1.png" src="../../_images/metric_off-ice-error_27_1.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_27_1.png" src="../../_images/AGU21_metric_off-ice-error_27_1.png" />
 </div>
 </div>
 <p>Results are attached to the right of the metadata sheet. (<code class="docutils literal notranslate"><span class="pre">OIE-x</span></code> and <code class="docutils literal notranslate"><span class="pre">OIE-y</span></code>)</p>
@@ -2008,7 +2001,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_31_0.png" src="../../_images/metric_off-ice-error_31_0.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_31_0.png" src="../../_images/AGU21_metric_off-ice-error_31_0.png" />
 </div>
 </div>
 </div>
@@ -2208,7 +2201,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/metric_off-ice-error_34_0.png" src="../../_images/metric_off-ice-error_34_0.png" />
+<img alt="../../_images/AGU21_metric_off-ice-error_34_0.png" src="../../_images/AGU21_metric_off-ice-error_34_0.png" />
 </div>
 </div>
 </div>
@@ -2239,21 +2232,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../../index.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Gftt: an open-source tool for evaluating remotely sensed glacier velocity products</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="../along_flow_shear_strain/sobel_filter_AGU.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Metric #2: Flow statistics on Sobel-filtered images</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+<div class='prev-next-area'>
 </div>
             
         </div>
