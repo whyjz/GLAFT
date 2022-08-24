@@ -10,9 +10,9 @@ with open("requirements.txt", "r") as fh:
 
 
 setuptools.setup(
-    name             = "gftt",
-    version          = "0.0.1",
-    author           = "The GFTT team",
+    name             = "glaft",
+    version          = "0.1.0",
+    author           = "The GLAFT team",
     author_email     = "whyjz@berkeley.edu",
     description      = "Python module for testing glacier feature-tracking performance.",
     long_description = long_description,
