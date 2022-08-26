@@ -4,3 +4,4 @@ shapely
 geopandas
 rasterio
 matplotlib
+cmcrameri

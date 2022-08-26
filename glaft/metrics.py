@@ -8,7 +8,236 @@ from rasterio.mask import mask
 from rasterio import features
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from cmcrameri import cm as cramericm
+import warnings
+from sklearn.neighbors import KernelDensity
+import matplotlib.patches as patches
 
+def _clip(gtiff: str, shp: str, nodata: float=-9999.0):
+    """
+    gtiff: geotiff file path
+    shp: polygon shapefile file path 
+    """
+    shapes = gpd.read_file(shp)
+    geoms = shapes.geometry.values
+    geoms = [mapping(geoms[i]) for i in range(len(geoms))]
+    with rasterio.open(gtiff) as src:
+        out_image, out_transform = mask(src, geoms, crop=True, nodata=nodata)
+    try:
+        clipped_data = out_image.data[0]
+    except NotImplementedError:
+        clipped_data = out_image[0]
+    return clipped_data
+
+def test_static_terrain_velo(vxfile=None, vyfile=None, static_area=None):
+    
+    vx_full = _clip(vxfile, static_area)
+    vy_full = _clip(vyfile, static_area)
+    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+    vx_full = vx_full[nonNaN_pts_idx]  # remove NaN points
+    vy_full = vy_full[nonNaN_pts_idx]  # remove NaN points
+
+    xy_full = np.vstack([vx_full, vy_full])
+    xy = xy_full
+    return xy
+
+def static_terrain_velo(vxfile=None, vyfile=None, wfile=None, static_area=None, thres_sigma=3.0, plot='full', ax=None, max_n=10000, peak_loc=False, nodata=-9999.0, kdegrid_size=100):
+    """
+    vxfile: str, geotiff file path
+    vyfile: str, geotiff file path
+    wfile: str, goetiff file path (as weight)
+    static_area: str, static area (shapefile) file path
+    max_n: maximum samples to calculate Gaussian KDE
+    nodata: specify nodata value in the provided geotiff. NOT implemented yet.
+    ----
+    returns:
+    vx: 1-d np array, vx values from all pixels within the off-ice area.
+    vy: 1-d np array, vy values from all pixels within the off-ice area.
+    z: 1-d np array (float), Gaussian KDE values for all pixels within the off-ice area.
+    thres_idx: 1-d np array (boolean), indices of pixels with a z value within a pre-defined confidence level. 
+               when thres_sigma=3.0, confidence level = 99.7%.
+    ==== or ====
+    v: 1-d np array, v values from all pixels within the off-ice area.
+    bins: plt.hist return with 100 bins and v^2 as input
+    ----
+    according to
+    https://gis.stackexchange.com/questions/260304/extract-raster-values-within-shapefile-with-pygeoprocessing-or-gdal
+    """  
+    #     shapefile = gpd.read_file(off_ice_area)
+    #     geoms = shapefile.geometry.values
+    #     geoms = [mapping(geoms[i]) for i in range(len(geoms))]
+
+    #     def clip(gtiff, geoms):
+    #         with rasterio.open(gtiff) as src:
+    #             out_image, out_transform = mask(src, geoms, crop=True, nodata=-9999.0)
+    #         try:
+    #             clipped_data = out_image.data[0]
+    #         except NotImplementedError:
+    #             clipped_data = out_image[0]
+    #         return clipped_data
+    
+    # vx_full = None
+    # vy_full = None
+    w_full = None
+
+    if vxfile is not None and vyfile is not None:
+        # case = 1
+        vx_full = _clip(vxfile, static_area)
+        vy_full = _clip(vyfile, static_area)
+        if int(nodata) != -9999:
+            warnings.warn("NoData values other than -9999 has not implemented yet. Falling back to -9999.")
+        nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
+        vx_full = vx_full[nonNaN_pts_idx]  # remove NaN points
+        vy_full = vy_full[nonNaN_pts_idx]  # remove NaN points
+        if wfile is not None:
+            w_full = _clip(wfile, static_area)
+            w_full = w_full[nonNaN_pts_idx]  # remove NaN points
+        # return vx_full, vy_full
+    # elif vfile is not None:
+    #     case = 2
+    #     v = clip(vfile, geoms)
+    #     v = v[v > -9998]  # remove NaN points
+    else:
+        # case = 0
+        raise TypeError('Vxfile and Vyfile are required.')
+  
+    # if case == 1:
+    if wfile is not None:
+        xy_full = np.vstack([vx_full, vy_full, w_full])
+    else:
+        xy_full = np.vstack([vx_full, vy_full])
+
+    # if len(vx_full) > max_n:
+    #     ## See https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html#numpy.random.Generator.choice
+    #     rng = np.random.default_rng()
+    #     xy = rng.choice(xy_full, size=max_n, replace=False, axis=1)
+    #     # xy = xy_full
+    # else:
+    #     xy = xy_full
+    
+    xy = xy_full
+    # xy = xy_full[:, :7000]
+        
+    # kde2 = KernelDensity(kernel="epanechnikov", bandwidth=2 * 0.6).fit(cc12)
+    # log_density2 = kde2.score_samples(cc12)
+    # density2 = np.exp(log_density2)
+    
+    xycov = np.cov(xy)
+    # xystd = (xycov[0, 0] * xycov[1, 1]) ** (0.25)
+    xystd = (xycov[0, 0] * xycov[1, 1]) ** (0.25)
+    #### According to https://doi.org/10.1016/j.spl.2012.07.020 for the epanechnikov kernel
+    # bandwidth = 0.4
+    bandwidth = 2.1991 * xystd * xy.shape[1] **(-1. / (2 + 4))   # epane
+    # bandwidth = 1.0000 * xystd * xy.shape[1] **(-1. / (2 + 4))    # gaussian
+    
+    midx = np.median(xy[0, :])
+    midy = np.median(xy[1, :])
+    
+    xeval = np.linspace(midx - (thres_sigma + 1) * xystd, midx + (thres_sigma + 1) * xystd, kdegrid_size)
+    yeval = np.linspace(midy - (thres_sigma + 1) * xystd, midy + (thres_sigma + 1) * xystd, kdegrid_size)
+    xevalg, yevalg = np.meshgrid(xeval, yeval)
+    halfd = (xevalg[1] - xevalg[0])/2
+    xyeval = np.vstack([xevalg.flatten(), yevalg.flatten()]).T
+    
+    if wfile is not None:
+        pass
+        # w = xy[2, :]
+        # w = np.where(w < 0, 0, w)
+        # kernel = gaussian_kde(xy[:2, :], weights=w)
+        # z = kernel(xy[:2, :])
+    else:
+        kernel = KernelDensity(kernel="epanechnikov", bandwidth=bandwidth).fit(xy.T)
+        # kernel = KernelDensity(kernel="gaussian", bandwidth=bandwidth).fit(xy.T)
+        # kernel = KernelDensity(kernel="gaussian", bandwidth=2 * 0.6).fit(xy.T)
+        # log_density = kernel.score_samples(xy.T)
+        log_density = kernel.score_samples(xyeval)
+        z = np.exp(log_density)
+        # kernel = gaussian_kde(xy)
+        # z = kernel(xy[:, :max_n])
+        # z = 1
+        zg = np.reshape(z.T, np.shape(xevalg))
+        
+    vx = xyeval[:, 0]
+    vy = xyeval[:, 1]
+    # thres_idx = 1
+    
+    # return vx, vy, z, thres_idx
+
+    thres_multiplier = np.e ** (thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
+    thres = max(z) / thres_multiplier
+    thres_idx = z >= thres
+    idx = thres_idx    # alias
+    
+    refined_spacing = ((max(vx[thres_idx]) - min(vx[thres_idx])) + (max(vy[thres_idx]) - min(vy[thres_idx]))) / 2
+
+    xeval2 = np.linspace(midx - 2 * refined_spacing, midx + 2 * refined_spacing, kdegrid_size)
+    yeval2 = np.linspace(midy - 2 * refined_spacing, midy + 2 * refined_spacing, kdegrid_size)
+    xevalg2, yevalg2 = np.meshgrid(xeval2, yeval2)
+    halfd2 = (xevalg2[1] - xevalg2[0])/2
+    xyeval2 = np.vstack([xevalg2.flatten(), yevalg2.flatten()]).T
+    log_density2 = kernel.score_samples(xyeval2)
+    z2 = np.exp(log_density2)
+    zg2 = np.reshape(z2.T, np.shape(xevalg2))
+    thres2 = max(z2) / thres_multiplier
+    thres_idx2 = z2 >= thres2
+    idx2 = thres_idx2    # alias
+    
+    vx2 = xyeval2[:, 0]
+    vy2 = xyeval2[:, 1]
+    
+    if plot == 'full':
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+        # viridis = cm.get_cmap('viridis', 12)
+        pt_style = {'s': 6, 'edgecolor': None}
+        
+        # pt_style = {'s': 1, 'edgecolor': None}
+        # plt.scatter(c1, c2, c='gray', alpha=0.5, **pt_style)
+        # plt.pcolormesh(xv, yv, density_plot, alpha=0.7, shading='nearest', cmap=cm.oslo_r)
+        # plt.axis('equal');
+
+        # if vx_full is not None:
+        
+        # ax.pcolormesh(xevalg, yevalg, zg, alpha=0.7, shading='nearest', cmap=cramericm.oslo_r)
+        ax.scatter(vx_full, vy_full, color='xkcd:gray', alpha=0.1, **pt_style)
+
+        # ax.scatter(vx[idx], vy[idx], c=z[idx], **pt_style)
+        # ax.scatter(vx[~idx], vy[~idx], color=viridis(0), alpha=0.4, **pt_style)
+    elif plot == 'zoom1':
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+        pt_style = {'s': 1, 'edgecolor': None}
+        ax.scatter(vx_full, vy_full, color='xkcd:pink', alpha=0.6, **pt_style)
+        ax.pcolormesh(xevalg2, yevalg2, zg2, alpha=0.85, shading='nearest', cmap=cramericm.oslo_r)
+        ax.set_xlim(min(xeval2), max(xeval2))
+        ax.set_ylim(min(yeval2), max(yeval2))
+        rect = patches.Rectangle((min(vx2[thres_idx2]), min(vy2[thres_idx2])), max(vx2[thres_idx2]) - min(vx2[thres_idx2]), max(vy2[thres_idx2]) - min(vy2[thres_idx2]), 
+                         linewidth=1, edgecolor='r', facecolor='none')
+        ax.add_patch(rect)
+        ax.set_title('$e_x$ = {:6.3f} | $e_y$ = {:6.3f} (m/day)'.format(0.5 * (max(vx2[thres_idx2]) - min(vx2[thres_idx2])), 
+                                                                 0.5 * (max(vy2[thres_idx2]) - min(vy2[thres_idx2]))))
+        
+    elif plot == 'zoom2':
+        pass
+        
+    return vx, vy, zg2, thres_idx2, xyeval2
+
+    # if peak_loc:
+    #     peak_x = vx[np.argmax(z)]
+    #     peak_y = vy[np.argmax(z)]
+    #     return vx, vy, z, thres_idx, peak_x, peak_y
+    # else:
+    #     return vx, vy, z, thres_idx
+    
+    #     elif case == 2:
+
+    #         if plot:
+    #             if ax is None:
+    #                 fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+
+    #         bins = ax.hist(v ** 2, 100);
+    #         return v, bins
 
 def off_ice_errors(vfile=None, vxfile=None, vyfile=None, wfile=None, off_ice_area=None, thres_sigma=3.0, plot=True, ax=None, max_n=10000, peak_loc=False):
     """

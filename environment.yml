@@ -1,4 +1,4 @@
-name: gftt 
+name: glaft 
 
 channels:
   - conda-forge
@@ -16,3 +16,4 @@ dependencies:
   - matplotlib
   - pip
   - seaborn
+  - cmcrameri
