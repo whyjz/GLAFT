@@ -33,8 +33,8 @@ class Velocity():
                  on_ice_area:   str=None,
                  nodata:      float=-9999.0,
                  velocity_unit: str='m/day',
-                 thres_sigma: float=3.0,
-                 kde_gridsize:  int=100,
+                 thres_sigma: float=2.0,
+                 kde_gridsize:  int=60,
                 ):
         """
         vxfile:        str, geotiff file path
@@ -264,7 +264,7 @@ class Velocity():
         vertice_y = self.mesh_fine[:, 1]
         
         if not rect_style:
-            rect_style = {'linewidth': 1, 'edgecolor': 'xkcd:red', 'facecolor': 'none'}            
+            rect_style = {'linewidth': 2, 'edgecolor': 'xkcd:cranberry', 'facecolor': 'none', 'alpha': 0.7}            
         rect = patches.Rectangle((min(vertice_x[self.mesh_fine_thres_idx]), min(vertice_y[self.mesh_fine_thres_idx])), 
                                  2 * self.metric_static_terrain_x,
                                  2 * self.metric_static_terrain_y, 
