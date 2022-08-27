@@ -12,6 +12,355 @@ from cmcrameri import cm as cramericm
 import warnings
 from sklearn.neighbors import KernelDensity
 import matplotlib.patches as patches
+from matplotlib.colors import ListedColormap
+from functools import wraps
+
+def _log_method(clsmethod):
+    @wraps(clsmethod)
+    def wrapper(*args, **kwargs):
+        print('Running {}'.format(clsmethod.__name__))
+        clsmethod(*args, **kwargs)
+    return wrapper
+
+
+class Velocity():
+    
+    def __init__(self, 
+                 vxfile:        str=None,
+                 vyfile:        str=None,
+                 wfile:         str=None,
+                 static_area:   str=None,
+                 on_ice_area:   str=None,
+                 nodata:      float=-9999.0,
+                 velocity_unit: str='m/day',
+                 thres_sigma: float=3.0,
+                 kde_gridsize:  int=100,
+                ):
+        """
+        vxfile:        str, geotiff file path
+        vyfile:        str, geotiff file path
+        wfile:         str, goetiff file path (as weight)
+        static_area:   str, static area (shapefile) file path
+        on_ice_area:   str, on-ice area (shapefile) file path
+        nodata:      float, nodata value in the provided geotiff. NOT FULLY IMPLEMENTED YET.
+        velocity_unit: str, velocity unit to be shown on the result plots.
+        """ 
+        self.vxfile = vxfile
+        self.vyfile = vyfile
+        self.wfile = wfile
+        self.static_area = static_area
+        self.on_ice_area = on_ice_area
+        self.nodata = nodata
+        self.velocity_unit = velocity_unit
+        
+        self.xy = None
+        self.w = None
+        self.thres_sigma = thres_sigma
+        
+        self.kernel = 'epanechnikov'
+        self.kde = None
+        self.bandwidth = None
+        self.xystd = None
+        self.kde_gridsize = kde_gridsize
+        self.mesh_crude = None
+        self.mesh_crude_shape = None
+        self.mesh_crude_z = None
+        self.mesh_fine  = None
+        self.mesh_fine_shape  = None
+        self.mesh_fine_z = None
+        self.mesh_fine_thres_idx = None
+        self.metric_static_terrain_x = None
+        self.metric_static_terrain_y = None
+        self.kdepeak_x = None
+        self.kdepeak_y = None
+        
+    @staticmethod       
+    def _clip(gtiff: str, shp: str, nodata: float=-9999.0):
+        """
+        gtiff: geotiff file path
+        shp: polygon shapefile file path
+        nodata: nodata value defined in the geotiff.
+        ----
+        returns:
+        clipped_data: 1-D array containing valid pixel values within the polygon shapes. 
+        """
+        shapes = gpd.read_file(shp)
+        geoms = shapes.geometry.values
+        geoms = [mapping(geoms[i]) for i in range(len(geoms))]
+        with rasterio.open(gtiff) as src:
+            out_image, out_transform = mask(src, geoms, crop=True, nodata=nodata)
+        try:
+            clipped_data = out_image.data[0]
+        except NotImplementedError:
+            clipped_data = out_image[0]
+        return clipped_data
+    
+    @staticmethod
+    def _construct_kde_eval_mesh(midx:      float, 
+                                 midy:      float,
+                                 halfwidth: float, 
+                                 gridsize:  int
+                                ):
+        """
+
+        ----
+        returns:
+        1. xyeval: n-by-2 array; each row is an x-y coordinate to be evaluated for KDE.
+        2. The shape of the evaluating grid.
+        """
+        xeval = np.linspace(midx - halfwidth, midx + halfwidth, gridsize)
+        yeval = np.linspace(midy - halfwidth, midy + halfwidth, gridsize)
+        xeval_grid, yeval_grid = np.meshgrid(xeval, yeval)
+        xyeval = np.vstack([xeval_grid.flatten(), yeval_grid.flatten()]).T
+        return xyeval, np.shape(xeval_grid)
+    
+    @staticmethod
+    def _verify_axes(ax):
+        
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+        return ax
+    
+    @staticmethod
+    def _customize_colormap(cmap: ListedColormap):
+        """
+        Add a transparency setting to cmap.
+        """
+        custom_cmap = cmap(np.linspace(0, 1, 254))
+        custom_cmap[:, 3] = np.linspace(0, 1, 254)    # alpha channel (trasparent --> non-transparent)
+        return ListedColormap(custom_cmap)
+    
+    @_log_method
+    def clip_static_area(self):
+        """
+        self.xy: 2-by-n array.
+        """
+        
+        if self.vxfile is None or self.vyfile is None:
+            raise TypeError('Vxfile and Vyfile are required.')
+            
+        vx = self._clip(self.vxfile, self.static_area)
+        vy = self._clip(self.vyfile, self.static_area)
+        
+        if int(self.nodata) != -9999:
+            warnings.warn("NoData values other than -9999 has not implemented yet. Falling back to -9999.")
+            
+        nonNaN_pts_idx = np.logical_and(vx > -9998, vy > -9998)
+        vx = vx[nonNaN_pts_idx]  # remove NaN points
+        vy = vy[nonNaN_pts_idx]  # remove NaN points
+        
+        if self.wfile is not None:
+            w = self._clip(self.wfile, self.static_area)
+            w = w[nonNaN_pts_idx]  # remove NaN points
+            w = np.where(w < 0, 0, w)  # force negative w to zero
+            self.w = w
+            
+        self.xy = np.vstack([vx, vy])
+
+    @_log_method
+    def calculate_xystd(self):
+        
+        if self.xy is None:
+            raise TypeError('There must be selected pixels.')
+            
+        xycov = np.cov(self.xy)
+        self.xystd = (xycov[0, 0] * xycov[1, 1]) ** (0.25)
+        
+    @_log_method
+    def calculate_bandwidth(self):
+        """
+        Calculate the rule-of-thumb bandwidth for the selected kernel,
+        according to https://doi.org/10.1016/j.spl.2012.07.020 
+        For now, only the epanechnikov and gaussian kernels are implemented.
+        """
+        
+        if self.xy is None or self.xystd is None:
+            raise TypeError('Needs to set up self.xy and self.xystd first.')
+            
+        if self.kernel == 'epanechnikov':
+            self.bandwidth = 2.1991 * self.xystd * self.xy.shape[1] ** (-1. / (2 + 4))
+        elif self.kernel == 'gaussian':
+            self.bandwidth = 1.0000 * self.xystd * self.xy.shape[1] ** (-1. / (2 + 4))
+        else:
+            raise NotImplementedError('Only Epanechnikov and Gaussian kernels are avaliable for now.')
+        # self.bandwidth = 0.4   # testing
+        
+    @_log_method
+    def construct_crude_mesh(self):
+        
+        if self.xy is None or self.xystd is None:
+            raise TypeError('Needs to set up self.xy and self.xystd first.')
+            
+        midx = np.median(self.xy[0, :])
+        midy = np.median(self.xy[1, :])
+        halfwidth = (self.thres_sigma + 1) * self.xystd
+        
+        self.mesh_crude, self.mesh_crude_shape = self._construct_kde_eval_mesh(midx, midy, halfwidth, self.kde_gridsize)
+        
+    @_log_method
+    def calculate_kde(self):
+        
+        if self.bandwidth is None:
+            raise TypeError('Needs to define bandwidth. Run calculate_bandwidth first.')
+            
+        self.kde = KernelDensity(kernel=self.kernel, bandwidth=self.bandwidth).fit(self.xy.T, sample_weight=self.w)
+        
+    @_log_method
+    def eval_crude_mesh(self):
+        
+        log_density = self.kde.score_samples(self.mesh_crude)
+        self.mesh_crude_z = np.exp(log_density)
+        
+    @_log_method
+    def construct_fine_mesh(self):
+        
+        if self.mesh_crude_z is None:
+            raise TypeError('Needs to calculate self.mesh_crude_z first.')
+            
+        midx = np.median(self.xy[0, :])
+        midy = np.median(self.xy[1, :])
+        
+        thres_multiplier = np.e ** (self.thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
+        thres_value = max(self.mesh_crude_z) / thres_multiplier
+        thres_idx = self.mesh_crude_z >= thres_value
+        vertice_x = self.mesh_crude[:, 0]
+        vertice_y = self.mesh_crude[:, 1]
+        refined_mesh_spacing = ((max(vertice_x[thres_idx]) - min(vertice_x[thres_idx])) + (max(vertice_y[thres_idx]) - min(vertice_y[thres_idx]))) / 2
+        halfwidth = refined_mesh_spacing
+        
+        self.mesh_fine, self.mesh_fine_shape = self._construct_kde_eval_mesh(midx, midy, halfwidth, self.kde_gridsize)
+        
+    @_log_method  
+    def eval_fine_mesh(self):
+        
+        log_density = self.kde.score_samples(self.mesh_fine)
+        self.mesh_fine_z = np.exp(log_density)
+        
+    @_log_method
+    def thresholding_fine_mesh(self):
+        
+        if self.mesh_fine_z is None:
+            raise TypeError('Needs to calculate self.mesh_fine_z first.')
+            
+        thres_multiplier = np.e ** (self.thres_sigma ** 2 / 2)   # normal dist., +- sigma number 
+        thres_value = max(self.mesh_fine_z) / thres_multiplier
+        self.mesh_fine_thres_idx = self.mesh_fine_z >= thres_value
+        
+    @_log_method
+    def calculate_metric_static_terrain(self):
+        
+        vertice_x = self.mesh_fine[:, 0]
+        vertice_y = self.mesh_fine[:, 1]
+        
+        self.metric_static_terrain_x = (max(vertice_x[self.mesh_fine_thres_idx]) - min(vertice_x[self.mesh_fine_thres_idx])) / 2
+        self.metric_static_terrain_y = (max(vertice_y[self.mesh_fine_thres_idx]) - min(vertice_y[self.mesh_fine_thres_idx])) / 2
+        
+        self.kdepeak_x = vertice_x[np.argmax(self.mesh_fine_z)]
+        self.kdepeak_y = vertice_y[np.argmax(self.mesh_fine_z)]
+        
+    def create_rectangle_patch(self, **rect_style):
+        
+        vertice_x = self.mesh_fine[:, 0]
+        vertice_y = self.mesh_fine[:, 1]
+        
+        if not rect_style:
+            rect_style = {'linewidth': 1, 'edgecolor': 'xkcd:red', 'facecolor': 'none'}            
+        rect = patches.Rectangle((min(vertice_x[self.mesh_fine_thres_idx]), min(vertice_y[self.mesh_fine_thres_idx])), 
+                                 2 * self.metric_static_terrain_x,
+                                 2 * self.metric_static_terrain_y, 
+                                 **rect_style)
+        return rect
+    
+    def gridding_kde_results(self):
+        
+        xg = np.reshape(self.mesh_fine[:, 0], self.mesh_fine_shape)
+        yg = np.reshape(self.mesh_fine[:, 1], self.mesh_fine_shape)
+        zg = np.reshape(self.mesh_fine_z, self.mesh_fine_shape)
+        return xg, yg, zg
+        
+    def plot_full_extent(self, ax=None, rect=None, **pt_style):
+        
+        ax = self._verify_axes(ax)
+        
+        if not pt_style:
+            pt_style = {        's': 6, 
+                            'color': 'xkcd:gray', 
+                        'edgecolor': None, 
+                            'alpha': 0.5}
+        ax.scatter(self.xy[0, :], self.xy[1, :], **pt_style)
+        
+        if self.metric_static_terrain_x:
+            
+            if not rect:
+                rect = self.create_rectangle_patch()
+            ax.add_patch(rect)
+            ax.set_title('$e_x$ = {:6.3f} | $e_y$ = {:6.3f} ({})'.format(self.metric_static_terrain_x, 
+                                                                         self.metric_static_terrain_y,
+                                                                         self.velocity_unit))
+            
+    def plot_zoomed_extent(self, ax=None, rect=None, base_colormap=None, **pt_style):
+        
+        ax = self._verify_axes(ax)
+        
+        if not base_colormap:
+            base_colormap = cramericm.bamako_r
+            # other good-looking colormaps:
+            # base_colormap = cramericm.turku_r
+            # base_colormap = cramericm.hawaii_r
+            # base_colormap = cramericm.batlow_r
+        
+        if not pt_style:
+            pt_style = {        's': 1, 
+                            'color': base_colormap(0), 
+                        'edgecolor': None, 
+                            'alpha': 0.5}
+        ax.scatter(self.xy[0, :], self.xy[1, :], **pt_style)
+        
+        if self.metric_static_terrain_x:
+        
+            xg, yg, zg = self.gridding_kde_results()
+            custom_cmap = self._customize_colormap(base_colormap)
+
+            ax.pcolormesh(xg, yg, zg, shading='nearest', cmap=custom_cmap)
+            ax.set_xlim(np.min(xg), np.max(xg))
+            ax.set_ylim(np.min(yg), np.max(yg))
+            
+            if not rect:
+                rect = self.create_rectangle_patch()
+            ax.add_patch(rect)
+            ax.set_title('$e_x$ = {:6.3f} | $e_y$ = {:6.3f} ({})'.format(self.metric_static_terrain_x, 
+                                                                         self.metric_static_terrain_y,
+                                                                         self.velocity_unit))
+        else:
+            warnings.warn("Unable to zoom in: need KDE estimates to determine zoom-in range.")
+            
+            
+    def static_terrain_analysis(self, plot=None, ax=None):
+        """
+        Entire workflow.
+        """
+        self.clip_static_area()
+        self.calculate_xystd()
+        self.calculate_bandwidth()
+        self.calculate_kde()
+        self.construct_crude_mesh()
+        self.eval_crude_mesh()
+        self.construct_fine_mesh()
+        self.eval_fine_mesh()
+        self.thresholding_fine_mesh()
+        self.calculate_metric_static_terrain()
+        
+        if plot == 'full':
+            self.plot_full_extent(ax=ax)
+        elif plot == 'zoomed':
+            self.plot_zoomed_extent(ax=ax)
+
+        
+        
+############### CLASS ENDS ##############
+
+
+
 
 def _clip(gtiff: str, shp: str, nodata: float=-9999.0):
     """
@@ -28,18 +377,6 @@ def _clip(gtiff: str, shp: str, nodata: float=-9999.0):
     except NotImplementedError:
         clipped_data = out_image[0]
     return clipped_data
-
-def test_static_terrain_velo(vxfile=None, vyfile=None, static_area=None):
-    
-    vx_full = _clip(vxfile, static_area)
-    vy_full = _clip(vyfile, static_area)
-    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
-    vx_full = vx_full[nonNaN_pts_idx]  # remove NaN points
-    vy_full = vy_full[nonNaN_pts_idx]  # remove NaN points
-
-    xy_full = np.vstack([vx_full, vy_full])
-    xy = xy_full
-    return xy
 
 def static_terrain_velo(vxfile=None, vyfile=None, wfile=None, static_area=None, thres_sigma=3.0, plot='full', ax=None, max_n=10000, peak_loc=False, nodata=-9999.0, kdegrid_size=100):
     """
