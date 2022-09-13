@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.stats import gaussian_kde
 from scipy.ndimage import map_coordinates, sobel
+# from scipy.signal import medfilt
+from scipy.signal import medfilt2d
 import geopandas as gpd
 from shapely.geometry import mapping
 import rasterio
@@ -37,8 +39,8 @@ class Velocity():
                  kde_gridsize:  int=60,
                 ):
         """
-        vxfile:        str, geotiff file path
-        vyfile:        str, geotiff file path
+        vxfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
+        vyfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
         wfile:         str, goetiff file path (as weight)
         static_area:   str, static area (shapefile) file path
         on_ice_area:   str, on-ice area (shapefile) file path
@@ -53,8 +55,13 @@ class Velocity():
         self.nodata = nodata
         self.velocity_unit = velocity_unit
         
-        self.xy = None
-        self.w = None
+        self.vx = None                  # 2-D, clipped vx
+        self.vy = None                  # 2-D, clipped vy
+        self.xy = None                  # np.vstack([flattened_vx, flattened_vy]) --> (1-D)-by-2 
+        self.w = None                   # 2-D, clipped weight data
+        self.w_flat = None              # 1-D, clipped & flattened weight data
+        self.dx = None
+        self.dy = None
         self.thres_sigma = thres_sigma
         
         self.kernel = 'epanechnikov'
@@ -73,6 +80,17 @@ class Velocity():
         self.metric_static_terrain_y = None
         self.kdepeak_x = None
         self.kdepeak_y = None
+                
+        self.flow_theta = None
+        self.exx = None
+        self.eyy = None
+        self.exy = None
+        self.flow_exx = None
+        self.flow_eyy = None
+        self.flow_exy = None
+        self.metric_alongflow_normal = None
+        self.metric_alongflow_shear = None
+        
         
     @staticmethod       
     def _clip(gtiff: str, shp: str, nodata: float=-9999.0):
@@ -88,7 +106,7 @@ class Velocity():
         geoms = shapes.geometry.values
         geoms = [mapping(geoms[i]) for i in range(len(geoms))]
         with rasterio.open(gtiff) as src:
-            out_image, out_transform = mask(src, geoms, crop=True, nodata=nodata)
+            out_image, out_transform = mask(src, geoms, crop=False, nodata=nodata)    # crop=True
         try:
             clipped_data = out_image.data[0]
         except NotImplementedError:
@@ -139,21 +157,24 @@ class Velocity():
         if self.vxfile is None or self.vyfile is None:
             raise TypeError('Vxfile and Vyfile are required.')
             
-        vx = self._clip(self.vxfile, self.static_area)
-        vy = self._clip(self.vyfile, self.static_area)
-        
         if int(self.nodata) != -9999:
             warnings.warn("NoData values other than -9999 has not implemented yet. Falling back to -9999.")
+            nodata_val = -9999.0
+        else:
+            nodata_val = self.nodata
             
-        nonNaN_pts_idx = np.logical_and(vx > -9998, vy > -9998)
-        vx = vx[nonNaN_pts_idx]  # remove NaN points
-        vy = vy[nonNaN_pts_idx]  # remove NaN points
+        self.vx = self._clip(self.vxfile, self.static_area, nodata=nodata_val)
+        self.vy = self._clip(self.vyfile, self.static_area, nodata=nodata_val)
+        
+        nonNaN_pts_idx = np.logical_and(self.vx > -9998, self.vy > -9998)
+        vx = self.vx[nonNaN_pts_idx]  # remove NaN points; flatten the array as well
+        vy = self.vy[nonNaN_pts_idx]  # remove NaN points; flatten the array as well
         
         if self.wfile is not None:
-            w = self._clip(self.wfile, self.static_area)
-            w = w[nonNaN_pts_idx]  # remove NaN points
+            self.w = self._clip(self.wfile, self.static_area, nodata=nodata_val)
+            w = self.w[nonNaN_pts_idx]  # remove NaN points
             w = np.where(w < 0, 0, w)  # force negative w to zero
-            self.w = w
+            self.w_flat = w
             
         self.xy = np.vstack([vx, vy])
 
@@ -203,7 +224,7 @@ class Velocity():
         if self.bandwidth is None:
             raise TypeError('Needs to define bandwidth. Run calculate_bandwidth first.')
             
-        self.kde = KernelDensity(kernel=self.kernel, bandwidth=self.bandwidth).fit(self.xy.T, sample_weight=self.w)
+        self.kde = KernelDensity(kernel=self.kernel, bandwidth=self.bandwidth).fit(self.xy.T, sample_weight=self.w_flat)
         
     @_log_method
     def eval_crude_mesh(self):
@@ -247,18 +268,23 @@ class Velocity():
         self.mesh_fine_thres_idx = self.mesh_fine_z >= thres_value
         
     @_log_method
-    def calculate_metric_static_terrain(self):
+    def thresholding_metric(self, metric: int=1):
         
         vertice_x = self.mesh_fine[:, 0]
         vertice_y = self.mesh_fine[:, 1]
-        
-        self.metric_static_terrain_x = (max(vertice_x[self.mesh_fine_thres_idx]) - min(vertice_x[self.mesh_fine_thres_idx])) / 2
-        self.metric_static_terrain_y = (max(vertice_y[self.mesh_fine_thres_idx]) - min(vertice_y[self.mesh_fine_thres_idx])) / 2
-        
+
         self.kdepeak_x = vertice_x[np.argmax(self.mesh_fine_z)]
         self.kdepeak_y = vertice_y[np.argmax(self.mesh_fine_z)]
         
-    def create_rectangle_patch(self, **rect_style):
+        if metric == 1:
+            self.metric_static_terrain_x = (max(vertice_x[self.mesh_fine_thres_idx]) - min(vertice_x[self.mesh_fine_thres_idx])) / 2
+            self.metric_static_terrain_y = (max(vertice_y[self.mesh_fine_thres_idx]) - min(vertice_y[self.mesh_fine_thres_idx])) / 2
+        elif metric == 2:
+            self.metric_alongflow_normal = (max(vertice_x[self.mesh_fine_thres_idx]) - min(vertice_x[self.mesh_fine_thres_idx])) / 2
+            self.metric_alongflow_shear  = (max(vertice_y[self.mesh_fine_thres_idx]) - min(vertice_y[self.mesh_fine_thres_idx])) / 2
+
+        
+    def create_rectangle_patch(self, var_x, var_y, **rect_style):
         
         vertice_x = self.mesh_fine[:, 0]
         vertice_y = self.mesh_fine[:, 1]
@@ -266,8 +292,8 @@ class Velocity():
         if not rect_style:
             rect_style = {'linewidth': 2, 'edgecolor': 'xkcd:cranberry', 'facecolor': 'none', 'alpha': 0.7}            
         rect = patches.Rectangle((min(vertice_x[self.mesh_fine_thres_idx]), min(vertice_y[self.mesh_fine_thres_idx])), 
-                                 2 * self.metric_static_terrain_x,
-                                 2 * self.metric_static_terrain_y, 
+                                 2 * var_x,
+                                 2 * var_y, 
                                  **rect_style)
         return rect
     
@@ -277,8 +303,34 @@ class Velocity():
         yg = np.reshape(self.mesh_fine[:, 1], self.mesh_fine_shape)
         zg = np.reshape(self.mesh_fine_z, self.mesh_fine_shape)
         return xg, yg, zg
+    
+    def _determine_plot_variables(self, metric: int=1):
+        """
+        See self.plot_full_extent for explanation.
+        """
+        if metric == 1:
+            var_x = self.metric_static_terrain_x
+            var_y = self.metric_static_terrain_y
+            lbl_x = '$e_x$'
+            lbl_y = '$e_y$'
+            unit = self.velocity_unit
+        elif metric == 2:
+            var_x = self.metric_alongflow_normal
+            var_y = self.metric_alongflow_shear
+            lbl_x = '$\epsilon_{xx}$'
+            lbl_y = '$\epsilon_{xy}$'
+            unit = '1/m'
+        else:
+            raise NotImplementedError('Metric can only be 1 (static terrain) or 2 (along-flow strain rate).')
+            
+        return var_x, var_y, lbl_x, lbl_y, unit
         
-    def plot_full_extent(self, ax=None, rect=None, **pt_style):
+    def plot_full_extent(self, ax=None, rect=None, metric: int=1, **pt_style):
+        """
+        metric: which metric to be plotted.
+            1: static terrain
+            2: along-flow strain rate
+        """
         
         ax = self._verify_axes(ax)
         
@@ -288,17 +340,27 @@ class Velocity():
                         'edgecolor': None, 
                             'alpha': 0.5}
         ax.scatter(self.xy[0, :], self.xy[1, :], **pt_style)
+        ax.axis('equal')
         
-        if self.metric_static_terrain_x:
+        var_x, var_y, lbl_x, lbl_y, unit = self._determine_plot_variables(metric=metric)
+        
+        if var_x:
             
             if not rect:
-                rect = self.create_rectangle_patch()
+                rect = self.create_rectangle_patch(var_x, var_y)
             ax.add_patch(rect)
-            ax.set_title('$e_x$ = {:6.3f} | $e_y$ = {:6.3f} ({})'.format(self.metric_static_terrain_x, 
-                                                                         self.metric_static_terrain_y,
-                                                                         self.velocity_unit))
+            ax.set_title('{} = {:6.3f} | {} = {:6.3f} ({})'.format(lbl_x,
+                                                                   var_x,
+                                                                   lbl_y,
+                                                                   var_y,
+                                                                   unit))
             
-    def plot_zoomed_extent(self, ax=None, rect=None, base_colormap=None, **pt_style):
+    def plot_zoomed_extent(self, ax=None, rect=None, base_colormap=None, metric: int=1, **pt_style):
+        """
+        metric: which metric to be plotted.
+            1: static terrain
+            2: along-flow strain rate
+        """
         
         ax = self._verify_axes(ax)
         
@@ -315,8 +377,11 @@ class Velocity():
                         'edgecolor': None, 
                             'alpha': 0.5}
         ax.scatter(self.xy[0, :], self.xy[1, :], **pt_style)
+        ax.axis('equal')
         
-        if self.metric_static_terrain_x:
+        var_x, var_y, lbl_x, lbl_y, unit = self._determine_plot_variables(metric=metric)
+        
+        if var_x:
         
             xg, yg, zg = self.gridding_kde_results()
             custom_cmap = self._customize_colormap(base_colormap)
@@ -326,11 +391,13 @@ class Velocity():
             ax.set_ylim(np.min(yg), np.max(yg))
             
             if not rect:
-                rect = self.create_rectangle_patch()
+                rect = self.create_rectangle_patch(var_x, var_y)
             ax.add_patch(rect)
-            ax.set_title('$e_x$ = {:6.3f} | $e_y$ = {:6.3f} ({})'.format(self.metric_static_terrain_x, 
-                                                                         self.metric_static_terrain_y,
-                                                                         self.velocity_unit))
+            ax.set_title('{} = {:6.3f} | {} = {:6.3f} ({})'.format(lbl_x,
+                                                                   var_x,
+                                                                   lbl_y,
+                                                                   var_y,
+                                                                   unit))
         else:
             warnings.warn("Unable to zoom in: need KDE estimates to determine zoom-in range.")
             
@@ -339,6 +406,8 @@ class Velocity():
         """
         Entire workflow.
         """
+        
+        metric = 1
         self.clip_static_area()
         self.calculate_xystd()
         self.calculate_bandwidth()
@@ -348,12 +417,240 @@ class Velocity():
         self.construct_fine_mesh()
         self.eval_fine_mesh()
         self.thresholding_fine_mesh()
-        self.calculate_metric_static_terrain()
+        self.thresholding_metric(metric=metric)
         
         if plot == 'full':
-            self.plot_full_extent(ax=ax)
+            self.plot_full_extent(ax=ax, metric=metric)
         elif plot == 'zoomed':
-            self.plot_zoomed_extent(ax=ax)
+            self.plot_zoomed_extent(ax=ax, metric=metric)
+            
+            
+    @staticmethod
+    def _calculate_strain_rate(xx: np.array, yy: np.array, dx: float=1., dy: float=1.):
+        """
+        xx: 2-D Vx grid (Cartesian convention; Vx[0, 0] is the lower-left corner)
+        yy: 2-D Vy grid (Cartesian convention; Vy[0, 0] is the lower-left corner)
+        dx: grid spacing along x
+        dy: grid spacing along y
+        
+        Sobel kernel to be convoluted with xx:
+        | 1 0 -1 |
+        | 2 0 -2 |
+        | 1 0 -1 |
+        
+        Sobel kernel to be convoluted with yy:
+        |  1  2  1 |
+        |  0  0  0 |
+        | -1 -2 -1 |
+        
+        Edge mode is set to constant, padding with np.nan. 
+        """
+        # These four are pixel-based gradient. (the same unit from velocity)
+        duxdx = sobel(xx, axis=1, mode='constant', cval=np.nan)
+        duxdy = sobel(xx, axis=0, mode='constant', cval=np.nan)
+        duydx = sobel(yy, axis=1, mode='constant', cval=np.nan)
+        duydy = sobel(yy, axis=0, mode='constant', cval=np.nan)
+        
+        # Strain rate = pixel-based gradient divied by pixel spacing. It has the unit of (Velocity * L^-1).
+        exx = duxdx / dx                         # normal strain rate along x axis
+        eyy = duydy / dy                         # normal strain rate along y axis
+        exy = 0.5 * (duxdy / dy + duydx / dx)    #  shear strain rate at the x-y coordinates
+        
+        return exx, eyy, exy
+
+    @staticmethod
+    def _rotate_strain_rate(exx: np.array, eyy: np.array, exy: np.array, theta: [float, np.array]):
+        """
+        theta can be a single float value or an array with the same size of exx, eyy, and exy.
+        """
+        
+        exx_rot = exx * np.cos(theta) ** 2 + eyy * np.sin(theta) ** 2 + exy * np.sin(2 * theta)
+        eyy_rot = exx * np.sin(theta) ** 2 + eyy * np.cos(theta) ** 2 - exy * np.sin(2 * theta)
+        exy_rot = 0.5 * (eyy - exx) * np.sin(2 * theta) +  exy * np.cos(2 * theta)
+        return exx_rot, eyy_rot, exy_rot
+    
+    @staticmethod
+    def _principle_strain_rate(exx: np.array, eyy: np.array, exy: np.array):
+        """
+        find the principle strain rates (e1 & e2) and their rotating angle from exx and eyy. 
+        """
+        
+        principle_theta = 0.5 * np.arctan(2 * exy / (exx - eyy))
+        e1 = 0.5 * (exx + eyy) + (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
+        e2 = 0.5 * (exx + eyy) - (exy ** 2 + 0.25 * (exx - eyy) ** 2 ) ** 0.5
+        return e1, e2, principle_theta
+
+
+    @_log_method
+    def clip_on_ice_area(self):
+        """
+
+        """
+        
+        if self.vxfile is None or self.vyfile is None:
+            raise TypeError('Vxfile and Vyfile are required.')
+            
+        if int(self.nodata) != -9999:
+            warnings.warn("NoData values other than -9999 has not implemented yet. Falling back to -9999.")
+            nodata_val = -9999.0
+        else:
+            nodata_val = self.nodata
+            
+        self.vx = self._clip(self.vxfile, self.on_ice_area, nodata=nodata_val)
+        self.vy = self._clip(self.vyfile, self.on_ice_area, nodata=nodata_val)
+        
+            
+        nonNaN_pts_idx = np.logical_and(self.vx > -9998, self.vy > -9998)
+        self.vx[~nonNaN_pts_idx] = np.nan  # change all NoData points to np.nan
+        self.vy[~nonNaN_pts_idx] = np.nan  # change all NoData points to np.nan
+        
+        if self.wfile is not None:
+            self.w = self._clip(self.wfile, self.on_ice_area, nodata=nodata_val)
+            self.w[~nonNaN_pts_idx] = np.nan  # change all NoData points to np.nan
+            self.w = np.where(self.w < 0, 0, self.w)  # force negative w to zero
+            
+    @_log_method
+    def get_grid_spacing(self):
+        """
+        NOTE: We assume Vx and Vy have the SAME SIZE and do not check if this is true.
+        """
+        
+        if self.vxfile is None or self.vyfile is None:
+            raise TypeError('Vxfile and Vyfile are required.')
+            
+        with rasterio.open(self.vxfile) as srcx:
+            transform = srcx.transform
+            self.dx = transform[0]
+            self.dy = abs(transform[4])
+
+    @_log_method
+    def calculate_flow_theta(self, kernel_size=None):
+        """
+        flow_theta is along-flow direction in radians, counterclockwise from the east (i.e. from the conventional x-axis)
+            which is smoothed by a median filter with a default or provided kernel size.
+        The smoothing is to prevent strain rate projected onto an erroneous flow direction, 
+            which can happen if the average flow speed is low.   
+        """
+        
+        if self.vx is None or self.vy is None:
+            raise TypeError('Either Vxfile and Vyfile are required or the clipping has to be performed first.')
+            
+        with rasterio.open(self.vxfile) as srcx, rasterio.open(self.vyfile) as srcy:
+            vx_noclip = srcx.read(1)
+            vy_noclip = srcy.read(1)
+            
+        flow_theta = np.arctan2(vy_noclip, vx_noclip)    
+        
+        if not kernel_size:
+            if self.dx:
+                kernel_size = 1500 / self.dx
+                kernel_size = int(kernel_size // 2 * 2 + 1)    # round to the closest odd integer
+                kernel_size = 35 if kernel_size > 35 else kernel_size    # kernel size is capped at 35 for computing efficiency
+            else:
+                warnings.warn("Cannot determine kernel size based on pixel spacing. Use default kernel size = 25.")
+                kernel_size = 25
+                
+        flow_theta = medfilt2d(flow_theta, kernel_size)
+        flow_theta[np.isnan(self.vx)] = np.nan
+        
+        self.flow_theta = flow_theta
+
+        
+    @_log_method
+    def calculate_strain_rate(self, pixel_based=False, rotate_angle: float=None):
+        """
+        pixel_based lets you to choose to calculate distance-based strain rate (when it sets to False) or pixel-based strain rate.
+        rotate_angle lets you set up a single angle to rotate strain field. If omitted, self.flow_theta will be used.
+        """
+        
+        # If Vx and Vy are read from geotiff, they follow the image convention; i.e., Vx[0, 0] is the upper-left corner.
+        # We have to flip these array so that it follows the Cartesian convention before the Sobel operator is applied.
+        vx_flipud = np.flipud(self.vx)
+        vy_flipud = np.flipud(self.vy)
+        
+        if pixel_based:
+            exx, eyy, exy = self._calculate_strain_rate(vx_flipud, vy_flipud)
+        else:
+            exx, eyy, exy = self._calculate_strain_rate(vx_flipud, vy_flipud, dx=self.dx, dy=self.dy)
+            
+        # flip the output back to the image convention, and save them to the object
+        self.exx = np.flipud(exx)
+        self.eyy = np.flipud(eyy)
+        self.exy = np.flipud(exy)
+        
+        if not rotate_angle:
+            rotate_angle = self.flow_theta
+        
+        self.exx_flow, self.eyy_flow, self.exy_flow = self._rotate_strain_rate(self.exx, self.eyy, self.exy, rotate_angle)
+
+    @_log_method
+    def prep_strain_rate_kde(self):
+        """
+        flatten exx_flow, eyy_flow, and w.
+        """
+        
+        nonNaN_pts_idx = np.logical_and(~np.isnan(self.exx_flow), ~np.isnan(self.exy_flow))        
+        x = self.exx_flow[nonNaN_pts_idx]
+        y = self.exy_flow[nonNaN_pts_idx]
+        self.xy = np.vstack([x, y])
+        
+        if self.w is not None:
+            self.w_flat = self.w[nonNaN_pts_idx]
+            
+    def plot_strain_map(self, ax=None, base_colormap=None):
+        
+        ax = self._verify_axes(ax)
+        
+        if not base_colormap:
+            base_colormap = cramericm.bamako_r
+        
+        saturation_radius = np.sqrt(self.metric_alongflow_normal * self.metric_alongflow_shear)
+        along_flow_strain_mag = np.sqrt(self.exx_flow ** 2 + self.exy_flow ** 2)
+        
+        ax.imshow(along_flow_strain_mag, vmin=0, vmax=saturation_radius)
+        
+        
+    
+    
+    
+    def longitudinal_shear_analysis(self, plot=None, ax=None):
+        """
+        Entire workflow.
+        """
+        
+        metric=2
+        self.clip_on_ice_area()
+        self.get_grid_spacing()
+        self.calculate_flow_theta()
+        self.calculate_strain_rate()
+        
+        ######## TESTING ########
+        self.prep_strain_rate_kde()
+        # e1, e2, prin_theta = self._principle_strain_rate(self.exx, self.eyy, self.exy)
+        # e1 = e1[~np.isnan(e1)]
+        # e2 = e2[~np.isnan(e2)]
+        # # x = np.minimum(np.abs(e1), np.abs(e2))
+        # x = np.where(np.abs(e1) < np.abs(e2), e1, e2)
+        # exx_rot = self.exx_rot[~np.isnan(self.exx_rot)]
+        # eyy_rot = self.eyy_rot[~np.isnan(self.eyy_rot)]
+        # # y = np.maximum(np.abs(exx_rot), np.abs(eyy_rot))
+        # y = np.where(np.abs(exx_rot) < np.abs(eyy_rot), eyy_rot, exx_rot)
+        # self.xy = np.vstack([x, y])
+
+        self.calculate_xystd()
+        self.calculate_bandwidth()
+        self.calculate_kde()
+        self.construct_crude_mesh()
+        self.eval_crude_mesh()
+        self.construct_fine_mesh()
+        self.eval_fine_mesh()
+        self.thresholding_fine_mesh()
+        self.thresholding_metric(metric=metric)
+        
+        if plot == 'full':
+            self.plot_full_extent(ax=ax, metric=metric)
+        elif plot == 'zoomed':
+            self.plot_zoomed_extent(ax=ax, metric=metric)
 
         
         
@@ -708,24 +1005,7 @@ def plot_off_ice_errors(vx, vy, z, thres_idx, ax=None, zoom=True):
         ax.set_xlim((min(vx[idx]), max(vx[idx])))
         ax.set_ylim((min(vy[idx]), max(vy[idx])))
     
-def sobel_test(vxfile=None, vyfile=None):
-    with rasterio.open(vxfile) as srcx, rasterio.open(vyfile) as srcy:
-        vx_full = srcx.read(1)
-        vy_full = srcy.read(1)
     
-    nonNaN_pts_idx = np.logical_and(vx_full > -9998, vy_full > -9998)
-    vx_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
-    vy_full[~nonNaN_pts_idx] = np.nan  # replace NaN points with np.nan
-        
-    mag_full = np.hypot(vx_full, vy_full)
-    # Looks like the axis is reversed here
-    smx = sobel(mag_full,axis=0,mode='constant')
-    smy = sobel(mag_full,axis=1,mode='constant')
-    # Get square root of sum of squares
-    sobelm = np.hypot(smx,smy)
-    sobelaz = np.arctan(smy / smx)
-    
-    return smx, smy, sobelm, sobelaz
     
 def sobel_test2(vxfile=None, vyfile=None):
     '''
