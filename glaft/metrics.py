@@ -311,14 +311,14 @@ class Velocity():
         if metric == 1:
             var_x = self.metric_static_terrain_x
             var_y = self.metric_static_terrain_y
-            lbl_x = '$e_x$'
-            lbl_y = '$e_y$'
+            lbl_x = '$\delta_u$'
+            lbl_y = '$\delta_v$'
             unit = self.velocity_unit
         elif metric == 2:
             var_x = self.metric_alongflow_normal
             var_y = self.metric_alongflow_shear
-            lbl_x = '$\epsilon_{xx}$'
-            lbl_y = '$\epsilon_{xy}$'
+            lbl_x = "$\delta_{x'x'}$"
+            lbl_y = "$\delta_{x'y'}$"
             unit = '1/m'
         else:
             raise NotImplementedError('Metric can only be 1 (static terrain) or 2 (along-flow strain rate).')
