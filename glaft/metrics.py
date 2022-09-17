@@ -597,18 +597,24 @@ class Velocity():
         if self.w is not None:
             self.w_flat = self.w[nonNaN_pts_idx]
             
-    def plot_strain_map(self, ax=None, base_colormap=None):
+    def plot_strain_map(self, ax=None, base_colormap=None, vmax=None):
         
         ax = self._verify_axes(ax)
         
         if not base_colormap:
-            base_colormap = cramericm.bamako_r
+            base_colormap = cramericm.bamako
         
         saturation_radius = np.sqrt(self.metric_alongflow_normal * self.metric_alongflow_shear)
         along_flow_strain_mag = np.sqrt(self.exx_flow ** 2 + self.exy_flow ** 2)
         
-        ax.imshow(along_flow_strain_mag, vmin=0, vmax=saturation_radius)
+        if not vmax:
+            vmax = saturation_radius
         
+        img_mappable = ax.imshow(along_flow_strain_mag, vmin=0, vmax=vmax, cmap=base_colormap)
+        ax.xaxis.set_visible(False)
+        ax.yaxis.set_visible(False)
+        
+        return img_mappable
         
     
     
