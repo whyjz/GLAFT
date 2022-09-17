@@ -28,7 +28,7 @@ jobs:
         conda env create -f environment.yml
     - name: Build book
       run: |
-        source activate gftt
+        source activate glaft
         jupyter-book build ./jupyter-book
     - name: Deploy to gh-pages
       if: github.ref == 'refs/heads/master'
