@@ -78,8 +78,10 @@ class Velocity():
         self.mesh_fine_thres_idx = None
         self.metric_static_terrain_x = None
         self.metric_static_terrain_y = None
+        
         self.kdepeak_x = None
         self.kdepeak_y = None
+        self.outlier_percent = None
                 
         self.flow_theta = None
         self.exx = None
@@ -282,6 +284,28 @@ class Velocity():
         elif metric == 2:
             self.metric_alongflow_normal = (max(vertice_x[self.mesh_fine_thres_idx]) - min(vertice_x[self.mesh_fine_thres_idx])) / 2
             self.metric_alongflow_shear  = (max(vertice_y[self.mesh_fine_thres_idx]) - min(vertice_y[self.mesh_fine_thres_idx])) / 2
+            
+    @_log_method
+    def cal_outlier_percent(self):
+        
+        vertice_x = self.mesh_fine[:, 0]
+        vertice_y = self.mesh_fine[:, 1]
+        
+        x_lb = min(vertice_x[self.mesh_fine_thres_idx])
+        x_ub = max(vertice_x[self.mesh_fine_thres_idx])
+        y_lb = min(vertice_y[self.mesh_fine_thres_idx])
+        y_ub = max(vertice_y[self.mesh_fine_thres_idx])
+        
+        x = self.xy[0, :]
+        y = self.xy[1, :]
+        
+        x_outside_idx = np.logical_or(x < x_lb, x > x_ub)
+        y_outside_idx = np.logical_or(y < y_lb, y > y_ub)
+        xy_outside_idx = np.logical_or(x_outside_idx, y_outside_idx)
+        
+        self.outlier_percent = sum(xy_outside_idx) / x.size
+        
+            
 
         
     def create_rectangle_patch(self, var_x, var_y, **rect_style):
@@ -418,6 +442,7 @@ class Velocity():
         self.eval_fine_mesh()
         self.thresholding_fine_mesh()
         self.thresholding_metric(metric=metric)
+        self.cal_outlier_percent()
         
         if plot == 'full':
             self.plot_full_extent(ax=ax, metric=metric)
@@ -616,8 +641,7 @@ class Velocity():
         
         return img_mappable
         
-    
-    
+
     
     def longitudinal_shear_analysis(self, plot=None, ax=None):
         """
@@ -629,20 +653,7 @@ class Velocity():
         self.get_grid_spacing()
         self.calculate_flow_theta()
         self.calculate_strain_rate()
-        
-        ######## TESTING ########
         self.prep_strain_rate_kde()
-        # e1, e2, prin_theta = self._principle_strain_rate(self.exx, self.eyy, self.exy)
-        # e1 = e1[~np.isnan(e1)]
-        # e2 = e2[~np.isnan(e2)]
-        # # x = np.minimum(np.abs(e1), np.abs(e2))
-        # x = np.where(np.abs(e1) < np.abs(e2), e1, e2)
-        # exx_rot = self.exx_rot[~np.isnan(self.exx_rot)]
-        # eyy_rot = self.eyy_rot[~np.isnan(self.eyy_rot)]
-        # # y = np.maximum(np.abs(exx_rot), np.abs(eyy_rot))
-        # y = np.where(np.abs(exx_rot) < np.abs(eyy_rot), eyy_rot, exx_rot)
-        # self.xy = np.vstack([x, y])
-
         self.calculate_xystd()
         self.calculate_bandwidth()
         self.calculate_kde()
@@ -652,6 +663,7 @@ class Velocity():
         self.eval_fine_mesh()
         self.thresholding_fine_mesh()
         self.thresholding_metric(metric=metric)
+        self.cal_outlier_percent()
         
         if plot == 'full':
             self.plot_full_extent(ax=ax, metric=metric)
