@@ -82,6 +82,7 @@ class Velocity():
         self.kdepeak_x = None
         self.kdepeak_y = None
         self.outlier_percent = None
+        self.invalid_percent = None
                 
         self.flow_theta = None
         self.exx = None
@@ -303,7 +304,7 @@ class Velocity():
         y_outside_idx = np.logical_or(y < y_lb, y > y_ub)
         xy_outside_idx = np.logical_or(x_outside_idx, y_outside_idx)
         
-        self.outlier_percent = sum(xy_outside_idx) / x.size
+        self.outlier_percent = np.sum(xy_outside_idx) / x.size
         
             
 
@@ -669,6 +670,34 @@ class Velocity():
             self.plot_full_extent(ax=ax, metric=metric)
         elif plot == 'zoomed':
             self.plot_zoomed_extent(ax=ax, metric=metric)
+            
+            
+    @_log_method
+    def cal_invalid_pixel_percent(self):
+        """
+  
+        """
+        
+        if self.vxfile is None or self.vyfile is None:
+            raise TypeError('Vxfile and Vyfile are required.')
+            
+        with rasterio.open(self.vxfile) as srcx, rasterio.open(self.vyfile) as srcy:
+            vx_noclip = srcx.read(1)
+            vy_noclip = srcy.read(1)
+            
+        if np.isnan(self.nodata):
+            vx_invalid_idx = np.isnan(vx_noclip)
+            vy_invalid_idx = np.isnan(vy_noclip)
+        elif int(self.nodata) == 0:
+            vx_invalid_idx = np.abs(vx_noclip) <= np.finfo(float).eps
+            vy_invalid_idx = np.abs(vy_noclip) <= np.finfo(float).eps
+        else:   # e.g. -9999, -99999,...
+            vx_invalid_idx = vx_noclip < self.nodata + 1
+            vy_invalid_idx = vy_noclip < self.nodata + 1
+            
+        vxy_invalid_idx = np.logical_or(vx_invalid_idx, vy_invalid_idx)
+        
+        self.invalid_percent = np.sum(vxy_invalid_idx) / vxy_invalid_idx.size
 
         
         
