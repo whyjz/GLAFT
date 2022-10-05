@@ -344,7 +344,7 @@ class Velocity():
             var_y = self.metric_alongflow_shear
             lbl_x = "$\delta_{x'x'}$"
             lbl_y = "$\delta_{x'y'}$"
-            unit = '1/m'
+            unit = '1/' + self.velocity_unit.split('/')[-1]
         else:
             raise NotImplementedError('Metric can only be 1 (static terrain) or 2 (along-flow strain rate).')
             
