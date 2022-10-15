@@ -1,7 +1,7 @@
-title          : GFTT
+title          : GLAFT
 author         : Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez
 copyright      : "2022"  
-logo           : tentative.png
+logo           : glaft_cover_img.png
 only_build_toc_files: true
 
 html:
