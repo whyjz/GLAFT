@@ -1,7 +1,8 @@
 title          : GFTT
-author         : Whyjay Zheng, Shashank Bhushan, Max Van Wyk de Vries, Will Kochtitzky, David Shean
-copyright      : "2021"  
+author         : Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez
+copyright      : "2022"  
 logo           : tentative.png
+only_build_toc_files: true
 
 html:
   use_edit_page_button: true
