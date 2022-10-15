@@ -13,7 +13,7 @@ Corresponding author and email: Whyjay Zheng (whyjz@berkeley.edu)
 
 ## Article link
 
-TBD. (Our AGU 2021 poster is available at doi:10.1002/essoar.10509355.1)
+TBD. (Our AGU 2021 poster is available at https://doi.org/10.1002/essoar.10509355.1)
 
 ## Content of this Jupyter Book
 

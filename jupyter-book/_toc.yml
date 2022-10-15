@@ -9,6 +9,7 @@ parts:
 - caption: Supplementary material
   numbered: false
   chapters:
+  - file: notebooks/0_velocity_plots/TableS1
   - file: notebooks/1_static_area_error/metric_static-area-velo-full-analysis.ipynb
   - file: notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.ipynb
   - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.ipynb
