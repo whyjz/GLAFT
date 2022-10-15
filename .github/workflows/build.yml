@@ -15,21 +15,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: s-weigand/setup-conda@v1
+    - name: Set up Python 3.8 and conda/mamba
+      uses: conda-incubator/setup-miniconda@v2
       with:
-        update-conda: true
-        conda-channels: conda-forge
         python-version: 3.8
-
-    - name: Install dependencies
+        mamba-version: "*"
+        channels: conda-forge
+        activate-environment: glaft
+        environment-file: environment.yml
+        use-mamba: true
+        
+    - name: Test environment
+      shell: bash -l {0}
       run: |
-        python --version
-        conda env create -f environment.yml
+        conda info
+        conda list
+
     - name: Build book
       run: |
-        source activate glaft
         jupyter-book build ./jupyter-book
+        
     - name: Deploy to gh-pages
       if: github.ref == 'refs/heads/master'
       uses: peaceiris/actions-gh-pages@v3.8.0
