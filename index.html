@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gftt: an open-source tool for evaluating remotely sensed glacier velocity products &#8212; GFTT</title>
+    <title>GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images” &#8212; GFTT</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/index.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)" href="notebooks/multiple_metrics/oie-vs-sobel.html" />
+    <link rel="next" title="GLAFT User Manual" href="glaft_user_manual.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -94,18 +94,35 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 current">
   <a class="reference internal" href="#">
-   Gftt: an open-source tool for evaluating remotely sensed glacier velocity products
+   GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”
   </a>
  </li>
 </ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks/multiple_metrics/oie-vs-sobel.html">
-   Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)
+  <a class="reference internal" href="glaft_user_manual.html">
+   GLAFT User Manual
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary material
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebooks/1_static_area_error/metric_static-area-velo-full-analysis.html">
+   Metric #1: Off-ice errors
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks/synthetic_displacement/validation_synthetic.html">
+  <a class="reference internal" href="notebooks/6_synthetic_offset/validation_synthetic.html">
    Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth
   </a>
  </li>
@@ -199,18 +216,13 @@ const thebe_selector_output = ".output, .cell_output"
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#abstract">
-   Abstract
+  <a class="reference internal nav-link" href="#article-link">
+   Article link
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plain-language-summary">
-   Plain language summary
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-to-cite">
-   How to cite
+  <a class="reference internal nav-link" href="#content-of-this-jupyter-book">
+   Content of this Jupyter Book
   </a>
  </li>
 </ul>
@@ -223,7 +235,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Gftt: an open-source tool for evaluating remotely sensed glacier velocity products</h1>
+                <h1>GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -234,18 +246,13 @@ const thebe_selector_output = ".output, .cell_output"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#abstract">
-   Abstract
+  <a class="reference internal nav-link" href="#article-link">
+   Article link
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plain-language-summary">
-   Plain language summary
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-to-cite">
-   How to cite
+  <a class="reference internal nav-link" href="#content-of-this-jupyter-book">
+   Content of this Jupyter Book
   </a>
  </li>
 </ul>
@@ -257,27 +264,27 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="gftt-an-open-source-tool-for-evaluating-remotely-sensed-glacier-velocity-products">
-<h1>Gftt: an open-source tool for evaluating remotely sensed glacier velocity products<a class="headerlink" href="#gftt-an-open-source-tool-for-evaluating-remotely-sensed-glacier-velocity-products" title="Permalink to this headline">¶</a></h1>
-<p>Whyjay Zheng<sup>1</sup>, Shashank Bhushan<sup>2</sup>, Maximillian S Van Wyk de Vries<sup>3</sup>, William Hardy Kochtitzky<sup>4</sup>, and David E Shean<sup>2</sup></p>
-<p><sup>1</sup>University of California, Berkeley, Statistics, Berkeley, CA, United States</p>
-<p><sup>2</sup>University of Washington, Civil &amp; Environmental Engineering, Seattle, WA, United States</p>
-<p><sup>3</sup>University of Minnesota Twin Cities, Department of Earth and Environmental Sciences and Saint Anthony Falls Laboratory, Minneapolis, United States</p>
-<p><sup>4</sup>University of Ottawa, Department of Geography, Environment and Geomatics, Ottawa, Canada</p>
-<p>Corresponding author and email: Whyjay Zheng (<a class="reference external" href="mailto:whyjz&#37;&#52;&#48;berkeley&#46;edu">whyjz<span>&#64;</span>berkeley<span>&#46;</span>edu</a>)</p>
-<div class="section" id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
-<p>Glacier velocity reflects the dynamics of ice flow, and its change over time serves a key role in predicting the future sea-level rise. Glacier feature tracking (also known as offset tracking or pixel tracking) is one of the most widely-used approaches for mapping glacier velocity using remote sensing data. However, running this workflow relies on multiple empirical parameter choices such as correlation kernel selection, image filter, and template size. As each target glacier area has different data availability, surface feature density, and ice flow width, there is no one-size-fits-all parameter set for glacier feature tracking.</p>
-<p>Finding an ideal parameter set for a given glacier requires quantitative and objective metrics to determine the quality of resulting velocity maps. The objective of our Glacier feature tracking test (gftt) project is both to devise a set of widely applicable metrics and to build a Python-based tool for calculating them. These metrics can be thus used for comparing the performance of different tracking parameters. We use Kaskawulsh glacier, Canada, as a test case to compare the velocity mapping results using Landsat 8 and Sentinel-2 images, various software packages (including Auto-RIFT, CARST, GIV, and vmap), and a range of input parameters. To begin with, we calculate random error over stable terrain, a metric that has been used for evaluating the uncertainty of the velocity products. We develop two other workflows for exploring new metrics and validating existing metrics, including the test with synthetic pixel offsets and the comparison with GNSS records. These existing and new metrics, calculated through the gftt software, will help determine optimal parameter sets for feature tracking of Kaskawulsh glacier and any other glacier around the world.</p>
-<p>This work is supported by the NSF Earth Cube Program under awards 1928406, 1928374.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="glaft-user-manual-other-supplementary-material-for-statistics-and-flow-dynamics-based-assessments-of-feature-tracked-glacier-velocities-derived-from-satellite-images">
+<h1>GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”<a class="headerlink" href="#glaft-user-manual-other-supplementary-material-for-statistics-and-flow-dynamics-based-assessments-of-feature-tracked-glacier-velocities-derived-from-satellite-images" title="Permalink to this headline">¶</a></h1>
+<p>Whyjay Zheng<sup>1</sup>, Shashank Bhushan<sup>2</sup>, Maximillian Van Wyk De Vries<sup>3,4,5</sup>, William Kochtitzky<sup>6</sup>, David Shean<sup>2</sup>, Luke Copland<sup>6</sup>, Christine Dow<sup>7</sup>, Fernando Pérez<sup>1</sup></p>
+<p><sup>1</sup>University of California Berkeley, Department of Statistics, Berkeley, CA 94720-3860, USA<br />
+<sup>2</sup>University of Washington, Department of Civil &amp; Environmental Engineering, Seattle, WA 98195, USA<br />
+<sup>3</sup>St Anthonys Falls laboratory, University of Minnesota, Minneapolis, MN, USA<br />
+<sup>4</sup>School of Environmental Sciences, University of Liverpool, Liverpool, L3 5DA, UK<br />
+<sup>5</sup>School of Geography and the Environment, University of Oxford, Oxford, OX1 3QY, UK<br />
+<sup>6</sup>Department of Geography, Environment and Geomatics, University of Ottawa, Ottawa K1N 6N5, Canada<br />
+<sup>7</sup>Department of Geography and Environmental Management, University of Waterloo, Waterloo N2L 3G1, Canada<br />
+Corresponding author and email: Whyjay Zheng (<a class="reference external" href="mailto:whyjz&#37;&#52;&#48;berkeley&#46;edu">whyjz<span>&#64;</span>berkeley<span>&#46;</span>edu</a>)</p>
+<div class="section" id="article-link">
+<h2>Article link<a class="headerlink" href="#article-link" title="Permalink to this headline">¶</a></h2>
+<p>TBD. (Our AGU 2021 poster is available at doi:10.1002/essoar.10509355.1)</p>
 </div>
-<div class="section" id="plain-language-summary">
-<h2>Plain language summary<a class="headerlink" href="#plain-language-summary" title="Permalink to this headline">¶</a></h2>
-<p>There are many ways to measure how quickly glaciers move including using GPS and satellites. Here, we compare a variety of methods to measure glacier motion to determine which method(s) perform the best in mapping glacier movement. We develop a software package called “gftt” to help execute our work and share our methods with the scientific community.</p>
+<div class="section" id="content-of-this-jupyter-book">
+<h2>Content of this Jupyter Book<a class="headerlink" href="#content-of-this-jupyter-book" title="Permalink to this headline">¶</a></h2>
+<p><strong>Part 1</strong>: GLAFT user manual.</p>
+<p><strong>Part 2</strong>: Supplemental material for the manuscript “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images,” including ALL necessary components to reproduce the presented work. (Binder-ready TBD)</p>
 </div>
-<div class="section" id="how-to-cite">
-<h2>How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this headline">¶</a></h2>
-<p>doi:10.1002/essoar.10509355.1</p>
+<div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
@@ -308,10 +315,10 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="notebooks/multiple_metrics/oie-vs-sobel.html" title="next page">
+    <a class='right-next' id="next-link" href="glaft_user_manual.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Comparing Metric #1 (off-ice error) and #2 (Sobel flow statistics)</p>
+        <p class="prev-next-title">GLAFT User Manual</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -322,9 +329,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Max Van Wyk de Vries, Will Kochtitzky, David Shean<br/>
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
     
-        &copy; Copyright 2021.<br/>
+        &copy; Copyright 2022.<br/>
   </p>
 </footer>
 </main>

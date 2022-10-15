@@ -1,0 +1,867 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth &#8212; GFTT</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/6_synthetic_offset/validation_synthetic.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="../5_multiple_metrics/validation1.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/tentative.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GFTT</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../glaft_user_manual.html">
+   GLAFT User Manual
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary material
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-full-analysis.html">
+   Metric #1: Off-ice errors
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/6_synthetic_offset/validation_synthetic.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-ft-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/6_synthetic_offset/validation_synthetic.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/6_synthetic_offset/validation_synthetic.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/6_synthetic_offset/validation_synthetic.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements-and-limits">
+   Requirements and Limits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#procedure">
+   Procedure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#information-map-area-importing-modules">
+     1. Information, map area, importing modules
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-pixel-shifted-image">
+     2. Create pixel-shifted image
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-feature-tracking-using-selected-algorithm-and-parameter-set">
+     3. Run feature tracking using selected algorithm and parameter set
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-the-results">
+     4. Check the results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculate-the-feature-tracking-deviation-from-the-ground-truth">
+     5. Calculate the feature tracking deviation from the ground truth
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements-and-limits">
+   Requirements and Limits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#procedure">
+   Procedure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis">
+   Analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#information-map-area-importing-modules">
+     1. Information, map area, importing modules
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-pixel-shifted-image">
+     2. Create pixel-shifted image
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#run-feature-tracking-using-selected-algorithm-and-parameter-set">
+     3. Run feature tracking using selected algorithm and parameter set
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#check-the-results">
+     4. Check the results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculate-the-feature-tracking-deviation-from-the-ground-truth">
+     5. Calculate the feature tracking deviation from the ground truth
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="section" id="validation-2-feature-tracking-over-a-known-synthetic-pixel-offset-then-calculate-the-difference-between-results-and-the-ground-truth">
+<h1>Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth<a class="headerlink" href="#validation-2-feature-tracking-over-a-known-synthetic-pixel-offset-then-calculate-the-difference-between-results-and-the-ground-truth" title="Permalink to this headline">¶</a></h1>
+<p>– To be updated in the future work –</p>
+<p>This method uses <strong>one source image</strong> from the planned feature tracking pair. A arbitrary, synthetic pixel offset is applied to that image. The original image and the processed image form a pair, and we perform feature tracking using this pair. we calculate the difference between the offsets found by the FT algorithm and the ground truth (which is the arbitrary pixel offset). The statistics of this difference can be compared with the metrics to determine whether these metrics really indicate better FT parameter combinations.</p>
+<div class="section" id="requirements-and-limits">
+<h2>Requirements and Limits<a class="headerlink" href="#requirements-and-limits" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>There are several steps needed to bo done before running FT. Users have to determine a few parameters for creating the synthetic offset field and create the second image.</p></li>
+<li><p>Since it does not use the actual results from the planned feature tracking pair, there is a concern that this metric may fail to find the best parameter set for the actual pair when surface conditions change during the pair period (e.g. from snow melt).</p></li>
+</ul>
+</div>
+<div class="section" id="procedure">
+<h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Prepare the source image as a Geotiff file.</p></li>
+<li><p>Determine the parameters for the synthetic offset field and use <code class="docutils literal notranslate"><span class="pre">gftt.create_synthetic_offset</span></code> and <code class="docutils literal notranslate"><span class="pre">gftt.apply_synthetic_offset</span></code> to create pixel-shifted image. See this notebook for details.</p></li>
+<li><p>Perform feature tracking algorithm and collect the resulting velocity field (<span class="math notranslate nohighlight">\(V_x\)</span> and <span class="math notranslate nohighlight">\(V_y\)</span>) as geotiff files.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">gftt.syn_shift_errors</span></code> to calculate the deviation from the ground truth (the synthetic shift field). See this notebook for details.</p></li>
+</ol>
+</div>
+<div class="section" id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="information-map-area-importing-modules">
+<h3>1. Information, map area, importing modules<a class="headerlink" href="#information-map-area-importing-modules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Test area: <strong>Kaskawulsh Glacier</strong></p></li>
+<li><p>Test packages: <strong>CARST and Vmap</strong></p></li>
+<li><p>Test pair: <strong>Landsat 8 20180304</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Developer&#39;s setting</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gftt</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">pygeotools.lib</span> <span class="kn">import</span> <span class="n">warplib</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># source file</span>
+<span class="n">image_geotiff</span> <span class="o">=</span> <span class="s1">&#39;../../data/LS8/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s.TIF&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">src</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_geotiff</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">show</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_5_0.png" src="../../_images/validation_synthetic_5_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="create-pixel-shifted-image">
+<h3>2. Create pixel-shifted image<a class="headerlink" href="#create-pixel-shifted-image" title="Permalink to this headline">¶</a></h3>
+<p>We use the defaul parameters below to create a sub-pixel shift field:</p>
+<ul class="simple">
+<li><p>block size = 500 pixels</p></li>
+<li><p>spline order = 1 (linear interpolation)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shift_arx</span><span class="p">,</span> <span class="n">shift_ary</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">create_synthetic_offset</span><span class="p">(</span><span class="n">image_geotiff</span><span class="p">)</span>
+<span class="n">shift_arx</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       ...,
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shift_arx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shift_ary</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_8_0.png" src="../../_images/validation_synthetic_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shifted_image</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">apply_synthetic_offset</span><span class="p">(</span><span class="n">image_geotiff</span><span class="p">,</span> <span class="n">shift_arx</span><span class="p">,</span> <span class="n">shift_ary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shifted_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_10_0.png" src="../../_images/validation_synthetic_10_0.png" />
+</div>
+</div>
+<p>Note that this should look really like the source image as the amount of offset is all within 1 pixel. We can save this image as a geotiff and perform feature tracking using whatever package to be tested.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kwds</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">profile</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;shifted_LS8_20180304.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">shifted_image</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kwds2</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">profile</span>
+<span class="n">kwds2</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;float32&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;shifted_array_x.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds2</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">shift_arx</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;shifted_array_y.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds2</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">shift_ary</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="run-feature-tracking-using-selected-algorithm-and-parameter-set">
+<h3>3. Run feature tracking using selected algorithm and parameter set<a class="headerlink" href="#run-feature-tracking-using-selected-algorithm-and-parameter-set" title="Permalink to this headline">¶</a></h3>
+<p>The pair to be used:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data/LS8/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s.TIF</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./shifted_LS8_20180304.tif</span></code></p></li>
+</ul>
+<p>CARST results are stored in <code class="docutils literal notranslate"><span class="pre">data/synthetic_offset_results_carst</span></code>.</p>
+</div>
+<div class="section" id="check-the-results">
+<h3>4. Check the results<a class="headerlink" href="#check-the-results" title="Permalink to this headline">¶</a></h3>
+<p>Here are paths to the FT results. We have 4 tests, and each of them uses a different kernel size. (8, 16, 36, and 52 pixels, respectively.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_x_geotiffs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne8/20180304-20180305_velo-raw_vx.tif&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne16/20180304-20180305_velo-raw_vx.tif&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne36/20180304-20180305_velo-raw_vx.tif&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne52/20180304-20180305_velo-raw_vx.tif&#39;</span><span class="p">]</span>
+<span class="n">result_y_geotiffs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne8/20180304-20180305_velo-raw_vy.tif&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne16/20180304-20180305_velo-raw_vy.tif&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne36/20180304-20180305_velo-raw_vy.tif&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne52/20180304-20180305_velo-raw_vy.tif&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we read these files, we also warp the shift field (Section 2) in order to perform the pixel-to-pixel comparison (raster differencing) in the next sction. This step is necessary because a skip of 8 pixels is applied during the FT process.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">input_x</span>  <span class="o">=</span> <span class="p">[]</span>
+<span class="n">result_y</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">input_y</span>  <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">result_x_geotiffs</span><span class="p">:</span>
+    <span class="n">ds_list</span> <span class="o">=</span> <span class="n">warplib</span><span class="o">.</span><span class="n">memwarp_multi_fn</span><span class="p">([</span><span class="s1">&#39;shifted_array_x.tif&#39;</span><span class="p">,</span> <span class="n">fn</span><span class="p">],</span> <span class="n">res</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="n">t_srs</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="s1">&#39;near&#39;</span><span class="p">)</span>
+    <span class="n">input_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">result_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">result_y_geotiffs</span><span class="p">:</span>
+    <span class="n">ds_list</span> <span class="o">=</span> <span class="n">warplib</span><span class="o">.</span><span class="n">memwarp_multi_fn</span><span class="p">([</span><span class="s1">&#39;shifted_array_y.tif&#39;</span><span class="p">,</span> <span class="n">fn</span><span class="p">],</span> <span class="n">res</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="n">t_srs</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="s1">&#39;near&#39;</span><span class="p">)</span>
+    <span class="n">input_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">result_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warping all inputs to the following:
+Resolution: 120.0
+Extent: [584992.5, 6718102.5, 641392.5, 6755062.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_x.tif
+nl: 308 ns: 470 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne8/20180304-20180305_velo-raw_vx.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [585052.5, 6718162.5, 641332.5, 6755002.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_x.tif
+nl: 307 ns: 469 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne16/20180304-20180305_velo-raw_vx.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [585202.5, 6718252.5, 641242.5, 6754852.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_x.tif
+nl: 305 ns: 467 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne36/20180304-20180305_velo-raw_vx.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [585322.5, 6718372.5, 641122.5, 6754732.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_x.tif
+nl: 303 ns: 465 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne52/20180304-20180305_velo-raw_vx.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [584992.5, 6718102.5, 641392.5, 6755062.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_y.tif
+nl: 308 ns: 470 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne8/20180304-20180305_velo-raw_vy.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [585052.5, 6718162.5, 641332.5, 6755002.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_y.tif
+nl: 307 ns: 469 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne16/20180304-20180305_velo-raw_vy.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [585202.5, 6718252.5, 641242.5, 6754852.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_y.tif
+nl: 305 ns: 467 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne36/20180304-20180305_velo-raw_vy.tif
+
+Warping all inputs to the following:
+Resolution: 120.0
+Extent: [585322.5, 6718372.5, 641122.5, 6754732.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: near
+
+1 of 2: shifted_array_y.tif
+nl: 303 ns: 465 res: 120.000
+2 of 2: ../../data/synthetic_offset_results_carst/pair001_20180304-20180304syn_kerne52/20180304-20180305_velo-raw_vy.tif
+</pre></div>
+</div>
+</div>
+</div>
+<p>Also, CARST’s offset measurements are in meters (or meters/day if date strings are given) instead of pixels, so we have to convert the unit in order to compare with the input shift field.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result_x</span><span class="p">)):</span>
+    <span class="n">nodata_loc</span> <span class="o">=</span> <span class="n">result_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">9990</span>       <span class="c1"># NoDataValue locations</span>
+    <span class="n">result_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="o">-</span><span class="mi">15</span>                     <span class="c1"># for unknown reason, CARST results seem to be sign-reversed</span>
+    <span class="n">result_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="mi">15</span>
+    <span class="n">result_x</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">nodata_loc</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9999</span>
+    <span class="n">result_y</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">nodata_loc</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9999</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This figure shows what the results look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax3</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">title_string</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;Kernel size = 8 (x)&#39;</span><span class="p">,</span> <span class="s1">&#39;Kernel size = 8 (y)&#39;</span><span class="p">],</span> 
+                <span class="p">[</span><span class="s1">&#39;Kernel size = 16 (x)&#39;</span><span class="p">,</span> <span class="s1">&#39;Kernel size = 16 (y)&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Kernel size = 36 (x)&#39;</span><span class="p">,</span> <span class="s1">&#39;Kernel size = 36 (y)&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s1">&#39;Kernel size = 52 (x)&#39;</span><span class="p">,</span> <span class="s1">&#39;Kernel size = 52 (y)&#39;</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result_x</span><span class="p">)):</span>
+    <span class="n">ax3</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">result_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vmin</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_string</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax3</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">result_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_string</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_21_0.png" src="../../_images/validation_synthetic_21_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="calculate-the-feature-tracking-deviation-from-the-ground-truth">
+<h3>5. Calculate the feature tracking deviation from the ground truth<a class="headerlink" href="#calculate-the-feature-tracking-deviation-from-the-ground-truth" title="Permalink to this headline">¶</a></h3>
+<p>Now we use <code class="docutils literal notranslate"><span class="pre">gftt.syn_shift_errors</span></code> to calculate the difference between the input shift field and the measured shift field. (This takes some time – ~15-20 minutes)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diff_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">diff_y</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">thres_idx</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result_x</span><span class="p">)):</span>
+    <span class="n">tmp_x</span><span class="p">,</span> <span class="n">tmp_y</span><span class="p">,</span> <span class="n">tmp_z</span><span class="p">,</span> <span class="n">tmp_idx</span> <span class="o">=</span> <span class="n">gftt</span><span class="o">.</span><span class="n">syn_shift_errors</span><span class="p">(</span><span class="n">ref_vx</span><span class="o">=</span><span class="n">input_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vx</span><span class="o">=</span><span class="n">result_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ref_vy</span><span class="o">=</span><span class="n">input_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vy</span><span class="o">=</span><span class="n">result_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">diff_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_x</span><span class="p">)</span>
+    <span class="n">diff_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_y</span><span class="p">)</span>
+    <span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_z</span><span class="p">)</span>
+    <span class="n">thres_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_idx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Start calculating KDE, this may take a while...
+KDE Done!
+Start calculating KDE, this may take a while...
+KDE Done!
+Start calculating KDE, this may take a while...
+KDE Done!
+Start calculating KDE, this may take a while...
+KDE Done!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax4</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+<span class="n">viridis</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="n">pt_style</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+<span class="n">xbound</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">ybound</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="n">title_string</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Kernel size = 8&#39;</span><span class="p">,</span> 
+                <span class="s1">&#39;Kernel size = 16&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Kernel size = 36&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Kernel size = 52&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result_x</span><span class="p">)):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">diff_x</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">thres_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span>  <span class="n">diff_y</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">thres_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">c</span><span class="o">=</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">thres_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="o">**</span><span class="n">pt_style</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">diff_x</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">~</span><span class="n">thres_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">diff_y</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">~</span><span class="n">thres_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="n">viridis</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="o">**</span><span class="n">pt_style</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xbound</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ybound</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_string</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(Measured Vx shift) - (Input Vx shift), in pixels&#39;</span><span class="p">)</span>
+    <span class="n">ax4</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(Measured Vy shift) - (Input Vy shift), in pixels&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_24_0.png" src="../../_images/validation_synthetic_24_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">thres_idx</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">diff_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.91648297]
+[0.94214847]
+[0.9614299]
+[0.96425707]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">title_string</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Vx std: </span><span class="si">{:5f}</span><span class="s1">  pixels&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">diff_x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Vy std: </span><span class="si">{:5f}</span><span class="s1">  pixels&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">diff_y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kernel size = 8
+Vx std: 0.309122  pixels
+Vy std: 0.262493  pixels
+Kernel size = 16
+Vx std: 0.138230  pixels
+Vy std: 0.111232  pixels
+Kernel size = 36
+Vx std: 0.055448  pixels
+Vy std: 0.043165  pixels
+Kernel size = 52
+Vx std: 0.045505  pixels
+Vy std: 0.033561  pixels
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Done!</strong></p>
+<p>Other plots:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">input_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">result_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-10.0, 10.0)
+</pre></div>
+</div>
+<img alt="../../_images/validation_synthetic_31_1.png" src="../../_images/validation_synthetic_31_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">diff_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">41</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_32_0.png" src="../../_images/validation_synthetic_32_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">diff_y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">41</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/validation_synthetic_33_0.png" src="../../_images/validation_synthetic_33_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-.conda-eztrack-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-.conda-eztrack-py",
+            path: "./notebooks/6_synthetic_offset"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-.conda-eztrack-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../5_multiple_metrics/validation1.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">&lt;no title&gt;</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
