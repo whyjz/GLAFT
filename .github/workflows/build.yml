@@ -33,7 +33,7 @@ jobs:
 
     - name: Build book
       run: |
-        jupyter-book build ./jupyter-book
+        jupyter book build ./jupyter-book
         
     - name: Deploy to gh-pages
       if: github.ref == 'refs/heads/master'
