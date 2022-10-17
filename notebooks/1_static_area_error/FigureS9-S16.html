@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figures S9-S16: Static area velocity analysis for all tests &#8212; GLAFT</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/1_static_area_error/FigureS9-S16.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.html" />
+    <link rel="prev" title="Figure 2 script" href="Fig2.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../glaft_user_manual.html">
+   GLAFT User Manual
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary material
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS1.html">
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig2.html">
+   Figure 2 script
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../6_synthetic_offset/validation_synthetic.html">
+   Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/1_static_area_error/FigureS9-S16.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-ft-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/1_static_area_error/FigureS9-S16.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/1_static_area_error/FigureS9-S16.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/1_static_area_error/FigureS9-S16.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-information-importing-modules-load-data-list-and-static-area-shapefile">
+   1. Basic information, importing modules, load data list and static-area shapefile
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#perform-analysis">
+   2. Perform analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualize-results">
+   3. Visualize results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#save-results">
+   4. Save results
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Figures S9-S16: Static area velocity analysis for all tests</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-information-importing-modules-load-data-list-and-static-area-shapefile">
+   1. Basic information, importing modules, load data list and static-area shapefile
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#perform-analysis">
+   2. Perform analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualize-results">
+   3. Visualize results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#save-results">
+   4. Save results
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="figures-s9-s16-static-area-velocity-analysis-for-all-tests">
+<h1>Figures S9-S16: Static area velocity analysis for all tests<a class="headerlink" href="#figures-s9-s16-static-area-velocity-analysis-for-all-tests" title="Permalink to this headline">¶</a></h1>
+<p>This notebooks shows the analysis static area velocity (sometimes abbreviated as <strong>SAV</strong> in this study) with the supplemental figures in the bottom.</p>
+<div class="section" id="basic-information-importing-modules-load-data-list-and-static-area-shapefile">
+<h2>1. Basic information, importing modules, load data list and static-area shapefile<a class="headerlink" href="#basic-information-importing-modules-load-data-list-and-static-area-shapefile" title="Permalink to this headline">¶</a></h2>
+<p>See Table S1 for all the Kaskawulsh glacier images and parameter sets used in this study.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glaft</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># import matplotlib.patches as patches</span>
+<span class="c1"># from matplotlib import colors, cm</span>
+<span class="c1"># from matplotlib.colors import ListedColormap</span>
+<span class="c1"># import rasterio</span>
+<span class="c1"># from rasterio.plot import show</span>
+<span class="c1"># import numpy as np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="c1"># import geopandas as gpd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We start by loading the data list. Whichever line works for reproducing the figures.
+<code class="docutils literal notranslate"><span class="pre">../manifest.csv</span></code> contains only the parameter table (<strong>Table S1</strong>),
+and <code class="docutils literal notranslate"><span class="pre">../results_2022.csv</span></code> contains both the parameter table and all the metrics calculated in this study.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../manifest.csv&#39;, dtype=str)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Specify static area:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_shp</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/shapefiles/bedrock_V1.shp&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="perform-analysis">
+<h2>2. Perform analysis<a class="headerlink" href="#perform-analysis" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exps</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">static_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">kde_gridsize</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">thres_sigma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">exp</span><span class="o">.</span><span class="n">static_terrain_analysis</span><span class="p">()</span>
+    <span class="n">exps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="visualize-results">
+<h2>3. Visualize results<a class="headerlink" href="#visualize-results" title="Permalink to this headline">¶</a></h2>
+<p>Click to reveal the plot settings and the batch script.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>To reproduce the figures, uncomment and run the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for datestr in [&#39;LS8-20180304-20180405&#39;, &#39;LS8-20180802-20180818&#39;, &#39;Sen2-20180304-20180314&#39;, &#39;Sen2-20180508-20180627&#39;]:</span>
+<span class="c1">#     sub_df = df.loc[df[&#39;Date&#39;] == datestr]</span>
+<span class="c1">#     fig, axs = plot_batch(sub_df, zoom=False, datestr=datestr)</span>
+<span class="c1">#     fig.patch.set_facecolor(&#39;xkcd:white&#39;)</span>
+<span class="c1">#     fig.savefig(&#39;figs/{}-SAV-full.png&#39;.format(datestr))</span>
+<span class="c1">#     fig, axs = plot_batch(sub_df, zoom=True, datestr=datestr)</span>
+<span class="c1">#     fig.patch.set_facecolor(&#39;xkcd:white&#39;)</span>
+<span class="c1">#     fig.savefig(&#39;figs/{}-SAV-zoomed.png&#39;.format(datestr))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="../../_images/LS8-20180304-20180405-SAV-full.png" />
+<strong>Figure S9.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">LS8-20180304-20180405</span></code> (full extent).</p>
+<p><img alt="" src="../../_images/LS8-20180304-20180405-SAV-zoomed.png" />
+<strong>Figure S10.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">LS8-20180304-20180405</span></code> (zoomed with kernel density estimation).</p>
+<p><img alt="" src="../../_images/LS8-20180802-20180818-SAV-full.png" />
+<strong>Figure S11.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">LS8-20180802-20180818</span></code>. (full extent).</p>
+<p><img alt="" src="../../_images/LS8-20180802-20180818-SAV-zoomed.png" />
+<strong>Figure S12.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">LS8-20180802-20180818</span></code>. (zoomed with kernel density estimation).</p>
+<p><img alt="" src="../../_images/Sen2-20180304-20180314-SAV-full.png" />
+<strong>Figure S13.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">Sen2-20180304-20180314</span></code>. (full extent).</p>
+<p><img alt="" src="../../_images/Sen2-20180304-20180314-SAV-zoomed.png" />
+<strong>Figure S14.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">Sen2-20180304-20180314</span></code>. (zoomed with kernel density estimation).</p>
+<p><img alt="" src="../../_images/Sen2-20180508-20180627-SAV-full.png" />
+<strong>Figure S15.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">Sen2-20180508-20180627</span></code>. (full extent).</p>
+<p><img alt="" src="../../_images/Sen2-20180508-20180627-SAV-zoomed.png" />
+<strong>Figure S16.</strong> Static terrain velocity distribution of the pair <code class="docutils literal notranslate"><span class="pre">Sen2-20180508-20180627</span></code>. (zoomed with kernel density estimation).</p>
+</div>
+<div class="section" id="save-results">
+<h2>4. Save results<a class="headerlink" href="#save-results" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">exps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-uncertainty-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-peak-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-peak-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-outlier-percent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">outlier_percent</span> <span class="o">*</span> <span class="mi">100</span>
+    
+<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-.conda-eztrack-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-.conda-eztrack-py",
+            path: "./notebooks/1_static_area_error"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-.conda-eztrack-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Fig2.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Figure 2 script</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

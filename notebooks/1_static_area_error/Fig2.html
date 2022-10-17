@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/1_static_area_error/Fig2.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metric #1: Off-ice errors" href="metric_static-area-velo-full-analysis.html" />
+    <link rel="next" title="Figures S9-S16: Static area velocity analysis for all tests" href="FigureS9-S16.html" />
     <link rel="prev" title="Figures S1-S8: All 172 test velocity maps" href="../0_velocity_plots/FigureS1-S8.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -133,8 +133,8 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="metric_static-area-velo-full-analysis.html">
-   Metric #1: Off-ice errors
+  <a class="reference internal" href="FigureS9-S16.html">
+   Figures S9-S16: Static area velocity analysis for all tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -265,39 +265,26 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Figure 2 script<a class="headerlink" href="#figure-2-script" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Developer&#39;s setting</span>
-<span class="o">%</span><span class="k">load_ext</span> autoreload
-<span class="o">%</span><span class="k">autoreload</span> 2
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glaft</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># font and linewidth settings</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
 <span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="c1"># axes_settings = {&#39;linewidth&#39;   : 2, &#39;labelsize&#39;: 14}</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../manifest.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="c1"># read and select data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../manifest.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
 <span class="n">in_shp</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/shapefiles/bedrock_V1.shp&#39;</span>
 <span class="n">selected_cases</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">126</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">28</span><span class="p">]]</span>
 <span class="n">selected_cases</span>
@@ -425,7 +412,8 @@ const thebe_selector_output = ".output, .cell_output"
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
+<p>This cell performs the static terrain analysis and calculates the corresponding metrics.</p>
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exps</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -436,82 +424,18 @@ const thebe_selector_output = ".output, .cell_output"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running clip_static_area
-Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-Running clip_static_area
-Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-Running clip_static_area
-Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-Running clip_static_area
-Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-Running clip_static_area
-Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-Running clip_static_area
-Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-</pre></div>
 </div>
-</div>
-</div>
+<p>The following functions plot the braces on the axes with annotations, which is necessary for Figure 2. They are modified from guzey’s answer to <a class="reference external" href="https://stackoverflow.com/questions/18386210/annotating-ranges-of-data-in-matplotlib/68180887#68180887">this StackOverflow thread</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://stackoverflow.com/questions/18386210/annotating-ranges-of-data-in-matplotlib/68180887#68180887</span>
-<span class="k">def</span> <span class="nf">draw_brace_x</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">xspan</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Draws an annotated brace on the axes.&quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_brace_x</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">xspan</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">yy</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ax: axes to be drawn.</span>
+<span class="sd">    xspan: x coordinates of the two brace ending points.</span>
+<span class="sd">    yy: y coordinate of the two brace ending points. (The brace will be placed horizontally)</span>
+<span class="sd">    text: annotation text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">xspan</span>
     <span class="n">xspan</span> <span class="o">=</span> <span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span>
     <span class="n">ax_xmin</span><span class="p">,</span> <span class="n">ax_xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
@@ -519,23 +443,27 @@ Running cal_outlier_percent
 
     <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
     <span class="n">yspan</span> <span class="o">=</span> <span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span>
-    <span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xspan</span><span class="o">/</span><span class="n">xax_span</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span> <span class="c1"># guaranteed uneven</span>
-    <span class="n">beta</span> <span class="o">=</span> <span class="mf">200.</span><span class="o">/</span><span class="n">xax_span</span> <span class="c1"># the higher this is, the smaller the radius</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xspan</span> <span class="o">/</span> <span class="n">xax_span</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># sampling resolution of the sigmoid brace</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="mf">200.</span> <span class="o">/</span> <span class="n">xax_span</span>                           <span class="c1"># the higher this is, the sharper the sigmoid</span>
 
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">resolution</span><span class="p">)</span>
-    <span class="n">x_half</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">resolution</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">y_half_brace</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="p">(</span><span class="n">x_half</span><span class="o">-</span><span class="n">x_half</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-                    <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="p">(</span><span class="n">x_half</span><span class="o">-</span><span class="n">x_half</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))))</span>
+    <span class="n">x_half</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">resolution</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">y_half_brace</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_half</span> <span class="o">-</span> <span class="n">x_half</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)))</span>
+                  <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_half</span> <span class="o">-</span> <span class="n">x_half</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))))</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_half_brace</span><span class="p">,</span> <span class="n">y_half_brace</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">yy</span> <span class="o">-</span> <span class="p">(</span><span class="mf">.05</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mf">.01</span><span class="p">)</span><span class="o">*</span><span class="n">yspan</span> <span class="c1"># adjust vertical position</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">yy</span> <span class="o">-</span> <span class="p">(</span><span class="mf">.05</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">.01</span><span class="p">)</span> <span class="o">*</span> <span class="n">yspan</span>                 <span class="c1"># adjust vertical stretch and position</span>
 
-    <span class="c1"># ax.autoscale(False)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">xmax</span><span class="o">+</span><span class="n">xmin</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">yy</span><span class="o">-</span><span class="mf">.07</span><span class="o">*</span><span class="n">yspan</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">xmax</span> <span class="o">+</span> <span class="n">xmin</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">yy</span> <span class="o">-</span> <span class="mf">.07</span> <span class="o">*</span> <span class="n">yspan</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
     
-<span class="k">def</span> <span class="nf">draw_brace_y</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">yspan</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Draws an annotated brace on the axes.&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">draw_brace_y</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">yspan</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">xx</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ax: axes to be drawn.</span>
+<span class="sd">    yspan: y coordinates of the two brace ending points.</span>
+<span class="sd">    xx: x coordinate of the two brace ending points. (The brace will be placed vertically)</span>
+<span class="sd">    text: annotation text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">yspan</span>
     <span class="n">yspan</span> <span class="o">=</span> <span class="n">ymax</span> <span class="o">-</span> <span class="n">ymin</span>
     <span class="n">ax_ymin</span><span class="p">,</span> <span class="n">ax_ymax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
@@ -543,31 +471,30 @@ Running cal_outlier_percent
 
     <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
     <span class="n">xspan</span> <span class="o">=</span> <span class="n">xmax</span> <span class="o">-</span> <span class="n">xmin</span>
-    <span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">yspan</span><span class="o">/</span><span class="n">yax_span</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span> <span class="c1"># guaranteed uneven</span>
-    <span class="n">beta</span> <span class="o">=</span> <span class="mf">200.</span><span class="o">/</span><span class="n">yax_span</span> <span class="c1"># the higher this is, the smaller the radius</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">yspan</span> <span class="o">/</span> <span class="n">yax_span</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># sampling resolution of the sigmoid brace</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="mf">200.</span> <span class="o">/</span> <span class="n">yax_span</span>                           <span class="c1"># the higher this is, the sharper the sigmoid</span>
 
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">resolution</span><span class="p">)</span>
-    <span class="n">y_half</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">resolution</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">x_half_brace</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="p">(</span><span class="n">y_half</span><span class="o">-</span><span class="n">y_half</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-                    <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span><span class="o">*</span><span class="p">(</span><span class="n">y_half</span><span class="o">-</span><span class="n">y_half</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))))</span>
+    <span class="n">y_half</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">resolution</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">x_half_brace</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_half</span> <span class="o">-</span> <span class="n">y_half</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)))</span>
+                  <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_half</span> <span class="o">-</span> <span class="n">y_half</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))))</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x_half_brace</span><span class="p">,</span> <span class="n">x_half_brace</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">xx</span> <span class="o">-</span> <span class="p">(</span><span class="mf">.05</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mf">.01</span><span class="p">)</span><span class="o">*</span><span class="n">xspan</span> <span class="c1"># adjust vertical position</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">xx</span> <span class="o">-</span> <span class="p">(</span><span class="mf">.05</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">.01</span><span class="p">)</span> <span class="o">*</span> <span class="n">xspan</span>                 <span class="c1"># adjust vertical stretch and position</span>
 
-    <span class="c1"># ax.autoscale(False)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xx</span><span class="o">-</span><span class="mf">.05</span><span class="o">*</span><span class="n">xspan</span><span class="p">,</span> <span class="p">(</span><span class="n">ymax</span><span class="o">+</span><span class="n">ymin</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xx</span> <span class="o">-</span> <span class="mf">.05</span> <span class="o">*</span> <span class="n">xspan</span><span class="p">,</span> <span class="p">(</span><span class="n">ymax</span> <span class="o">+</span> <span class="n">ymin</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now starting to make the figure:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fig = plt.figure(constrained_layout=True, figsize=(13, 7))</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
-<span class="n">subfigs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">subfigures</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span> <span class="c1"># width_ratios=(0.333, 0.333, 0.333) height_ratios=(0.5, 0.5)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+<span class="n">subfigs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">subfigures</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>    <span class="c1"># last column is for colorbar</span>
 <span class="n">all_axs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
 
+<span class="c1"># create two subplots in each subfigure</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subfigs</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]):</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">subfig</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
         <span class="n">all_axs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">subfig</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">gridspec_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hspace&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;height_ratios&#39;</span><span class="p">:(</span><span class="mf">0.3962</span><span class="p">,</span> <span class="mf">0.6038</span><span class="p">)})</span>
@@ -582,28 +509,44 @@ Running cal_outlier_percent
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[[</span><span class="mi">126</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">130</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">134</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
                   <span class="p">[</span><span class="mi">97</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">73</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]:</span>
     <span class="n">exp</span> <span class="o">=</span> <span class="n">exps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    
+    <span class="c1"># top panel</span>
     <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">all_axs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">cm_settings</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">show_velocomp</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">vxfile</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;datalim&#39;</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+    
+    <span class="c1"># bottom panel</span>
     <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">all_axs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">exp</span><span class="o">.</span><span class="n">plot_zoomed_extent</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    
+    <span class="c1"># bottom panel ticks</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="p">))</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="p">))</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
     <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-
-
-    <span class="n">draw_brace_x</span><span class="p">(</span><span class="n">ax_sel</span><span class="p">,</span> <span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span><span class="p">),</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">,</span> <span class="s1">&#39;$\delta_u$ = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">))</span>
-    <span class="n">draw_brace_y</span><span class="p">(</span><span class="n">ax_sel</span><span class="p">,</span> <span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span><span class="p">),</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">,</span> <span class="s1">&#39;$\delta_v$ = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">))</span>
     
+    <span class="c1"># show percentage of incorrent matches</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:.1f}% i</span><span class="s1">ncorrect matches&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">outlier_percent</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
     
+    <span class="c1"># annotations of du and dv</span>
+    <span class="n">draw_brace_x</span><span class="p">(</span><span class="n">ax_sel</span><span class="p">,</span> 
+                 <span class="n">xspan</span><span class="o">=</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span><span class="p">),</span> 
+                 <span class="n">yy</span><span class="o">=</span><span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">,</span> 
+                 <span class="n">text</span><span class="o">=</span><span class="s1">&#39;$\delta_u$ = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">))</span>
+    <span class="n">draw_brace_y</span><span class="p">(</span><span class="n">ax_sel</span><span class="p">,</span> 
+                 <span class="n">yspan</span><span class="o">=</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span><span class="p">),</span> 
+                 <span class="n">xx</span><span class="o">=</span><span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span> <span class="o">-</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">,</span> 
+                 <span class="n">text</span><span class="o">=</span><span class="s1">&#39;$\delta_v$ = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">))</span>
+    
+
+<span class="c1"># fine-tune positions of the top panels</span>
 <span class="n">bbox_top</span>    <span class="o">=</span> <span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
 <span class="n">bbox_bottom</span> <span class="o">=</span> <span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
 <span class="n">bbox_top</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">bbox_bottom</span><span class="o">.</span><span class="n">x0</span>
@@ -616,36 +559,30 @@ Running cal_outlier_percent
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">subfig</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
         <span class="n">all_axs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="n">bbox_top</span><span class="p">)</span>
 
-<span class="c1"># ax_sel.annotate(&#39;something&#39;, xy=(-0.2, -0.7), xytext=(-0.2, -0.8), </span>
-<span class="c1">#             fontsize=14, ha=&#39;center&#39;, va=&#39;bottom&#39;,</span>
-<span class="c1">#             # bbox=dict(boxstyle=&#39;square&#39;, fc=&#39;white&#39;),</span>
-<span class="c1">#             arrowprops=dict(arrowstyle=&#39;-[, widthB=1.0, lengthB=1.5&#39;, lw=2.0))</span>
-
-<span class="c1">#     axs = subfig.subplots(2, 1, gridspec_kw = {&#39;hspace&#39;:0, &#39;height_ratios&#39;:(0.3962, 0.6038)})</span>
-
-    
-
+<span class="c1"># add colorbars</span>
 <span class="n">mappable</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">prep_colorbar_mappable</span><span class="p">(</span><span class="o">**</span><span class="n">cm_settings</span><span class="p">)</span>
 <span class="n">cax</span> <span class="o">=</span> <span class="n">subfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">bbox_top</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">bbox_top</span><span class="o">.</span><span class="n">y1</span> <span class="o">-</span> <span class="n">bbox_top</span><span class="o">.</span><span class="n">y0</span><span class="p">])</span>
 <span class="n">subfigs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$V_x$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">),</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">cax</span> <span class="o">=</span> <span class="n">subfigs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">bbox_top</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">bbox_top</span><span class="o">.</span><span class="n">y1</span> <span class="o">-</span> <span class="n">bbox_top</span><span class="o">.</span><span class="n">y0</span><span class="p">])</span>
 <span class="n">subfigs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$V_x$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">),</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
-<span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;-1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1.0&#39;</span><span class="p">])</span>
-<span class="n">all_axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;-1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1.0&#39;</span><span class="p">])</span>
-<span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Static area $V_y$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">),</span> <span class="n">labelpad</span><span class="o">=-</span><span class="mf">45.0</span><span class="p">)</span>
-<span class="n">all_axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Static area $V_y$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">),</span> <span class="n">labelpad</span><span class="o">=-</span><span class="mf">45.0</span><span class="p">)</span>
+<span class="c1"># add axis labels</span>
+<span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;-1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1.0&#39;</span><span class="p">])</span>                                      <span class="c1"># to prevent label bleeding</span>
+<span class="n">all_axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;-1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1.0&#39;</span><span class="p">])</span>                                      <span class="c1"># ditto</span>
+<span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Static area $V_y$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">),</span> <span class="n">labelpad</span><span class="o">=-</span><span class="mf">30.0</span><span class="p">)</span>    <span class="c1"># ditto</span>
+<span class="n">all_axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Static area $V_y$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">),</span> <span class="n">labelpad</span><span class="o">=-</span><span class="mf">30.0</span><span class="p">)</span>    <span class="c1"># ditto</span>
 
 <span class="n">all_axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Static area $V_x$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">))</span>
 <span class="n">all_axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Static area $V_x$ (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">velocity_unit</span><span class="p">))</span>
 
+<span class="c1"># save figure</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig2.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig2.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Fig2_7_0.png" src="../../_images/Fig2_7_0.png" />
+<img alt="../../_images/Fig2_8_0.png" src="../../_images/Fig2_8_0.png" />
 </div>
 </div>
 </div>
@@ -682,10 +619,10 @@ Running cal_outlier_percent
             <p class="prev-next-title">Figures S1-S8: All 172 test velocity maps</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="metric_static-area-velo-full-analysis.html" title="next page">
+    <a class='right-next' id="next-link" href="FigureS9-S16.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Metric #1: Off-ice errors</p>
+        <p class="prev-next-title">Figures S9-S16: Static area velocity analysis for all tests</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
