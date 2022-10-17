@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Table S1: All 172 test velocity maps (four satellite image pairs with 43 parameter combinations) &#8212; GLAFT</title>
+    <title>Table S1: Parameters of all 172 tests &#8212; GLAFT</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/0_velocity_plots/TableS1.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metric #1: Off-ice errors" href="../1_static_area_error/metric_static-area-velo-full-analysis.html" />
+    <link rel="next" title="Figures S1-S8: All 172 test velocity maps" href="FigureS1-S8.html" />
     <link rel="prev" title="GLAFT User Manual" href="../../glaft_user_manual.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -119,7 +119,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Table S1: All 172 test velocity maps (four satellite image pairs with 43 parameter combinations)
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/Fig2.html">
+   Figure 2 script
   </a>
  </li>
  <li class="toctree-l1">
@@ -253,7 +263,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Table S1: All 172 test velocity maps (four satellite image pairs with 43 parameter combinations)</h1>
+                <h1>Table S1: Parameters of all 172 tests</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -277,200 +287,2119 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="table-s1-all-172-test-velocity-maps-four-satellite-image-pairs-with-43-parameter-combinations">
-<h1>Table S1: All 172 test velocity maps (four satellite image pairs with 43 parameter combinations)<a class="headerlink" href="#table-s1-all-172-test-velocity-maps-four-satellite-image-pairs-with-43-parameter-combinations" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
+  <div class="tex2jax_ignore mathjax_ignore section" id="table-s1-parameters-of-all-172-tests">
+<h1>Table S1: Parameters of all 172 tests<a class="headerlink" href="#table-s1-parameters-of-all-172-tests" title="Permalink to this headline">¶</a></h1>
+<p>These tests consist of four satellite image pairs with 43 distinct parameter combinations.</p>
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../manifest.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># from IPython.display import display, Markdown</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../manifest.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Vx&#39;</span><span class="p">,</span> <span class="s1">&#39;Vy&#39;</span><span class="p">])</span>     <span class="c1"># Vx and Vy are file paths</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()))</span>
+<span class="n">df</span>
+<span class="c1"># display(Markdown(df.to_markdown()))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<p>|     | Date                   |   Duration (days) | Template size (px)   | Template size (m)   |   Pixel spacing (px) |   Pixel spacing (m) | Prefilter   | Subpixel              | Software   |
-|----:|:-----------------------|------------------:|:---------------------|:--------------------|---------------------:|--------------------:|:------------|:----------------------|:-----------|
-|   0 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |               12     |              120    | Gau         | 16-node oversampling  | CARST      |
-|   1 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |               12     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|   2 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |               12     |              120    | None        | 16-node oversampling  | CARST      |
-|   3 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |                1     |               10    | Gau         | 16-node oversampling  | CARST      |
-|   4 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |                1     |               10    | NAOF        | 16-node oversampling  | CARST      |
-|   5 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |                1     |               10    | None        | 16-node oversampling  | CARST      |
-|   6 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |                4     |               40    | Gau         | 16-node oversampling  | CARST      |
-|   7 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |                4     |               40    | NAOF        | 16-node oversampling  | CARST      |
-|   8 | Sen2-20180304-20180314 |                10 | 48                   | 480                 |                4     |               40    | None        | 16-node oversampling  | CARST      |
-|   9 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |               12     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  10 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |               12     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  11 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |               12     |              120    | None        | 16-node oversampling  | CARST      |
-|  12 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                1     |               10    | Gau         | 16-node oversampling  | CARST      |
-|  13 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                1     |               10    | NAOF        | 16-node oversampling  | CARST      |
-|  14 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                1     |               10    | None        | 16-node oversampling  | CARST      |
-|  15 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                4     |               40    | Gau         | 16-node oversampling  | CARST      |
-|  16 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                4     |               40    | NAOF        | 16-node oversampling  | CARST      |
-|  17 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                4     |               40    | None        | 16-node oversampling  | CARST      |
-|  18 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                1     |               15    | Gau         | 16-node oversampling  | CARST      |
-|  19 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                1     |               15    | NAOF        | 16-node oversampling  | CARST      |
-|  20 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                1     |               15    | None        | 16-node oversampling  | CARST      |
-|  21 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                4     |               60    | Gau         | 16-node oversampling  | CARST      |
-|  22 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                4     |               60    | NAOF        | 16-node oversampling  | CARST      |
-|  23 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                4     |               60    | None        | 16-node oversampling  | CARST      |
-|  24 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                8     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  25 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                8     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  26 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                8     |              120    | None        | 16-node oversampling  | CARST      |
-|  27 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                1     |               15    | Gau         | 16-node oversampling  | CARST      |
-|  28 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                1     |               15    | NAOF        | 16-node oversampling  | CARST      |
-|  29 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                1     |               15    | None        | 16-node oversampling  | CARST      |
-|  30 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                4     |               60    | Gau         | 16-node oversampling  | CARST      |
-|  31 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                4     |               60    | NAOF        | 16-node oversampling  | CARST      |
-|  32 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                4     |               60    | None        | 16-node oversampling  | CARST      |
-|  33 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                8     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  34 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                8     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  35 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                8     |              120    | None        | 16-node oversampling  | CARST      |
-|  36 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |               12     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  37 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |               12     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  38 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |               12     |              120    | None        | 16-node oversampling  | CARST      |
-|  39 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |                1     |               10    | Gau         | 16-node oversampling  | CARST      |
-|  40 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |                1     |               10    | NAOF        | 16-node oversampling  | CARST      |
-|  41 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |                1     |               10    | None        | 16-node oversampling  | CARST      |
-|  42 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |                4     |               40    | Gau         | 16-node oversampling  | CARST      |
-|  43 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |                4     |               40    | NAOF        | 16-node oversampling  | CARST      |
-|  44 | Sen2-20180508-20180627 |                50 | 48                   | 480                 |                4     |               40    | None        | 16-node oversampling  | CARST      |
-|  45 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |               12     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  46 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |               12     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  47 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |               12     |              120    | None        | 16-node oversampling  | CARST      |
-|  48 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                1     |               10    | Gau         | 16-node oversampling  | CARST      |
-|  49 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                1     |               10    | NAOF        | 16-node oversampling  | CARST      |
-|  50 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                1     |               10    | None        | 16-node oversampling  | CARST      |
-|  51 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                4     |               40    | Gau         | 16-node oversampling  | CARST      |
-|  52 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                4     |               40    | NAOF        | 16-node oversampling  | CARST      |
-|  53 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                4     |               40    | None        | 16-node oversampling  | CARST      |
-|  54 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                1     |               15    | Gau         | 16-node oversampling  | CARST      |
-|  55 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                1     |               15    | NAOF        | 16-node oversampling  | CARST      |
-|  56 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                1     |               15    | None        | 16-node oversampling  | CARST      |
-|  57 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                4     |               60    | Gau         | 16-node oversampling  | CARST      |
-|  58 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                4     |               60    | NAOF        | 16-node oversampling  | CARST      |
-|  59 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                4     |               60    | None        | 16-node oversampling  | CARST      |
-|  60 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                8     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  61 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                8     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  62 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                8     |              120    | None        | 16-node oversampling  | CARST      |
-|  63 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                1     |               15    | Gau         | 16-node oversampling  | CARST      |
-|  64 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                1     |               15    | NAOF        | 16-node oversampling  | CARST      |
-|  65 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                1     |               15    | None        | 16-node oversampling  | CARST      |
-|  66 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                4     |               60    | Gau         | 16-node oversampling  | CARST      |
-|  67 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                4     |               60    | NAOF        | 16-node oversampling  | CARST      |
-|  68 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                4     |               60    | None        | 16-node oversampling  | CARST      |
-|  69 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                8     |              120    | Gau         | 16-node oversampling  | CARST      |
-|  70 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                8     |              120    | NAOF        | 16-node oversampling  | CARST      |
-|  71 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                8     |              120    | None        | 16-node oversampling  | CARST      |
-|  72 | LS8-20180304-20180405  |                32 | varying: multi-pass  | varying: multi-pass |               15.13  |              242.1  | NAOF        | interest point groups | GIV        |
-|  73 | LS8-20180304-20180405  |                32 | varying: multi-pass  | varying: multi-pass |                4.009 |               60.14 | NAOF        | interest point groups | GIV        |
-|  74 | LS8-20180304-20180405  |                32 | varying: multi-pass  | varying: multi-pass |               15.13  |              242.1  | Gau         | interest point groups | GIV        |
-|  75 | LS8-20180304-20180405  |                32 | varying: multi-pass  | varying: multi-pass |                4.009 |               60.14 | Gau         | interest point groups | GIV        |
-|  76 | LS8-20180304-20180405  |                32 | varying: multi-pass  | varying: multi-pass |               15.13  |              242.1  | None        | interest point groups | GIV        |
-|  77 | LS8-20180304-20180405  |                32 | varying: multi-pass  | varying: multi-pass |                4.009 |               60.14 | None        | interest point groups | GIV        |
-|  78 | LS8-20180802-20180818  |                16 | varying: multi-pass  | varying: multi-pass |               15.13  |              242.1  | NAOF        | interest point groups | GIV        |
-|  79 | LS8-20180802-20180818  |                16 | varying: multi-pass  | varying: multi-pass |                4.009 |               60.14 | NAOF        | interest point groups | GIV        |
-|  80 | LS8-20180802-20180818  |                16 | varying: multi-pass  | varying: multi-pass |               15.13  |              242.1  | Gau         | interest point groups | GIV        |
-|  81 | LS8-20180802-20180818  |                16 | varying: multi-pass  | varying: multi-pass |                4.009 |               60.14 | Gau         | interest point groups | GIV        |
-|  82 | LS8-20180802-20180818  |                16 | varying: multi-pass  | varying: multi-pass |               15.13  |              242.1  | None        | interest point groups | GIV        |
-|  83 | LS8-20180802-20180818  |                16 | varying: multi-pass  | varying: multi-pass |                4.009 |               60.14 | None        | interest point groups | GIV        |
-|  84 | Sen2-20180304-20180314 |                10 | varying: multi-pass  | varying: multi-pass |               16.04  |              160.4  | NAOF        | interest point groups | GIV        |
-|  85 | Sen2-20180304-20180314 |                10 | varying: multi-pass  | varying: multi-pass |                4.003 |               40.03 | NAOF        | interest point groups | GIV        |
-|  86 | Sen2-20180304-20180314 |                10 | varying: multi-pass  | varying: multi-pass |               16.04  |              160.4  | Gau         | interest point groups | GIV        |
-|  87 | Sen2-20180304-20180314 |                10 | varying: multi-pass  | varying: multi-pass |                4.003 |               40.03 | Gau         | interest point groups | GIV        |
-|  88 | Sen2-20180304-20180314 |                10 | varying: multi-pass  | varying: multi-pass |               16.04  |              160.4  | None        | interest point groups | GIV        |
-|  89 | Sen2-20180304-20180314 |                10 | varying: multi-pass  | varying: multi-pass |                4.003 |               40.03 | None        | interest point groups | GIV        |
-|  90 | Sen2-20180508-20180627 |                50 | varying: multi-pass  | varying: multi-pass |               16.04  |              160.4  | NAOF        | interest point groups | GIV        |
-|  91 | Sen2-20180508-20180627 |                50 | varying: multi-pass  | varying: multi-pass |                4.003 |               40.03 | NAOF        | interest point groups | GIV        |
-|  92 | Sen2-20180508-20180627 |                50 | varying: multi-pass  | varying: multi-pass |               16.04  |              160.4  | Gau         | interest point groups | GIV        |
-|  93 | Sen2-20180508-20180627 |                50 | varying: multi-pass  | varying: multi-pass |                4.003 |               40.03 | Gau         | interest point groups | GIV        |
-|  94 | Sen2-20180508-20180627 |                50 | varying: multi-pass  | varying: multi-pass |               16.04  |              160.4  | None        | interest point groups | GIV        |
-|  95 | Sen2-20180508-20180627 |                50 | varying: multi-pass  | varying: multi-pass |                4.003 |               40.03 | None        | interest point groups | GIV        |
-|  96 | LS8-20180304-20180405  |                32 | 31                   | 465                 |                1     |               15    | Gau         | parabolic             | Vmap       |
-|  97 | LS8-20180304-20180405  |                32 | 65                   | 975                 |                1     |               15    | Gau         | parabolic             | Vmap       |
-|  98 | LS8-20180802-20180818  |                16 | 31                   | 465                 |                1     |               15    | Gau         | parabolic             | Vmap       |
-|  99 | LS8-20180802-20180818  |                16 | 65                   | 975                 |                1     |               15    | Gau         | parabolic             | Vmap       |
-| 100 | Sen2-20180304-20180314 |                10 | 31                   | 310                 |                1     |               10    | Gau         | parabolic             | Vmap       |
-| 101 | Sen2-20180304-20180314 |                10 | 65                   | 650                 |                1     |               10    | Gau         | parabolic             | Vmap       |
-| 102 | Sen2-20180508-20180627 |                50 | 31                   | 310                 |                1     |               10    | Gau         | parabolic             | Vmap       |
-| 103 | Sen2-20180508-20180627 |                50 | 65                   | 650                 |                1     |               10    | Gau         | parabolic             | Vmap       |
-| 104 | LS8-20180304-20180405  |                32 | 31                   | 465                 |                1     |               15    | None        | parabolic             | Vmap       |
-| 105 | LS8-20180304-20180405  |                32 | 65                   | 975                 |                1     |               15    | None        | parabolic             | Vmap       |
-| 106 | LS8-20180802-20180818  |                16 | 31                   | 465                 |                1     |               15    | None        | parabolic             | Vmap       |
-| 107 | LS8-20180802-20180818  |                16 | 65                   | 975                 |                1     |               15    | None        | parabolic             | Vmap       |
-| 108 | Sen2-20180304-20180314 |                10 | 31                   | 310                 |                1     |               10    | None        | parabolic             | Vmap       |
-| 109 | Sen2-20180304-20180314 |                10 | 65                   | 650                 |                1     |               10    | None        | parabolic             | Vmap       |
-| 110 | Sen2-20180508-20180627 |                50 | 31                   | 310                 |                1     |               10    | None        | parabolic             | Vmap       |
-| 111 | Sen2-20180508-20180627 |                50 | 65                   | 650                 |                1     |               10    | None        | parabolic             | Vmap       |
-| 112 | LS8-20180304-20180405  |                32 | 31                   | 465                 |                1     |               15    | LoG         | parabolic             | Vmap       |
-| 113 | LS8-20180304-20180405  |                32 | 31                   | 465                 |                1     |               15    | LoG         | affine adaptive       | Vmap       |
-| 114 | LS8-20180304-20180405  |                32 | 31                   | 465                 |                1     |               15    | LoG         | affine                | Vmap       |
-| 115 | LS8-20180802-20180818  |                16 | 31                   | 465                 |                1     |               15    | LoG         | parabolic             | Vmap       |
-| 116 | LS8-20180802-20180818  |                16 | 31                   | 465                 |                1     |               15    | LoG         | affine adaptive       | Vmap       |
-| 117 | LS8-20180802-20180818  |                16 | 31                   | 465                 |                1     |               15    | LoG         | affine                | Vmap       |
-| 118 | Sen2-20180304-20180314 |                10 | 31                   | 310                 |                1     |               10    | LoG         | parabolic             | Vmap       |
-| 119 | Sen2-20180304-20180314 |                10 | 31                   | 310                 |                1     |               10    | LoG         | affine adaptive       | Vmap       |
-| 120 | Sen2-20180304-20180314 |                10 | 31                   | 310                 |                1     |               10    | LoG         | affine                | Vmap       |
-| 121 | Sen2-20180508-20180627 |                50 | 31                   | 310                 |                1     |               10    | LoG         | parabolic             | Vmap       |
-| 122 | Sen2-20180508-20180627 |                50 | 31                   | 310                 |                1     |               10    | LoG         | affine adaptive       | Vmap       |
-| 123 | Sen2-20180508-20180627 |                50 | 31                   | 310                 |                1     |               10    | LoG         | affine                | Vmap       |
-| 124 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                4     |               60    | None        | pyrUP                 | autoRIFT   |
-| 125 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                8     |              120    | None        | pyrUP                 | autoRIFT   |
-| 126 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                4     |               60    | None        | pyrUP                 | autoRIFT   |
-| 127 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                8     |              120    | None        | pyrUP                 | autoRIFT   |
-| 128 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                4     |               60    | Gau         | pyrUP                 | autoRIFT   |
-| 129 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                8     |              120    | Gau         | pyrUP                 | autoRIFT   |
-| 130 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                4     |               60    | Gau         | pyrUP                 | autoRIFT   |
-| 131 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                8     |              120    | Gau         | pyrUP                 | autoRIFT   |
-| 132 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                4     |               60    | NAOF        | pyrUP                 | autoRIFT   |
-| 133 | LS8-20180304-20180405  |                32 | 32                   | 480                 |                8     |              120    | NAOF        | pyrUP                 | autoRIFT   |
-| 134 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                4     |               60    | NAOF        | pyrUP                 | autoRIFT   |
-| 135 | LS8-20180304-20180405  |                32 | 64                   | 960                 |                8     |              120    | NAOF        | pyrUP                 | autoRIFT   |
-| 136 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                4     |               60    | None        | pyrUP                 | autoRIFT   |
-| 137 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                8     |              120    | None        | pyrUP                 | autoRIFT   |
-| 138 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                4     |               60    | None        | pyrUP                 | autoRIFT   |
-| 139 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                8     |              120    | None        | pyrUP                 | autoRIFT   |
-| 140 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                4     |               60    | Gau         | pyrUP                 | autoRIFT   |
-| 141 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                8     |              120    | Gau         | pyrUP                 | autoRIFT   |
-| 142 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                4     |               60    | Gau         | pyrUP                 | autoRIFT   |
-| 143 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                8     |              120    | Gau         | pyrUP                 | autoRIFT   |
-| 144 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                4     |               60    | NAOF        | pyrUP                 | autoRIFT   |
-| 145 | LS8-20180802-20180818  |                16 | 32                   | 480                 |                8     |              120    | NAOF        | pyrUP                 | autoRIFT   |
-| 146 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                4     |               60    | NAOF        | pyrUP                 | autoRIFT   |
-| 147 | LS8-20180802-20180818  |                16 | 64                   | 960                 |                8     |              120    | NAOF        | pyrUP                 | autoRIFT   |
-| 148 | Sen2-20180304-20180314 |                10 | 32                   | 320                 |                4     |               40    | None        | pyrUP                 | autoRIFT   |
-| 149 | Sen2-20180304-20180314 |                10 | 32                   | 320                 |                8     |               80    | None        | pyrUP                 | autoRIFT   |
-| 150 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                4     |               40    | None        | pyrUP                 | autoRIFT   |
-| 151 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                8     |               80    | None        | pyrUP                 | autoRIFT   |
-| 152 | Sen2-20180304-20180314 |                10 | 32                   | 320                 |                4     |               40    | Gau         | pyrUP                 | autoRIFT   |
-| 153 | Sen2-20180304-20180314 |                10 | 32                   | 320                 |                8     |               80    | Gau         | pyrUP                 | autoRIFT   |
-| 154 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                4     |               40    | Gau         | pyrUP                 | autoRIFT   |
-| 155 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                8     |               80    | Gau         | pyrUP                 | autoRIFT   |
-| 156 | Sen2-20180304-20180314 |                10 | 32                   | 320                 |                4     |               40    | NAOF        | pyrUP                 | autoRIFT   |
-| 157 | Sen2-20180304-20180314 |                10 | 32                   | 320                 |                8     |               80    | NAOF        | pyrUP                 | autoRIFT   |
-| 158 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                4     |               40    | NAOF        | pyrUP                 | autoRIFT   |
-| 159 | Sen2-20180304-20180314 |                10 | 64                   | 640                 |                8     |               80    | NAOF        | pyrUP                 | autoRIFT   |
-| 160 | Sen2-20180508-20180627 |                50 | 32                   | 320                 |                4     |               40    | None        | pyrUP                 | autoRIFT   |
-| 161 | Sen2-20180508-20180627 |                50 | 32                   | 320                 |                8     |               80    | None        | pyrUP                 | autoRIFT   |
-| 162 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                4     |               40    | None        | pyrUP                 | autoRIFT   |
-| 163 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                8     |               80    | None        | pyrUP                 | autoRIFT   |
-| 164 | Sen2-20180508-20180627 |                50 | 32                   | 320                 |                4     |               40    | Gau         | pyrUP                 | autoRIFT   |
-| 165 | Sen2-20180508-20180627 |                50 | 32                   | 320                 |                8     |               80    | Gau         | pyrUP                 | autoRIFT   |
-| 166 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                4     |               40    | Gau         | pyrUP                 | autoRIFT   |
-| 167 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                8     |               80    | Gau         | pyrUP                 | autoRIFT   |
-| 168 | Sen2-20180508-20180627 |                50 | 32                   | 320                 |                4     |               40    | NAOF        | pyrUP                 | autoRIFT   |
-| 169 | Sen2-20180508-20180627 |                50 | 32                   | 320                 |                8     |               80    | NAOF        | pyrUP                 | autoRIFT   |
-| 170 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                4     |               40    | NAOF        | pyrUP                 | autoRIFT   |
-| 171 | Sen2-20180508-20180627 |                50 | 64                   | 640                 |                8     |               80    | NAOF        | pyrUP                 | autoRIFT   |</p>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Duration (days)</th>
+      <th>Template size (px)</th>
+      <th>Template size (m)</th>
+      <th>Pixel spacing (px)</th>
+      <th>Pixel spacing (m)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>Software</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>12</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>12</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>12</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>1</td>
+      <td>10</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>48</td>
+      <td>480</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>12</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>12</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>12</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>1</td>
+      <td>10</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>1</td>
+      <td>15</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>1</td>
+      <td>15</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>12</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>12</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>12</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>1</td>
+      <td>10</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>48</td>
+      <td>480</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>12</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>12</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>12</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>1</td>
+      <td>10</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>1</td>
+      <td>15</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>1</td>
+      <td>15</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>16-node oversampling</td>
+      <td>CARST</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>15.13</td>
+      <td>242.1</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.009</td>
+      <td>60.14</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>15.13</td>
+      <td>242.1</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.009</td>
+      <td>60.14</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>15.13</td>
+      <td>242.1</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.009</td>
+      <td>60.14</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>15.13</td>
+      <td>242.1</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.009</td>
+      <td>60.14</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>15.13</td>
+      <td>242.1</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.009</td>
+      <td>60.14</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>15.13</td>
+      <td>242.1</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.009</td>
+      <td>60.14</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>16.04</td>
+      <td>160.4</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.003</td>
+      <td>40.03</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>16.04</td>
+      <td>160.4</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.003</td>
+      <td>40.03</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>16.04</td>
+      <td>160.4</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.003</td>
+      <td>40.03</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>16.04</td>
+      <td>160.4</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.003</td>
+      <td>40.03</td>
+      <td>NAOF</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>16.04</td>
+      <td>160.4</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.003</td>
+      <td>40.03</td>
+      <td>Gau</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>16.04</td>
+      <td>160.4</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>varying: multi-pass</td>
+      <td>varying: multi-pass</td>
+      <td>4.003</td>
+      <td>40.03</td>
+      <td>None</td>
+      <td>interest point groups</td>
+      <td>GIV</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>65</td>
+      <td>975</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>65</td>
+      <td>975</td>
+      <td>1</td>
+      <td>15</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>65</td>
+      <td>650</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>65</td>
+      <td>650</td>
+      <td>1</td>
+      <td>10</td>
+      <td>Gau</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>65</td>
+      <td>975</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>65</td>
+      <td>975</td>
+      <td>1</td>
+      <td>15</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>65</td>
+      <td>650</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>65</td>
+      <td>650</td>
+      <td>1</td>
+      <td>10</td>
+      <td>None</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>LoG</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>LoG</td>
+      <td>affine adaptive</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>LoG</td>
+      <td>affine</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>LoG</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>LoG</td>
+      <td>affine adaptive</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>31</td>
+      <td>465</td>
+      <td>1</td>
+      <td>15</td>
+      <td>LoG</td>
+      <td>affine</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>LoG</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>LoG</td>
+      <td>affine adaptive</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>LoG</td>
+      <td>affine</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>LoG</td>
+      <td>parabolic</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>LoG</td>
+      <td>affine adaptive</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>31</td>
+      <td>310</td>
+      <td>1</td>
+      <td>10</td>
+      <td>LoG</td>
+      <td>affine</td>
+      <td>Vmap</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>129</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>131</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>LS8-20180304-20180405</td>
+      <td>32</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>139</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>32</td>
+      <td>480</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>4</td>
+      <td>60</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>LS8-20180802-20180818</td>
+      <td>16</td>
+      <td>64</td>
+      <td>960</td>
+      <td>8</td>
+      <td>120</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>32</td>
+      <td>320</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>32</td>
+      <td>320</td>
+      <td>8</td>
+      <td>80</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>8</td>
+      <td>80</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>32</td>
+      <td>320</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>32</td>
+      <td>320</td>
+      <td>8</td>
+      <td>80</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>8</td>
+      <td>80</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>32</td>
+      <td>320</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>32</td>
+      <td>320</td>
+      <td>8</td>
+      <td>80</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>10</td>
+      <td>64</td>
+      <td>640</td>
+      <td>8</td>
+      <td>80</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>32</td>
+      <td>320</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>32</td>
+      <td>320</td>
+      <td>8</td>
+      <td>80</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>162</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>163</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>8</td>
+      <td>80</td>
+      <td>None</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>32</td>
+      <td>320</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>32</td>
+      <td>320</td>
+      <td>8</td>
+      <td>80</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>8</td>
+      <td>80</td>
+      <td>Gau</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>32</td>
+      <td>320</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>32</td>
+      <td>320</td>
+      <td>8</td>
+      <td>80</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>4</td>
+      <td>40</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>50</td>
+      <td>64</td>
+      <td>640</td>
+      <td>8</td>
+      <td>80</td>
+      <td>NAOF</td>
+      <td>pyrUP</td>
+      <td>autoRIFT</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="section" id="abbreviations-in-table-s1">
 <h2>Abbreviations in Table S1<a class="headerlink" href="#abbreviations-in-table-s1" title="Permalink to this headline">¶</a></h2>
@@ -519,10 +2448,10 @@ const thebe_selector_output = ".output, .cell_output"
             <p class="prev-next-title">GLAFT User Manual</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../1_static_area_error/metric_static-area-velo-full-analysis.html" title="next page">
+    <a class='right-next' id="next-link" href="FigureS1-S8.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Metric #1: Off-ice errors</p>
+        <p class="prev-next-title">Figures S1-S8: All 172 test velocity maps</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
