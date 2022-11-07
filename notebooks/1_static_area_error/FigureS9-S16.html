@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/1_static_area_error/FigureS9-S16.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.html" />
+    <link rel="next" title="Figure 3 script" href="../2_longitudinal_shear_strain/Fig3.html" />
     <link rel="prev" title="Figure 2 script" href="Fig2.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -135,6 +135,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/Fig3.html">
+   Figure 3 script
   </a>
  </li>
  <li class="toctree-l1">
@@ -378,7 +383,71 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
 <div class="section" id="visualize-results">
 <h2>3. Visualize results<a class="headerlink" href="#visualize-results" title="Permalink to this headline">¶</a></h2>
 <p>Click to reveal the plot settings and the batch script.</p>
-<div class="cell tag_remove-input docutils container">
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Font and line width settings</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_batch</span><span class="p">(</span><span class="n">sub_df</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">datestr</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot static area velocity distribution for all the tests from the same image pair.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">26</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        
+        <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="n">exps</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">zoom</span><span class="p">:</span>
+            <span class="n">exp</span><span class="o">.</span><span class="n">plot_zoomed_extent</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+            <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">exp</span><span class="o">.</span><span class="n">plot_full_extent</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+            <span class="c1"># adjust extent</span>
+            <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax_sel</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+            <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ax_sel</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+            <span class="n">newmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">),</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">newmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span>  <span class="mi">10</span><span class="p">)</span>
+            <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">newmin</span><span class="p">,</span> <span class="n">newmax</span><span class="p">)</span>
+            <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">newmin</span><span class="p">,</span> <span class="n">newmax</span><span class="p">)</span>
+        
+        <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+        <span class="c1"># show incorrect match percentage</span>
+        <span class="n">ax_sel</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">outlier_percent</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_sel</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">backgroundcolor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+
+        <span class="c1">#### title label</span>
+        <span class="n">templatesize</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Template size (px)&#39;</span><span class="p">]</span>
+        <span class="c1"># change long GIV label &quot;varying: multi-pass&quot; to &quot;multi&quot;</span>
+        <span class="n">templatesize</span> <span class="o">=</span> <span class="s1">&#39;multi&#39;</span> <span class="k">if</span> <span class="n">templatesize</span> <span class="o">==</span> <span class="s1">&#39;varying: multi-pass&#39;</span> <span class="k">else</span> <span class="n">templatesize</span>
+        <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">Software</span> <span class="o">==</span> <span class="s1">&#39;Vmap&#39;</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">templatesize</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Pixel spacing (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">Subpixel</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">row</span><span class="o">.</span><span class="n">Software</span><span class="p">,</span> <span class="n">templatesize</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Pixel spacing (px)&#39;</span><span class="p">],</span> <span class="n">row</span><span class="o">.</span><span class="n">Prefilter</span><span class="p">))</span>
+        <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="c1">####</span>
+        
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="c1"># delete empty axes</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">48</span><span class="p">):</span>
+        <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">ax_sel</span><span class="p">)</span>
+    
+    <span class="c1"># legends</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> 
+             <span class="s1">&#39;</span><span class="si">{}</span><span class="se">\n</span><span class="s1">X axis: static area $V_x$ (m/day) </span><span class="se">\n</span><span class="s1">Y axis: static area $V_y$ (m/day) </span><span class="se">\n</span><span class="s1">Percentage: amount of incorrect matches to all matches&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datestr</span><span class="p">),</span> 
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>To reproduce the figures, uncomment and run the cell below.</p>
 <div class="cell docutils container">
@@ -463,10 +532,10 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
             <p class="prev-next-title">Figure 2 script</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.html" title="next page">
+    <a class='right-next' id="next-link" href="../2_longitudinal_shear_strain/Fig3.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Figure 3 script</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
