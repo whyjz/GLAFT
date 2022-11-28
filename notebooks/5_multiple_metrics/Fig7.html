@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figure 7 script &#8212; GLAFT</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/5_multiple_metrics/Fig7.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth" href="../6_synthetic_offset/validation_synthetic.html" />
+    <link rel="prev" title="Figure 5 script" href="Fig5.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../glaft_user_manual.html">
+   GLAFT User Manual
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary material
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS1.html">
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/Fig2.html">
+   Figure 2 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/FigureS9-S16.html">
+   Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/Fig3.html">
+   Figure 3 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig4.html">
+   Figure 4 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig5.html">
+   Figure 5 script
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Figure 7 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../6_synthetic_offset/validation_synthetic.html">
+   Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/5_multiple_metrics/Fig7.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-ft-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/5_multiple_metrics/Fig7.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/5_multiple_metrics/Fig7.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/5_multiple_metrics/Fig7.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Figure 7 script</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="figure-7-script">
+<h1>Figure 7 script<a class="headerlink" href="#figure-7-script" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LinearSegmentedColormap</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="c1"># from datetime import datetime</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">axes_settings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../results_ITSLIVE.csv&#39;, dtype=str)</span>
+<span class="c1"># for field in [&#39;Duration (days)&#39;,</span>
+<span class="c1">#               &#39;Pixel spacing (m)&#39;,</span>
+<span class="c1">#               &#39;Assigned-x-error&#39;,</span>
+<span class="c1">#               &#39;Assigned-y-error&#39;,</span>
+<span class="c1">#               &#39;SAV-uncertainty-x&#39;,</span>
+<span class="c1">#               &#39;SAV-uncertainty-y&#39;,</span>
+<span class="c1">#               &#39;SAV-peak-x&#39;,</span>
+<span class="c1">#               &#39;SAV-peak-y&#39;,</span>
+<span class="c1">#               &#39;SAV-outlier-percent&#39;,</span>
+<span class="c1">#               &#39;LSR-uncertainty-nm&#39;,</span>
+<span class="c1">#               &#39;LSR-uncertainty-sh&#39;,</span>
+<span class="c1">#               &#39;pt0_vxavg&#39;,</span>
+<span class="c1">#               &#39;pt0_vxgps&#39;,</span>
+<span class="c1">#               &#39;pt0_vyavg&#39;,</span>
+<span class="c1">#               &#39;pt0_vygps&#39;,</span>
+<span class="c1">#               &#39;pt1_vxavg&#39;,</span>
+<span class="c1">#               &#39;pt1_vxgps&#39;,</span>
+<span class="c1">#               &#39;pt1_vyavg&#39;,</span>
+<span class="c1">#               &#39;pt1_vygps&#39;,</span>
+<span class="c1">#               &#39;pt2_vxavg&#39;,</span>
+<span class="c1">#               &#39;pt2_vxgps&#39;,</span>
+<span class="c1">#               &#39;pt2_vyavg&#39;,</span>
+<span class="c1">#               &#39;pt2_vygps&#39;,</span>
+<span class="c1">#               &#39;pt0_vxdiff&#39;,</span>
+<span class="c1">#               &#39;pt0_vydiff&#39;,</span>
+<span class="c1">#               &#39;pt1_vxdiff&#39;,</span>
+<span class="c1">#               &#39;pt1_vydiff&#39;,</span>
+<span class="c1">#               &#39;pt2_vxdiff&#39;,</span>
+<span class="c1">#               &#39;pt2_vydiff&#39;,</span>
+<span class="c1">#               &#39;pt0_vxavgdiff&#39;,</span>
+<span class="c1">#               &#39;pt0_vyavgdiff&#39;,</span>
+<span class="c1">#               &#39;pt1_vxavgdiff&#39;,</span>
+<span class="c1">#               &#39;pt1_vyavgdiff&#39;,</span>
+<span class="c1">#               &#39;pt2_vxavgdiff&#39;,</span>
+<span class="c1">#               &#39;pt2_vyavgdiff&#39;,</span>
+<span class="c1">#               &#39;pt0_vavg&#39;, </span>
+<span class="c1">#               &#39;pt0_vgps&#39;,</span>
+<span class="c1">#               &#39;pt0_vdiff&#39;,</span>
+<span class="c1">#               &#39;pt0_verr&#39;,</span>
+<span class="c1">#               &#39;pt1_vavg&#39;, </span>
+<span class="c1">#               &#39;pt1_vgps&#39;,</span>
+<span class="c1">#               &#39;pt1_vdiff&#39;,</span>
+<span class="c1">#               &#39;pt1_verr&#39;,</span>
+<span class="c1">#               &#39;pt2_vavg&#39;, </span>
+<span class="c1">#               &#39;pt2_vgps&#39;,</span>
+<span class="c1">#               &#39;pt2_vdiff&#39;,</span>
+<span class="c1">#               &#39;pt2_verr&#39;,</span>
+<span class="c1">#               ]:</span>
+<span class="c1">#     df[field] = df[field].astype(float)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_ITSLIVE.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Assigned-x-error&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Assigned-y-error&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;SAV-uncertainty-y&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;SAV-peak-x&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;SAV-peak-y&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;SAV-outlier-percent&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;LSR-uncertainty-nm&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;LSR-uncertainty-sh&#39;</span><span class="p">,</span>
+              <span class="p">]:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for idx, row in df.iterrows():</span>
+<span class="c1">#     df.loc[idx, &#39;Start date&#39;] = datetime.strptime(row[&#39;Start date&#39;], &#39;%Y%m%d&#39;)</span>
+<span class="c1">#     df.loc[idx, &#39;End date&#39;] = datetime.strptime(row[&#39;End date&#39;], &#39;%Y%m%d&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[&#39;Center date&#39;] = (df[&#39;End date&#39;] - df[&#39;Start date&#39;]) / 2 + df[&#39;Start date&#39;]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-x-m/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-y-m/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-y&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error-m/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-nm-1/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-nm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-sh-1/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-sh&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day-95CI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error-m/day-95CI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error-m/day&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;rocket_r&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cmaplist</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="mi">70</span><span class="p">)]</span>
+<span class="n">discrete_cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">&#39;Custom rocket_r&#39;</span><span class="p">,</span> <span class="n">cmaplist</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cmaplist</span><span class="p">))</span>
+<span class="n">discrete_cmap</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>Custom rocket_r</strong> </div><div class="cmap"><img alt="Custom rocket_r colormap" title="Custom rocket_r" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAHnRFWHRUaXRsZQBDdXN0b20gcm9ja2V0X3IgY29sb3JtYXBDGHz2AAAAJHRFWHREZXNjcmlwdGlvbgBDdXN0b20gcm9ja2V0X3IgY29sb3JtYXCJpJWZAAAAMHRFWHRBdXRob3IATWF0cGxvdGxpYiB2My40LjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmes1mPdAAAAMnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHYzLjQuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Jw/PoAAAFFSURBVHic7dYxDcIAFABRQEUlk3RASRXURsf6ICRNwAV/uPcU3Hj397F/b2R91ud0AoO2fZlOYNDrOqcTGPSYDgAA/s8AAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAgyAAAQZAAAIMgAAECQAQCAIAMAAEEGAACCDAAABBkAAAj6AfqrCfj+1rNsAAAAAElFTkSuQmCC"></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#f8d4bcff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #f8d4bcff;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#2d1738ff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #2d1738ff;"></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;SAV-uncertainty-x-m/day&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Assigned-x-error-m/day-95CI&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;LSR-uncertainty-sh-1/day&#39;</span><span class="p">,</span> <span class="n">hue_norm</span><span class="o">=</span><span class="p">(</span><span class="mf">0.002</span><span class="p">,</span><span class="mf">0.01</span><span class="p">),</span> <span class="n">palette</span><span class="o">=</span><span class="n">discrete_cmap</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\delta_u$ (m day$^{-1}$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;ITS_LIVE $V_x$ error (2-$\sigma$, m day$^{-1}$)&#39;</span><span class="p">)</span>
+<span class="c1"># ax.get_legend().set_title(&quot;$\delta_{x&#39;y&#39;}$ (day$^{-1}$)&quot;)</span>
+
+<span class="c1">## legend:</span>
+<span class="c1">## &lt; 0.004 lvl 1 </span>
+<span class="c1">## 0.004 - 0.006 lvl 2</span>
+<span class="c1">## 0.006 - 0.008 lvl 3</span>
+<span class="c1">## &gt; 0.008 lvl 4</span>
+
+<span class="c1"># bounds = np.linspace(0, 256, 5)</span>
+<span class="c1"># norm = mpl.colors.BoundaryNorm(bounds, cmap.N)</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">mappable</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">discrete_cmap</span><span class="p">)</span>
+<span class="c1"># mappable = mpl.cm.ScalarMappable(norm=norm, cmap=discrete_cmap)</span>
+
+<span class="c1"># cax = subfigs[3].add_axes([0.0, bbox_top.y0 + 0.02, 0.15, bbox_top.y1 - bbox_top.y0 - 0.02])</span>
+<span class="c1"># subfigs[3].colorbar(mappable_velo, cax=cax, orientation=&#39;vertical&#39;, label=&#39;$V_x$ ({})&#39;.format(exp.velocity_unit), ticks=[-2, -1, 0, 1, 2])</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mf">0.004</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">,</span> <span class="mf">0.008</span><span class="p">])</span> <span class="c1">#, label=&#39;$V_x$ ({})&#39;.format(exp.velocity_unit))</span>
+<span class="c1"># , norm=norm,</span>
+<span class="c1">#    spacing=&#39;proportional&#39;, ticks=bounds, boundaries=bounds, format=&#39;%1i&#39;)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;$\delta_{x&#39;y&#39;}$ (day$^{-1}$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">19</span><span class="p">)</span>
+
+<span class="c1"># save figure</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig7.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Fig7_11_0.png" src="../../_images/Fig7_11_0.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-.conda-eztrack-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-.conda-eztrack-py",
+            path: "./notebooks/5_multiple_metrics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-.conda-eztrack-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Fig5.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Figure 5 script</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../6_synthetic_offset/validation_synthetic.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Validation #2: Feature tracking over a known, synthetic pixel offset, then calculate the difference between results and the ground truth</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
