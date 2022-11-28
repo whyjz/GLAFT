@@ -16,6 +16,7 @@ parts:
   - file: notebooks/2_longitudinal_shear_strain/Fig3
   - file: notebooks/5_multiple_metrics/Fig4.ipynb
   - file: notebooks/5_multiple_metrics/Fig5.ipynb
+  - file: notebooks/5_multiple_metrics/Fig7.ipynb
 #   - file: notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.ipynb
 #   - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.ipynb
 #   - file: notebooks/4_invalid_pixel_percent/invalid_pixel_percenty.ipynb
