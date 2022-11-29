@@ -1,7 +1,8 @@
+cmcrameri
+geopandas
+matplotlib
 numpy
+rasterio
+scikit-learn
 scipy
 shapely
-geopandas
-rasterio
-matplotlib
-cmcrameri

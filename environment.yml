@@ -18,3 +18,4 @@ dependencies:
   - seaborn
   - cmcrameri
   - tabulate
+  - scikit-learn

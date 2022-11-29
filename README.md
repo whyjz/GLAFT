@@ -1,6 +1,6 @@
 # GLAcier Feature Tracking testkit: `glaft`
 
-Python module for testing glacier feature-tracking performance using physics-based metrics. Use data from Kaskawulsh glacier, Canada, as demo examples.
+Python module for assessing glacier velocity maps using statistics- and physics-based metrics. Includes demo Notebook examples using data from Kaskawulsh glacier, Canada.
 
 ## installation
 
