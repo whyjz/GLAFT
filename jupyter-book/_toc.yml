@@ -14,6 +14,7 @@ parts:
   - file: notebooks/1_static_area_error/Fig2
   - file: notebooks/1_static_area_error/FigureS9-S16
   - file: notebooks/2_longitudinal_shear_strain/Fig3
+  - file: notebooks/2_longitudinal_shear_strain/FigureS17-S28
   - file: notebooks/5_multiple_metrics/Fig4.ipynb
   - file: notebooks/5_multiple_metrics/Fig5.ipynb
   - file: notebooks/5_multiple_metrics/Fig7.ipynb
