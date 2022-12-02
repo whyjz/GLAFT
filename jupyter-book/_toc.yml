@@ -15,14 +15,17 @@ parts:
   - file: notebooks/1_static_area_error/FigureS9-S16
   - file: notebooks/2_longitudinal_shear_strain/Fig3
   - file: notebooks/2_longitudinal_shear_strain/FigureS17-S28
+  - file: notebooks/5_multiple_metrics/TableS2
   - file: notebooks/5_multiple_metrics/Fig4.ipynb
   - file: notebooks/5_multiple_metrics/Fig5.ipynb
+  - file: notebooks/0_velocity_plots/TableS3
+  - file: notebooks/5_multiple_metrics/TableS4
   - file: notebooks/5_multiple_metrics/Fig7.ipynb
 #   - file: notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.ipynb
 #   - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.ipynb
 #   - file: notebooks/4_invalid_pixel_percent/invalid_pixel_percenty.ipynb
 #   - file: notebooks/5_multiple_metrics/validation1.ipynb
-  - file: notebooks/6_synthetic_offset/validation_synthetic.ipynb
+#   - file: notebooks/6_synthetic_offset/validation_synthetic.ipynb
 
 # sections:
 # - file: notebooks/stable_area_error_assessment/AGU21_metric_off-ice-error
