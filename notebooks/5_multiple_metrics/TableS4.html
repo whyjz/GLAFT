@@ -1,0 +1,920 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table S4: Metrics for the ITS_LIVE velocity maps &#8212; GLAFT</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/5_multiple_metrics/TableS4.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Figure 7 script" href="Fig7.html" />
+    <link rel="prev" title="Table S3: List of all 35 ITS_LIVE maps" href="../0_velocity_plots/TableS3.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/introduction.html">
+   GLAFT User Manual
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/quickstart.html">
+   Quick Start
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/reference.html">
+   Functions
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary material
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS1.html">
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/Fig2.html">
+   Figure 2 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/FigureS9-S16.html">
+   Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/Fig3.html">
+   Figure 3 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/FigureS17-S28.html">
+   Figures S17-S28: Longitudinal strain rate analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TableS2.html">
+   Table S2: Results of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig4.html">
+   Figure 4 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig5.html">
+   Figure 5 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS3.html">
+   Table S3: List of all 35 ITS_LIVE maps
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Table S4: Metrics for the ITS_LIVE velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig7.html">
+   Figure 7 script
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/5_multiple_metrics/TableS4.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-ft-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/5_multiple_metrics/TableS4.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/5_multiple_metrics/TableS4.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/5_multiple_metrics/TableS4.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#abbreviations-in-table-s4">
+   Abbreviations in Table S4
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Table S4: Metrics for the ITS_LIVE velocity maps</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#abbreviations-in-table-s4">
+   Abbreviations in Table S4
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="table-s4-metrics-for-the-its-live-velocity-maps">
+<h1>Table S4: Metrics for the ITS_LIVE velocity maps<a class="headerlink" href="#table-s4-metrics-for-the-its-live-velocity-maps" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.precision&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_ITSLIVE.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">df_sel</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">57</span><span class="p">]]</span>
+<span class="n">df_sel</span> <span class="o">=</span> <span class="n">df_sel</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">df_sel</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Label&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">df_sel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Label</th>
+      <th>Assigned-x-error</th>
+      <th>Assigned-y-error</th>
+      <th>SAV-uncertainty-x</th>
+      <th>SAV-uncertainty-y</th>
+      <th>SAV-peak-x</th>
+      <th>SAV-peak-y</th>
+      <th>SAV-outlier-percent</th>
+      <th>LSR-uncertainty-nm</th>
+      <th>LSR-uncertainty-sh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LS8-20180304-20180405</td>
+      <td>47.7</td>
+      <td>32.6</td>
+      <td>51.1488</td>
+      <td>44.5490</td>
+      <td>-10.7502</td>
+      <td>12.6500</td>
+      <td>25.5099</td>
+      <td>1.0753</td>
+      <td>0.8147</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LS8-20180405-20180421</td>
+      <td>119.6</td>
+      <td>71.7</td>
+      <td>124.2358</td>
+      <td>108.7063</td>
+      <td>32.1766</td>
+      <td>-3.5882</td>
+      <td>30.4657</td>
+      <td>2.0622</td>
+      <td>1.4141</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LS8-20180421-20180523</td>
+      <td>92.5</td>
+      <td>48.2</td>
+      <td>147.2743</td>
+      <td>81.3884</td>
+      <td>5.1295</td>
+      <td>-6.8756</td>
+      <td>15.3570</td>
+      <td>2.5138</td>
+      <td>1.7745</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LS8-20180523-20180608</td>
+      <td>75.5</td>
+      <td>64.0</td>
+      <td>87.4032</td>
+      <td>76.1254</td>
+      <td>12.4584</td>
+      <td>-7.8195</td>
+      <td>24.2239</td>
+      <td>2.6042</td>
+      <td>2.1307</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LS8-20180412-20180428</td>
+      <td>132.2</td>
+      <td>68.8</td>
+      <td>113.6569</td>
+      <td>98.9915</td>
+      <td>43.3318</td>
+      <td>-31.3336</td>
+      <td>25.0583</td>
+      <td>3.3615</td>
+      <td>2.4011</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LS8-20180428-20180802</td>
+      <td>32.0</td>
+      <td>18.5</td>
+      <td>35.0748</td>
+      <td>35.0748</td>
+      <td>-30.0474</td>
+      <td>0.3716</td>
+      <td>24.1731</td>
+      <td>1.0058</td>
+      <td>0.9084</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LS8-20180802-20180818</td>
+      <td>48.3</td>
+      <td>44.9</td>
+      <td>32.0912</td>
+      <td>32.0912</td>
+      <td>-20.0697</td>
+      <td>-1.0697</td>
+      <td>31.8074</td>
+      <td>1.7956</td>
+      <td>1.4147</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LS8-20180818-20180903</td>
+      <td>49.9</td>
+      <td>47.6</td>
+      <td>45.6125</td>
+      <td>42.6698</td>
+      <td>-2.1278</td>
+      <td>-5.4141</td>
+      <td>26.3946</td>
+      <td>1.6979</td>
+      <td>1.3892</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LS8-20180903-20181005</td>
+      <td>38.7</td>
+      <td>30.8</td>
+      <td>34.5922</td>
+      <td>29.1871</td>
+      <td>-18.4050</td>
+      <td>4.9190</td>
+      <td>30.1054</td>
+      <td>1.4017</td>
+      <td>1.0619</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Sen2-20180306-20180316</td>
+      <td>102.3</td>
+      <td>62.4</td>
+      <td>111.2489</td>
+      <td>97.3428</td>
+      <td>44.3826</td>
+      <td>1.5235</td>
+      <td>21.8180</td>
+      <td>1.2218</td>
+      <td>0.8727</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sen2-20180316-20180515</td>
+      <td>43.0</td>
+      <td>18.5</td>
+      <td>71.8003</td>
+      <td>40.7515</td>
+      <td>2.2271</td>
+      <td>0.0595</td>
+      <td>19.0379</td>
+      <td>1.3350</td>
+      <td>1.1264</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Sen2-20180329-20180508</td>
+      <td>52.1</td>
+      <td>25.2</td>
+      <td>85.5989</td>
+      <td>50.8967</td>
+      <td>15.4483</td>
+      <td>-7.3135</td>
+      <td>15.4072</td>
+      <td>1.7981</td>
+      <td>1.3221</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Sen2-20180508-20180518</td>
+      <td>175.7</td>
+      <td>106.0</td>
+      <td>111.9817</td>
+      <td>90.9852</td>
+      <td>23.4994</td>
+      <td>-2.4994</td>
+      <td>29.5978</td>
+      <td>3.6587</td>
+      <td>3.0870</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>37.1</td>
+      <td>21.5</td>
+      <td>71.0687</td>
+      <td>52.2564</td>
+      <td>8.0903</td>
+      <td>0.9097</td>
+      <td>15.2372</td>
+      <td>1.5157</td>
+      <td>1.3690</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Sen2-20180515-20180619</td>
+      <td>45.3</td>
+      <td>30.4</td>
+      <td>80.1844</td>
+      <td>63.1756</td>
+      <td>21.5702</td>
+      <td>-0.4298</td>
+      <td>15.5889</td>
+      <td>1.2131</td>
+      <td>1.0236</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Sen2-20180518-20180523</td>
+      <td>133.3</td>
+      <td>110.6</td>
+      <td>143.2905</td>
+      <td>117.2377</td>
+      <td>18.0264</td>
+      <td>18.3421</td>
+      <td>28.0330</td>
+      <td>5.2090</td>
+      <td>4.4198</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Sen2-20180627-20180722</td>
+      <td>39.0</td>
+      <td>29.1</td>
+      <td>31.6944</td>
+      <td>26.7422</td>
+      <td>6.0286</td>
+      <td>-0.0095</td>
+      <td>39.4703</td>
+      <td>0.9104</td>
+      <td>1.0046</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Sen2-20180704-20180724</td>
+      <td>36.7</td>
+      <td>28.2</td>
+      <td>22.6684</td>
+      <td>24.2317</td>
+      <td>-4.9083</td>
+      <td>-6.0917</td>
+      <td>35.2196</td>
+      <td>0.8499</td>
+      <td>0.8792</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Sen2-20180724-20180729</td>
+      <td>70.3</td>
+      <td>66.5</td>
+      <td>92.5666</td>
+      <td>118.4852</td>
+      <td>24.8920</td>
+      <td>22.4867</td>
+      <td>28.0406</td>
+      <td>3.2260</td>
+      <td>2.3721</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Sen2-20180727-20180801</td>
+      <td>67.1</td>
+      <td>60.1</td>
+      <td>56.4143</td>
+      <td>58.3596</td>
+      <td>1.9453</td>
+      <td>-1.9453</td>
+      <td>15.9744</td>
+      <td>1.9864</td>
+      <td>1.6761</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>121.4</td>
+      <td>73.1</td>
+      <td>100.8888</td>
+      <td>77.1503</td>
+      <td>33.9020</td>
+      <td>-1.0327</td>
+      <td>26.7112</td>
+      <td>1.1858</td>
+      <td>0.9068</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Sen2-20180314-20180329</td>
+      <td>72.3</td>
+      <td>45.5</td>
+      <td>79.2852</td>
+      <td>66.8969</td>
+      <td>-10.5670</td>
+      <td>5.4777</td>
+      <td>23.0105</td>
+      <td>1.1267</td>
+      <td>0.9155</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Sen2-20180523-20180612</td>
+      <td>50.4</td>
+      <td>39.7</td>
+      <td>71.8164</td>
+      <td>56.5826</td>
+      <td>4.8237</td>
+      <td>4.1763</td>
+      <td>25.0130</td>
+      <td>1.7165</td>
+      <td>1.5504</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Sen2-20180612-20180627</td>
+      <td>80.5</td>
+      <td>61.2</td>
+      <td>141.1083</td>
+      <td>103.7561</td>
+      <td>-0.7512</td>
+      <td>-11.4507</td>
+      <td>22.5063</td>
+      <td>1.4392</td>
+      <td>1.4392</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Sen2-20180619-20180704</td>
+      <td>61.6</td>
+      <td>52.5</td>
+      <td>93.4423</td>
+      <td>78.8419</td>
+      <td>-0.6004</td>
+      <td>0.9201</td>
+      <td>30.9668</td>
+      <td>1.1808</td>
+      <td>1.1414</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Sen2-20180722-20180727</td>
+      <td>76.0</td>
+      <td>71.5</td>
+      <td>58.9596</td>
+      <td>63.0258</td>
+      <td>-1.9669</td>
+      <td>-0.0331</td>
+      <td>22.2547</td>
+      <td>2.3483</td>
+      <td>1.9814</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Sen2-20180729-20180818</td>
+      <td>24.8</td>
+      <td>20.0</td>
+      <td>25.6879</td>
+      <td>28.4402</td>
+      <td>-4.5871</td>
+      <td>3.7523</td>
+      <td>32.3215</td>
+      <td>1.2633</td>
+      <td>1.1411</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Sen2-20180801-20180811</td>
+      <td>39.1</td>
+      <td>33.8</td>
+      <td>41.7041</td>
+      <td>23.0470</td>
+      <td>1.0975</td>
+      <td>-0.9025</td>
+      <td>25.7202</td>
+      <td>1.5543</td>
+      <td>1.3036</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Sen2-20180811-20180831</td>
+      <td>33.4</td>
+      <td>29.6</td>
+      <td>37.8486</td>
+      <td>36.5870</td>
+      <td>-11.7849</td>
+      <td>-2.2616</td>
+      <td>30.6416</td>
+      <td>0.8849</td>
+      <td>0.9481</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Sen2-20180818-20180917</td>
+      <td>32.9</td>
+      <td>22.8</td>
+      <td>40.7117</td>
+      <td>32.0759</td>
+      <td>-13.6358</td>
+      <td>9.7011</td>
+      <td>23.3886</td>
+      <td>0.6939</td>
+      <td>0.7178</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Sen2-20180831-20180910</td>
+      <td>65.7</td>
+      <td>52.0</td>
+      <td>82.0364</td>
+      <td>87.6941</td>
+      <td>-2.8288</td>
+      <td>0.1712</td>
+      <td>25.8497</td>
+      <td>1.7262</td>
+      <td>1.5104</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Sen2-20180910-20180920</td>
+      <td>73.9</td>
+      <td>71.4</td>
+      <td>95.2788</td>
+      <td>95.2788</td>
+      <td>-18.5279</td>
+      <td>3.1760</td>
+      <td>25.0593</td>
+      <td>1.8709</td>
+      <td>1.3757</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Sen2-20180917-20181002</td>
+      <td>54.4</td>
+      <td>45.0</td>
+      <td>73.4694</td>
+      <td>83.9651</td>
+      <td>-32.1195</td>
+      <td>-18.8717</td>
+      <td>20.5361</td>
+      <td>1.3447</td>
+      <td>1.2579</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Sen2-20180920-20180930</td>
+      <td>78.2</td>
+      <td>63.7</td>
+      <td>89.8632</td>
+      <td>83.8723</td>
+      <td>-3.9863</td>
+      <td>9.9954</td>
+      <td>26.1195</td>
+      <td>2.0611</td>
+      <td>1.6863</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Sen2-20180930-20181005</td>
+      <td>103.5</td>
+      <td>93.5</td>
+      <td>75.8879</td>
+      <td>75.8879</td>
+      <td>-22.7664</td>
+      <td>1.4704</td>
+      <td>31.5486</td>
+      <td>2.1947</td>
+      <td>1.9823</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="section" id="abbreviations-in-table-s4">
+<h2>Abbreviations in Table S4<a class="headerlink" href="#abbreviations-in-table-s4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>LS8: Landsat 8</p></li>
+<li><p>Sen2: Sentinel-2</p></li>
+<li><p>Assigned-x-error: the value of the <code class="docutils literal notranslate"><span class="pre">Vx_err</span></code> flag that comes with each velocity map (m/yr)</p></li>
+<li><p>Assigned-y-error: the value of the <code class="docutils literal notranslate"><span class="pre">Vy_err</span></code> flag that comes with each velocity map (m/yr)</p></li>
+<li><p>SAV-uncertainty-x: correct-match uncertainty of the static terrain velocity (x component, m/yr)</p></li>
+<li><p>SAV-uncertainty-y: correct-match uncertainty of the static terrain velocity (y component, m/yr)</p></li>
+<li><p>SAV-peak-x: correct-match peak location (x component, m/yr)</p></li>
+<li><p>SAV-peak-y: correct-match peak location (y component, m/yr)</p></li>
+<li><p>SAV-outlier-percent: amount of incorrect matches (in percent of all the static terrain pixels)</p></li>
+<li><p>LSR-uncertainty-nm: variability of longitudinal normal strain rate (1/yr)</p></li>
+<li><p>LSR-uncertainty-sh: variability of longitudinal shear strain rate (1/yr)</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-.conda-eztrack-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-.conda-eztrack-py",
+            path: "./notebooks/5_multiple_metrics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-.conda-eztrack-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../0_velocity_plots/TableS3.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Table S3: List of all 35 ITS_LIVE maps</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Fig7.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Figure 7 script</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
