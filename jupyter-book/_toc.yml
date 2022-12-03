@@ -4,7 +4,9 @@ parts:
 - caption: GLAFT user manual
   numbered: false
   chapters:
-  - file: glaft_user_manual
+  - file: doc/introduction
+  - file: doc/quickstart
+  - file: doc/reference
 
 - caption: Supplementary material
   numbered: false
