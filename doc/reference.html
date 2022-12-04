@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Functions &#8212; GLAFT</title>
+    <title>Reference &#8212; GLAFT</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Table S1: Parameters of all 172 tests" href="../notebooks/0_velocity_plots/TableS1.html" />
-    <link rel="prev" title="Quick Start" href="quickstart.html" />
+    <link rel="prev" title="GLAFT Quick Start" href="quickstart.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -92,14 +92,7 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../index.html">
-   GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   GLAFT user manual
  </span>
@@ -107,17 +100,17 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="introduction.html">
-   GLAFT User Manual
+   Introduction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="quickstart.html">
-   Quick Start
+   GLAFT Quick Start
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Functions
+   Reference
   </a>
  </li>
 </ul>
@@ -271,6 +264,253 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#glaft-velocity-class">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     glaft.Velocity
+    </span>
+   </code>
+   class
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-velocity-vxfile-str-none-vyfile-str-none-wfile-str-none-static-area-str-none-on-ice-area-str-none-nodata-float-9999-0-velocity-unit-str-m-day-thres-sigma-float-2-0-kde-gridsize-int-60">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.Velocity(vxfile:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       vyfile:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       wfile:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       static_area:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       on_ice_area:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       nodata:
+      </span>
+      <span class="pre">
+       float=-9999.0,
+      </span>
+      <span class="pre">
+       velocity_unit:
+      </span>
+      <span class="pre">
+       str='m/day',
+      </span>
+      <span class="pre">
+       thres_sigma:
+      </span>
+      <span class="pre">
+       float=2.0,
+      </span>
+      <span class="pre">
+       kde_gridsize:
+      </span>
+      <span class="pre">
+       int=60)
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-static-terrain-analysis-plot-none-ax-none">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.static_terrain_analysis(plot=None,
+        </span>
+        <span class="pre">
+         ax=None)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-longitudinal-shear-analysis-plot-none-ax-none">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.longitudinal_shear_analysis(plot=None,
+        </span>
+        <span class="pre">
+         ax=None)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-plot-full-extent-ax-none-rect-none-metric-int-1-pt-style">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.plot_full_extent(ax=None,
+        </span>
+        <span class="pre">
+         rect=None,
+        </span>
+        <span class="pre">
+         metric:
+        </span>
+        <span class="pre">
+         int=1,
+        </span>
+        <span class="pre">
+         **pt_style)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.plot_zoomed_extent(self,
+        </span>
+        <span class="pre">
+         ax=None,
+        </span>
+        <span class="pre">
+         rect=None,
+        </span>
+        <span class="pre">
+         base_colormap=None,
+        </span>
+        <span class="pre">
+         metric:
+        </span>
+        <span class="pre">
+         int=1,
+        </span>
+        <span class="pre">
+         **pt_style)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-create-rectangle-patch-var-x-var-y-rect-style">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.create_rectangle_patch(var_x,
+        </span>
+        <span class="pre">
+         var_y,
+        </span>
+        <span class="pre">
+         **rect_style)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-plot-strain-map-ax-none-base-colormap-none-vmax-none">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.plot_strain_map(ax=None,
+        </span>
+        <span class="pre">
+         base_colormap=None,
+        </span>
+        <span class="pre">
+         vmax=None)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-cal-invalid-pixel-percent">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.cal_invalid_pixel_percent()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#important-attributes">
+       Important attributes
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auxillary-functions">
+   Auxillary functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-show-velocomp-gtiff-str-ax-none-cm-settings">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.show_velocomp(gtiff:
+      </span>
+      <span class="pre">
+       str,
+      </span>
+      <span class="pre">
+       ax=None,
+      </span>
+      <span class="pre">
+       **cm_settings)
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-prep-colorbar-mappable-vmin-2-vmax-2-cmap-cramericm-broc-r">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.prep_colorbar_mappable(vmin=-2,
+      </span>
+      <span class="pre">
+       vmax=2,
+      </span>
+      <span class="pre">
+       cmap=cramericm.broc_r)
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-naof2-im">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.naof2(im)
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -278,27 +518,438 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Functions</h1>
+                <h1>Reference</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#glaft-velocity-class">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     glaft.Velocity
+    </span>
+   </code>
+   class
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-velocity-vxfile-str-none-vyfile-str-none-wfile-str-none-static-area-str-none-on-ice-area-str-none-nodata-float-9999-0-velocity-unit-str-m-day-thres-sigma-float-2-0-kde-gridsize-int-60">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.Velocity(vxfile:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       vyfile:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       wfile:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       static_area:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       on_ice_area:
+      </span>
+      <span class="pre">
+       str=None,
+      </span>
+      <span class="pre">
+       nodata:
+      </span>
+      <span class="pre">
+       float=-9999.0,
+      </span>
+      <span class="pre">
+       velocity_unit:
+      </span>
+      <span class="pre">
+       str='m/day',
+      </span>
+      <span class="pre">
+       thres_sigma:
+      </span>
+      <span class="pre">
+       float=2.0,
+      </span>
+      <span class="pre">
+       kde_gridsize:
+      </span>
+      <span class="pre">
+       int=60)
+      </span>
+     </code>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-static-terrain-analysis-plot-none-ax-none">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.static_terrain_analysis(plot=None,
+        </span>
+        <span class="pre">
+         ax=None)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-longitudinal-shear-analysis-plot-none-ax-none">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.longitudinal_shear_analysis(plot=None,
+        </span>
+        <span class="pre">
+         ax=None)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-plot-full-extent-ax-none-rect-none-metric-int-1-pt-style">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.plot_full_extent(ax=None,
+        </span>
+        <span class="pre">
+         rect=None,
+        </span>
+        <span class="pre">
+         metric:
+        </span>
+        <span class="pre">
+         int=1,
+        </span>
+        <span class="pre">
+         **pt_style)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.plot_zoomed_extent(self,
+        </span>
+        <span class="pre">
+         ax=None,
+        </span>
+        <span class="pre">
+         rect=None,
+        </span>
+        <span class="pre">
+         base_colormap=None,
+        </span>
+        <span class="pre">
+         metric:
+        </span>
+        <span class="pre">
+         int=1,
+        </span>
+        <span class="pre">
+         **pt_style)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-create-rectangle-patch-var-x-var-y-rect-style">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.create_rectangle_patch(var_x,
+        </span>
+        <span class="pre">
+         var_y,
+        </span>
+        <span class="pre">
+         **rect_style)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-plot-strain-map-ax-none-base-colormap-none-vmax-none">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.plot_strain_map(ax=None,
+        </span>
+        <span class="pre">
+         base_colormap=None,
+        </span>
+        <span class="pre">
+         vmax=None)
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#velocity-cal-invalid-pixel-percent">
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         Velocity.cal_invalid_pixel_percent()
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#important-attributes">
+       Important attributes
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auxillary-functions">
+   Auxillary functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-show-velocomp-gtiff-str-ax-none-cm-settings">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.show_velocomp(gtiff:
+      </span>
+      <span class="pre">
+       str,
+      </span>
+      <span class="pre">
+       ax=None,
+      </span>
+      <span class="pre">
+       **cm_settings)
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-prep-colorbar-mappable-vmin-2-vmax-2-cmap-cramericm-broc-r">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.prep_colorbar_mappable(vmin=-2,
+      </span>
+      <span class="pre">
+       vmax=2,
+      </span>
+      <span class="pre">
+       cmap=cramericm.broc_r)
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glaft-naof2-im">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       glaft.naof2(im)
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="section" id="functions">
-<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="glaft-velocity-class">
+<h2><code class="docutils literal notranslate"><span class="pre">glaft.Velocity</span></code> class<a class="headerlink" href="#glaft-velocity-class" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="glaft-velocity-vxfile-str-none-vyfile-str-none-wfile-str-none-static-area-str-none-on-ice-area-str-none-nodata-float-9999-0-velocity-unit-str-m-day-thres-sigma-float-2-0-kde-gridsize-int-60">
+<h3><code class="docutils literal notranslate"><span class="pre">glaft.Velocity(vxfile:</span> <span class="pre">str=None,</span> <span class="pre">vyfile:</span> <span class="pre">str=None,</span> <span class="pre">wfile:</span> <span class="pre">str=None,</span> <span class="pre">static_area:</span> <span class="pre">str=None,</span> <span class="pre">on_ice_area:</span> <span class="pre">str=None,</span> <span class="pre">nodata:</span> <span class="pre">float=-9999.0,</span> <span class="pre">velocity_unit:</span> <span class="pre">str='m/day',</span> <span class="pre">thres_sigma:</span> <span class="pre">float=2.0,</span> <span class="pre">kde_gridsize:</span> <span class="pre">int=60)</span></code><a class="headerlink" href="#glaft-velocity-vxfile-str-none-vyfile-str-none-wfile-str-none-static-area-str-none-on-ice-area-str-none-nodata-float-9999-0-velocity-unit-str-m-day-thres-sigma-float-2-0-kde-gridsize-int-60" title="Permalink to this headline">¶</a></h3>
+<p>Construct an experiment to calculate velocity map benchmarking metrics.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vxfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
+vyfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
+wfile:         str, goetiff file path (as weight)
+static_area:   str, static area (shapefile) file path
+on_ice_area:   str, on-ice area (shapefile) file path
+nodata:      float, nodata value in the provided geotiff. NOT FULLY IMPLEMENTED YET.
+velocity_unit: str, velocity unit to be shown on the result plots.
+thres_sigma: float, selected thresholding z values.
+kde_gridsize:  int, grid size used for evaluating a crude KDE surface (larger value means a faster but less precise process)
+</pre></div>
+</div>
+<div class="section" id="velocity-static-terrain-analysis-plot-none-ax-none">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.static_terrain_analysis(plot=None,</span> <span class="pre">ax=None)</span></code><a class="headerlink" href="#velocity-static-terrain-analysis-plot-none-ax-none" title="Permalink to this headline">¶</a></h4>
+<p>Perform the static terrain analysis and calculate the correct-match uncertainty.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot: None for no plot; &quot;full&quot; for plotting the results in the full extent; &quot;zoomed&quot; for plotting the results in the zoomed extent.
+ax: matplotlib.axes object to be visualized when plot is not set to None.
+</pre></div>
+</div>
+</div>
+<div class="section" id="velocity-longitudinal-shear-analysis-plot-none-ax-none">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.longitudinal_shear_analysis(plot=None,</span> <span class="pre">ax=None)</span></code><a class="headerlink" href="#velocity-longitudinal-shear-analysis-plot-none-ax-none" title="Permalink to this headline">¶</a></h4>
+<p>Perform the longitudinal strain rate analysis and calculate the associated metrics.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot: None for no plot; &quot;full&quot; for plotting the results in the full extent; &quot;zoomed&quot; for plotting the results in the zoomed extent.
+ax: matplotlib.axes object to be visualized when plot is not set to None.
+</pre></div>
+</div>
+</div>
+<div class="section" id="velocity-plot-full-extent-ax-none-rect-none-metric-int-1-pt-style">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_full_extent(ax=None,</span> <span class="pre">rect=None,</span> <span class="pre">metric:</span> <span class="pre">int=1,</span> <span class="pre">**pt_style)</span></code><a class="headerlink" href="#velocity-plot-full-extent-ax-none-rect-none-metric-int-1-pt-style" title="Permalink to this headline">¶</a></h4>
+<p>Plot the analysis results in the full extent.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax: matplotlib.axes object to be visualized when plot is not set to None.
+rect: style of the rectanglar box indicating the correct match area. If None, the plot uses thick red line as default. See Velocity.create_rectangle_patch
+metric: which metric to be plotted. 1: static terrain; 2: along-flow strain rate.
+pt_style: point style passed to plt.scatter.
+</pre></div>
+</div>
+</div>
+<div class="section" id="velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_zoomed_extent(self,</span> <span class="pre">ax=None,</span> <span class="pre">rect=None,</span> <span class="pre">base_colormap=None,</span> <span class="pre">metric:</span> <span class="pre">int=1,</span> <span class="pre">**pt_style)</span></code><a class="headerlink" href="#velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style" title="Permalink to this headline">¶</a></h4>
+<p>Plot the analysis results in the zoomed extent (focusing on the correct-match area).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax: matplotlib.axes object to be visualized when plot is not set to None.
+rect: style of the rectanglar box indicating the correct match area. If None, the plot uses thick red line as default. See Velocity.create_rectangle_patch
+base_colormap: colormap for showing the KDE probability distribtuion. If None, the default (cramericm.bamako_r) is used. 
+metric: which metric to be plotted. 1: static terrain; 2: along-flow strain rate.
+pt_style: point style passed to plt.scatter.
+</pre></div>
+</div>
+</div>
+<div class="section" id="velocity-create-rectangle-patch-var-x-var-y-rect-style">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.create_rectangle_patch(var_x,</span> <span class="pre">var_y,</span> <span class="pre">**rect_style)</span></code><a class="headerlink" href="#velocity-create-rectangle-patch-var-x-var-y-rect-style" title="Permalink to this headline">¶</a></h4>
+<p>Create a rectangle patch to be plotted on the visualization of the processing results.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var_x: half width of the rectangle
+var_y: half height of the rectangle
+rect_style: style of the rectangle. Default is {&#39;linewidth&#39;: 2, &#39;edgecolor&#39;: &#39;xkcd:cranberry&#39;, &#39;facecolor&#39;: &#39;none&#39;, &#39;alpha&#39;: 0.7}
+
+Returns
+--------------
+matplotlib.patches.Rectangle object.
+</pre></div>
+</div>
+</div>
+<div class="section" id="velocity-plot-strain-map-ax-none-base-colormap-none-vmax-none">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_strain_map(ax=None,</span> <span class="pre">base_colormap=None,</span> <span class="pre">vmax=None)</span></code><a class="headerlink" href="#velocity-plot-strain-map-ax-none-base-colormap-none-vmax-none" title="Permalink to this headline">¶</a></h4>
+<p>Show the strain map (only works after <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> is performed).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax: plotting axes (matplotlib.axes object)
+base_colormap: colormap for showing the strain map. If None, the default (cramericm.bamako) is used. 
+vmax: value at where color is saturated. If None, this upper limit will be automatically scaled.
+</pre></div>
+</div>
+</div>
+<div class="section" id="velocity-cal-invalid-pixel-percent">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.cal_invalid_pixel_percent()</span></code><a class="headerlink" href="#velocity-cal-invalid-pixel-percent" title="Permalink to this headline">¶</a></h4>
+<p>Calculate the amount of invalid pixels in a velocity map.</p>
+</div>
+<div class="section" id="important-attributes">
+<h4>Important attributes<a class="headerlink" href="#important-attributes" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>Data and metadata input</p></li>
-<li><p>Functions for calculating metrics</p></li>
-<li><p>Auxiliary functions</p></li>
-<li><p>Visualization tools</p></li>
-<li><p>Details about finding the KDE</p></li>
-<li><p>Two-step gridding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.vxfile</span></code> Vx file path.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.vyfile</span></code> Vy file path.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.wfile</span></code> Weight file path.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.static_area</span></code> static area geometries file path.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.on_ice_area</span></code> on-ice area geometries file path.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.nodata</span></code> NoData value for the raster files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.velocity_unit</span></code> velocity unit to be shown on the result plots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.vx</span></code>  2-D, clipped vx data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.vy</span></code>  2-D, clipped vy data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.xy</span></code>  = np.vstack([flattened_vx, flattened_vy]) –&gt; (1-D)-by-2 array containing vx and vy.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.w</span></code>   2-D, clipped weight data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.w_flat</span></code> 1-D, clipped &amp; flattened weight data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.dx</span></code> velocity map pixel spacing, x</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.dy</span></code> velocity map pixel spacing, y</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.thres_sigma</span></code> selected thresholding z values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.kernel</span></code> KDE kernel (default <code class="docutils literal notranslate"><span class="pre">epanechnikov</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.bandwidth</span></code> KDE bandwidth (default: calculated using the rule of thumb)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.kde_gridsize</span></code> grid size used for evaluating a crude KDE surface (larger value means a faster but less precise process)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.mesh_fine</span></code> Final KDE mesh</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.mesh_fine_z</span></code> KDE values at the final KDE mesh vertices</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.mesh_fine_thres_idx</span></code> boolean array showing whether a vertex falls within the correct match area</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.metric_static_terrain_x</span></code> delta_x</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.metric_static_terrain_y</span></code> delta_y</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.kdepeak_x</span></code> KDE peak location x</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.kdepeak_y</span></code> KDE peak location y</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.outlier_percent</span></code> Incorrect match percentage (*100%)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.invalid_percent</span></code> Invalid pixels percentage (*100%)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_theta</span></code> Flow direction</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.exx</span></code> normal strain rate exx, image axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.eyy</span></code> normal strain rate eyy, image axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.exy</span></code> shear strain rate exy, image axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_exx</span></code> normal strain rate exx, flow axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_eyy</span></code> normal strain rate eyy, flow axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_exy</span></code> shear strain rate exy, flow axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.metric_alongflow_normal</span></code> delta_x’x’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.metric_alongflow_shear</span></code> delta_x’y’</p></li>
 </ul>
+</div>
+</div>
+</div>
+<div class="section" id="auxillary-functions">
+<h2>Auxillary functions<a class="headerlink" href="#auxillary-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="glaft-show-velocomp-gtiff-str-ax-none-cm-settings">
+<h3><code class="docutils literal notranslate"><span class="pre">glaft.show_velocomp(gtiff:</span> <span class="pre">str,</span> <span class="pre">ax=None,</span> <span class="pre">**cm_settings)</span></code><a class="headerlink" href="#glaft-show-velocomp-gtiff-str-ax-none-cm-settings" title="Permalink to this headline">¶</a></h3>
+<p>Preview a geotiff file (presuming a velocity map).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Parameters
+-------------
+gtiff: geotiff file path (much be single band. e.g., Velocity component, such as Vx)
+ax: plotting axes (matplotlib.axes object)
+cm_settings: colormap settings to be used in the visualization. Default: {&#39;vmin&#39;: -2, &#39;vmax&#39;: 2, &#39;cmap&#39;: cramericm.broc_r}
+
+Returns
+--------------
+cm_settings: colormap settings using in the visualization.
+    image with NAOF filtered applied
+</pre></div>
+</div>
+</div>
+<div class="section" id="glaft-prep-colorbar-mappable-vmin-2-vmax-2-cmap-cramericm-broc-r">
+<h3><code class="docutils literal notranslate"><span class="pre">glaft.prep_colorbar_mappable(vmin=-2,</span> <span class="pre">vmax=2,</span> <span class="pre">cmap=cramericm.broc_r)</span></code><a class="headerlink" href="#glaft-prep-colorbar-mappable-vmin-2-vmax-2-cmap-cramericm-broc-r" title="Permalink to this headline">¶</a></h3>
+<p>Generate a mappbale object for creating a colorbar.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Parameters
+-------------
+vmin: colormap lower range
+vmax: colormap upper range
+cmap: master colormap (a colormap object)
+
+Returns
+--------------
+mappable: a matplotlib.mappable object
+</pre></div>
+</div>
+</div>
+<div class="section" id="glaft-naof2-im">
+<h3><code class="docutils literal notranslate"><span class="pre">glaft.naof2(im)</span></code><a class="headerlink" href="#glaft-naof2-im" title="Permalink to this headline">¶</a></h3>
+<p>NAOF preprocessing filter. Translated to Python from GIV source code. All implementation credit to <a class="reference external" href="https://github.com/MaxVWDV/glacier-image-velocimetry/blob/16fb4d2d243b6dc24f35c531d3ea8d91bf3c84a4/functions/image%20processing%20and%20filters/NAOF2.m">Max VWDV</a>.</p>
+<p>MaxVWDV. (2021). MaxVWDV/glacier-image-velocimetry: Glacie Image Velocimetry (v1.0.1). Zenodo. <a class="reference external" href="https://doi.org/10.5281/zenodo.4904544">https://doi.org/10.5281/zenodo.4904544</a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Parameters
+-------------
+im: np.ma.array
+    input image
+
+Returns
+--------------
+naof_im: np.ma.array
+    image with NAOF filtered applied
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -330,7 +981,7 @@ const thebe_selector_output = ".output, .cell_output"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Quick Start</p>
+            <p class="prev-next-title">GLAFT Quick Start</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../notebooks/0_velocity_plots/TableS1.html" title="next page">
