@@ -22,5 +22,5 @@ pip install -e .
 
 ## License
 
-GLAFT uses GNU General Public License (GPL) v3.0. More information is available [here](https://github.com/whyjz/GLAFT/blob/master/LICENSE).
+GLAFT uses the MIT License. More information is available [here](https://github.com/whyjz/GLAFT/blob/master/LICENSE).
 
