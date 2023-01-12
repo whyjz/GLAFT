@@ -8,16 +8,10 @@ GLAFT is an open source project with all source code hosted on Github (https://g
 
 **For cloud access**: users are recommended to use the [Ghub portal and launch GLAFT](https://theghub.org/tools/glaft/status) (registration required).
 
-**For local installation**: GLAFT will be available on PyPI soon. Before that happens, one can download the [Github repository](https://github.com/whyjz/GLAFT), navigate to the repository folder on a terminal, and enter the following command  to install:
+**For local installation**: GLAFT is available on PyPI and can be installed via `pip`. 
 
 ```
-pip install .
-```
-
-Alternatively, for a development installation you can type
-
-```
-pip install -e .
+pip install glaft
 ```
 
 ## License
