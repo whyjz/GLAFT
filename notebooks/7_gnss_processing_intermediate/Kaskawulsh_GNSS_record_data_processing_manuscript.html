@@ -1,0 +1,756 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GNSS data processing script &#8212; GLAFT</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Extract velocity map data at GNSS locations" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html" />
+    <link rel="prev" title="Figure 7 script" href="../5_multiple_metrics/Fig7.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/quickstart.html">
+   GLAFT Quick Start
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/reference.html">
+   Reference
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary tables and figures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS1.html">
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
+   Table S2: Results of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS3.html">
+   Table S3: List of all 35 ITS_LIVE maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/TableS4.html">
+   Table S4: Metrics for the ITS_LIVE velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/FigureS9-S16.html">
+   Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/FigureS17-S28.html">
+   Figures S17-S28: Longitudinal strain rate analysis for all tests
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Figure scripts
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/Fig2.html">
+   Figure 2 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/Fig3.html">
+   Figure 3 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig4.html">
+   Figure 4 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig5.html">
+   Figure 5 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig7.html">
+   Figure 7 script
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intermediate processing steps
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   GNSS data processing script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html">
+   Extract velocity map data at GNSS locations
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ITS_LIVE data processing scripts
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
+   ITS_LIVE: calculating
+   <span class="math notranslate nohighlight">
+    \(\delta_u\)
+   </span>
+   and
+   <span class="math notranslate nohighlight">
+    \(\delta_v\)
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
+   ITS_LIVE: calculating
+   <span class="math notranslate nohighlight">
+    \(\delta_{x'y'}\)
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity-ITSLIVE.html">
+   ITS_LIVE: Extract velocity map data at GNSS locations
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-ft-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>GNSS data processing script</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="gnss-data-processing-script">
+<h1>GNSS data processing script<a class="headerlink" href="#gnss-data-processing-script" title="Permalink to this headline">¶</a></h1>
+<p><strong>Note: This notebook is not reproducible by default</strong> because the source data paths direct to a large database. It is meant to give readers a sense about how the provided GNSS records (<code class="docutils literal notranslate"><span class="pre">Kaskawulsh_v2_2018-mm-dd_to_2018-mm-dd_GPS.csv</span></code>) were made.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">interpolate</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">pyproj</span> <span class="kn">import</span> <span class="n">transform</span><span class="p">,</span> <span class="n">CRS</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">atan2</span>
+<span class="c1"># from scipy.stats import linregress</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+<span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">num2date</span>
+<span class="kn">import</span> <span class="nn">calendar</span>
+<span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">loadmat</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;style&gt;.container { width:100% !important; }&lt;/style&gt;&quot;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">convert_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span> 
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">seconds</span> <span class="o">%</span> <span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> 
+    <span class="n">hour</span> <span class="o">=</span> <span class="n">seconds</span> <span class="o">//</span> <span class="mi">3600</span>
+    <span class="n">seconds</span> <span class="o">%=</span> <span class="mi">3600</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="n">seconds</span> <span class="o">//</span> <span class="mi">60</span>
+    <span class="n">seconds</span> <span class="o">%=</span> <span class="mi">60</span>
+      
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">:</span><span class="si">%02d</span><span class="s2">:</span><span class="si">%02d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">minutes</span><span class="p">,</span> <span class="n">seconds</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">custom_mean</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rsquared</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Return R^2 where x and y are array-like.&quot;&quot;&quot;</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r_value</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a value truncated to a specific number of decimal places.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">decimals</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;decimal places must be an integer.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">decimals</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;decimal places has to be 0 or more.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">decimals</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+
+    <span class="n">factor</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="n">decimals</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">number</span> <span class="o">*</span> <span class="n">factor</span><span class="p">)</span> <span class="o">/</span> <span class="n">factor</span>
+
+<span class="n">horizontal_error</span> <span class="o">=</span> <span class="mf">0.12</span>
+<span class="n">vertical_error</span> <span class="o">=</span> <span class="mf">0.2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># #read Lower data</span>
+<span class="n">lower_path</span><span class="o">=</span><span class="s1">&#39;/Users/willkochtitzky/Projects/Kaskawulsh/GPS_data/lower_cleaned.csv&#39;</span>
+<span class="c1">#read in PPP corrected data (from NR CAN)</span>
+<span class="c1">#read lower data</span>
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">lower_path</span><span class="p">)</span><span class="c1">#,usecols=[&#39;DIR&#39;,&#39;HGT(m)&#39;,&#39;YEAR-MM-DD&#39;,&#39;HR:MN:SS.SS&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;])</span>
+
+<span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">/%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;day_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DIR&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">,</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">])</span>
+
+<span class="c1"># lower_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]] = lower_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]].apply(pd.to_numeric)#change the data types</span>
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span><span class="c1">#sort the data</span>
+
+<span class="c1">#filter out good data to inspect the bad data later</span>
+<span class="n">lower_pos_data_bad_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="p">[(</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">vertical_error</span><span class="p">)]</span>  
+
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="p">[</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="p">[</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="p">[</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">vertical_error</span><span class="p">]</span>
+
+<span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofyear</span>
+<span class="n">lower_pos_data</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index for the calculations ahead, this is crucial to make sure your counter is right!</span>
+
+<span class="c1">#calculate how much time has occured since 1/1/00 so that you can figure out how much time is between observations</span>
+<span class="n">pos_sec_since</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">jan1_2007</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lower_pos_data</span><span class="p">)):</span>
+    <span class="n">pos_sec_since</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">jan1_2007</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="n">lower_pos_data</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pos_sec_since</span>
+
+<span class="n">lower_pos_data_daily</span> <span class="o">=</span> <span class="n">lower_pos_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1">#calculate daily data</span>
+<span class="n">lower_pos_data_daily</span> <span class="o">=</span> <span class="n">lower_pos_data_daily</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index after you claculate daily data</span>
+
+<span class="n">distance</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="n">obs_duration_days</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lower_pos_data_daily</span><span class="p">)):</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>   
+    <span class="n">obs_duration_days</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span><span class="p">)</span>   
+<span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">distance</span>
+<span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">obs_duration_days</span>
+<span class="n">lower_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lower_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">)</span><span class="c1">#change the data types</span>
+<span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Velocity_m_per_d&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#read middle data</span>
+<span class="c1">#middle_path=&#39;/Users/willkochtitzky/Projects/Kaskawulsh/GPS_data/Middle_all_data.csv&#39;</span>
+<span class="n">middle_path</span><span class="o">=</span><span class="s1">&#39;/Users/willkochtitzky/Projects/Kaskawulsh/GPS_data/middle_cleaned.csv&#39;</span>
+<span class="c1">#read in PPP corrected data (from NR CAN)</span>
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">middle_path</span><span class="p">)</span><span class="c1">#,usecols=[&#39;DIR&#39;,&#39;HGT(m)&#39;,&#39;YEAR-MM-DD&#39;,&#39;HR:MN:SS.SS&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;])</span>
+
+<span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">/%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;day_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DIR&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">,</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">])</span>
+
+<span class="c1"># middle_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]] = middle_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]].apply(pd.to_numeric)#change the data types</span>
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span><span class="c1">#sort the data</span>
+
+<span class="c1">#filter out good data to inspect the bad data later</span>
+<span class="n">middle_pos_data_bad_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="p">[(</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">vertical_error</span><span class="p">)]</span>  
+
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="p">[</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="p">[</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="p">[</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">vertical_error</span><span class="p">]</span>
+
+<span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofyear</span>
+<span class="n">middle_pos_data</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index for the calculations ahead, this is crucial to make sure your counter is right!</span>
+
+<span class="c1">#calculate how much time has occured since 1/1/00 so that you can figure out how much time is between observations</span>
+<span class="n">pos_sec_since</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">jan1_2007</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">middle_pos_data</span><span class="p">)):</span>
+    <span class="n">pos_sec_since</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">jan1_2007</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="n">middle_pos_data</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pos_sec_since</span>
+
+<span class="n">middle_pos_data_daily</span> <span class="o">=</span> <span class="n">middle_pos_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1">#calculate daily data</span>
+<span class="n">middle_pos_data_daily</span> <span class="o">=</span> <span class="n">middle_pos_data_daily</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index after you claculate daily data</span>
+
+<span class="n">distance</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="n">obs_duration_days</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">middle_pos_data_daily</span><span class="p">)):</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>   
+    <span class="n">obs_duration_days</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span><span class="p">)</span>   
+<span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">distance</span>
+<span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">obs_duration_days</span>
+<span class="n">middle_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">middle_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">)</span><span class="c1">#change the data types</span>
+<span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Velocity_m_per_d&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#read Upper data</span>
+<span class="n">upper_path</span><span class="o">=</span><span class="s1">&#39;/Users/willkochtitzky/Projects/Kaskawulsh/GPS_data/upper_cleaned.csv&#39;</span>
+<span class="c1">#read in PPP corrected data (from NR CAN)</span>
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">upper_path</span><span class="p">)</span><span class="c1">#,usecols=[&#39;DIR&#39;,&#39;HGT(m)&#39;,&#39;YEAR-MM-DD&#39;,&#39;HR:MN:SS.SS&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;])</span>
+<span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">/%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;day_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DIR&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">,</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">])</span>
+
+<span class="c1"># upper_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]] = upper_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]].apply(pd.to_numeric)#change the data types</span>
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span><span class="c1">#sort the data</span>
+
+<span class="c1">#filter out good data to inspect the bad data later</span>
+<span class="n">upper_pos_data_bad_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="p">[(</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">vertical_error</span><span class="p">)]</span>  
+
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="p">[</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="p">[</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="p">[</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">vertical_error</span><span class="p">]</span>
+
+<span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofyear</span>
+<span class="n">upper_pos_data</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index for the calculations ahead, this is crucial to make sure your counter is right!</span>
+
+<span class="c1">#calculate how much time has occured since 1/1/00 so that you can figure out how much time is between observations</span>
+<span class="n">pos_sec_since</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">jan1_2007</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">upper_pos_data</span><span class="p">)):</span>
+    <span class="n">pos_sec_since</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">jan1_2007</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="n">upper_pos_data</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pos_sec_since</span>
+
+<span class="n">upper_pos_data_daily</span> <span class="o">=</span> <span class="n">upper_pos_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1">#calculate daily data</span>
+<span class="n">upper_pos_data_daily</span> <span class="o">=</span> <span class="n">upper_pos_data_daily</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index after you claculate daily data</span>
+
+<span class="n">distance</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="n">obs_duration_days</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">upper_pos_data_daily</span><span class="p">)):</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>   
+    <span class="n">obs_duration_days</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span><span class="p">)</span>   
+<span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">distance</span>
+<span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">obs_duration_days</span>
+<span class="n">upper_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">upper_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">)</span><span class="c1">#change the data types</span>
+<span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Velocity_m_per_d&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#read Arm data</span>
+<span class="n">arm_path</span><span class="o">=</span><span class="s1">&#39;/Users/willkochtitzky/Projects/Kaskawulsh/GPS_data/arm_cleaned.csv&#39;</span>
+<span class="c1">#read in PPP corrected data (from NR CAN)</span>
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">arm_path</span><span class="p">)</span><span class="c1">#,usecols=[&#39;DIR&#39;,&#39;HGT(m)&#39;,&#39;YEAR-MM-DD&#39;,&#39;HR:MN:SS.SS&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;])</span>
+<span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">/%H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;day_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DIR&#39;</span><span class="p">,</span><span class="s1">&#39;YEAR-MM-DD&#39;</span><span class="p">,</span><span class="s1">&#39;HR:MN:SS.SS&#39;</span><span class="p">])</span>
+
+<span class="c1"># arm_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]] = arm_pos_data[[&#39;HGT(m)&#39;,&#39;UTM_EASTING&#39;,&#39;UTM_NORTHING&#39;,&#39;GDOP&#39;,&#39;RMSC(m)&#39;,&#39;RMSP(m)&#39;,&#39;SDLAT(95%)&#39;,&#39;SDLON(95%)&#39;,&#39;SDHGT(95%)&#39;,&#39;SDCLK(95%)&#39;,&#39;SDTZD(95%)&#39;]].apply(pd.to_numeric)#change the data types</span>
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span><span class="c1">#sort the data</span>
+
+<span class="c1">#filter out good data to inspect the bad data later</span>
+<span class="n">arm_pos_data_bad_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="p">[(</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">horizontal_error</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">vertical_error</span><span class="p">)]</span>
+
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="p">[</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLAT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="p">[</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;SDLON(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">horizontal_error</span><span class="p">]</span>
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="p">[</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;SDHGT(95%)&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">vertical_error</span><span class="p">]</span>
+
+<span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofyear</span>
+<span class="n">arm_pos_data</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index for the calculations ahead, this is crucial to make sure your counter is right!</span>
+
+<span class="c1">#calculate how much time has occured since 1/1/00 so that you can figure out how much time is between observations</span>
+<span class="n">pos_sec_since</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">jan1_2007</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">arm_pos_data</span><span class="p">)):</span>
+    <span class="n">pos_sec_since</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">jan1_2007</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="n">arm_pos_data</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pos_sec_since</span>
+
+<span class="n">arm_pos_data_daily</span> <span class="o">=</span> <span class="n">arm_pos_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1">#calculate daily data</span>
+<span class="n">arm_pos_data_daily</span> <span class="o">=</span> <span class="n">arm_pos_data_daily</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#reset the index after you claculate daily data</span>
+
+<span class="n">distance</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="n">obs_duration_days</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">arm_pos_data_daily</span><span class="p">)):</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>   
+    <span class="n">obs_duration_days</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span><span class="p">)</span>   
+<span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">distance</span>
+<span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">obs_duration_days</span>
+<span class="n">arm_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">arm_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">)</span><span class="c1">#change the data types</span>
+<span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Velocity_m_per_d&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;Distance&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;obs_duration_days&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#calculate velocity between two dates:</span>
+
+<span class="c1"># Whyjay project</span>
+<span class="n">start_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span><span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-28&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-12&#39;</span><span class="p">,</span><span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-21&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-04&#39;</span><span class="p">,</span><span class="s1">&#39;2018-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-11&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-12&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-04&#39;</span><span class="p">,</span><span class="s1">&#39;2018-09-17&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-24&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-19&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-16&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-06&#39;</span><span class="p">]</span>
+<span class="n">end_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span><span class="s1">&#39;2018-10-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-28&#39;</span><span class="p">,</span><span class="s1">&#39;2018-06-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-21&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-05&#39;</span><span class="p">,</span><span class="s1">&#39;2018-10-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-11&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-12&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-14&#39;</span><span class="p">,</span><span class="s1">&#39;2018-10-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-17&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-24&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-19&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-16&#39;</span><span class="p">]</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">start_dates</span><span class="p">)):</span>
+    <span class="n">vel_date_start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">start_dates</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">vel_date_end</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">end_dates</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1">#Lower</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lower_pos_data_daily</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_start</span><span class="p">:</span>
+            <span class="n">start_pos</span><span class="o">=</span> <span class="n">lower_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">lower_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_end</span><span class="p">:</span>
+            <span class="n">end_pos</span><span class="o">=</span><span class="n">lower_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">distance_traveled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">time_between_obs</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span>
+
+    <span class="n">velocity_obs_lower</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;date1&#39;</span><span class="p">:[</span><span class="n">vel_date_start</span><span class="p">],</span><span class="s1">&#39;date2&#39;</span><span class="p">:[</span><span class="n">vel_date_end</span><span class="p">],</span><span class="s1">&#39;start_easting&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;start_northing&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_easting&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_northing&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;distance_traveled (m)&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="p">],</span><span class="s1">&#39;velocity (m/d)&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="o">/</span><span class="n">time_between_obs</span><span class="p">]},</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">velocity_obs_lower</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span>
+    
+    <span class="c1">#Middle</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">middle_pos_data_daily</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_start</span><span class="p">:</span>
+            <span class="n">start_pos</span><span class="o">=</span> <span class="n">middle_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">middle_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_end</span><span class="p">:</span>
+            <span class="n">end_pos</span><span class="o">=</span><span class="n">middle_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">distance_traveled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">time_between_obs</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span>
+
+    <span class="n">velocity_obs_middle</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;date1&#39;</span><span class="p">:[</span><span class="n">vel_date_start</span><span class="p">],</span><span class="s1">&#39;date2&#39;</span><span class="p">:[</span><span class="n">vel_date_end</span><span class="p">],</span><span class="s1">&#39;start_easting&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;start_northing&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_easting&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_northing&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;distance_traveled (m)&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="p">],</span><span class="s1">&#39;velocity (m/d)&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="o">/</span><span class="n">time_between_obs</span><span class="p">]},</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">velocity_obs_middle</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span>
+    
+    <span class="c1">#Upper</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">upper_pos_data_daily</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_start</span><span class="p">:</span>
+            <span class="n">start_pos</span><span class="o">=</span> <span class="n">upper_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">upper_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_end</span><span class="p">:</span>
+            <span class="n">end_pos</span><span class="o">=</span><span class="n">upper_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">distance_traveled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">time_between_obs</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span>
+
+    <span class="n">velocity_obs_upper</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;date1&#39;</span><span class="p">:[</span><span class="n">vel_date_start</span><span class="p">],</span><span class="s1">&#39;date2&#39;</span><span class="p">:[</span><span class="n">vel_date_end</span><span class="p">],</span><span class="s1">&#39;start_easting&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;start_northing&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_easting&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_northing&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;distance_traveled (m)&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="p">],</span><span class="s1">&#39;velocity (m/d)&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="o">/</span><span class="n">time_between_obs</span><span class="p">]},</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">velocity_obs_upper</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span>
+    
+    <span class="c1">#Arm</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">arm_pos_data_daily</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_start</span><span class="p">:</span>
+            <span class="n">start_pos</span><span class="o">=</span> <span class="n">arm_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">arm_pos_data_daily</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">vel_date_end</span><span class="p">:</span>
+            <span class="n">end_pos</span><span class="o">=</span><span class="n">arm_pos_data_daily</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">,</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">,</span><span class="s1">&#39;HGT(m)&#39;</span><span class="p">,</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">distance_traveled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">time_between_obs</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;sec_since&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">3600</span><span class="o">/</span><span class="mi">24</span>
+
+    <span class="n">velocity_obs_arm</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;date1&#39;</span><span class="p">:[</span><span class="n">vel_date_start</span><span class="p">],</span><span class="s1">&#39;date2&#39;</span><span class="p">:[</span><span class="n">vel_date_end</span><span class="p">],</span><span class="s1">&#39;start_easting&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;start_northing&#39;</span><span class="p">:[</span><span class="n">start_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_easting&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_EASTING&#39;</span><span class="p">]],</span><span class="s1">&#39;end_northing&#39;</span><span class="p">:[</span><span class="n">end_pos</span><span class="p">[</span><span class="s1">&#39;UTM_NORTHING&#39;</span><span class="p">]],</span><span class="s1">&#39;distance_traveled&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="p">],</span><span class="s1">&#39;velocity&#39;</span><span class="p">:[</span><span class="n">distance_traveled</span><span class="o">/</span><span class="n">time_between_obs</span><span class="p">]},</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">velocity_obs_arm</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;arm&#39;</span>
+    
+    <span class="c1"># print(velocity_obs_lower)</span>
+    <span class="c1"># print(velocity_obs_middle)</span>
+    <span class="c1"># print(velocity_obs_upper)</span>
+    <span class="c1"># print(velocity_obs_arm)</span>
+
+<span class="c1">#     velocity_data_between_two_dates = pd.concat([velocity_obs_lower,velocity_obs_middle,velocity_obs_upper],axis=0)</span>
+    <span class="n">velocity_data_between_two_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">velocity_obs_lower</span><span class="p">,</span><span class="n">velocity_obs_middle</span><span class="p">,</span><span class="n">velocity_obs_upper</span><span class="p">,</span><span class="n">velocity_obs_arm</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">csv_name</span><span class="o">=</span><span class="s1">&#39;Kaskawulsh_v2_&#39;</span><span class="o">+</span><span class="n">vel_date_start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_to_&#39;</span><span class="o">+</span><span class="n">vel_date_end</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_GPS.csv&#39;</span>
+    <span class="n">velocity_data_between_two_dates</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/7_gnss_processing_intermediate"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../5_multiple_metrics/Fig7.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Figure 7 script</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Extract velocity map data at GNSS locations</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

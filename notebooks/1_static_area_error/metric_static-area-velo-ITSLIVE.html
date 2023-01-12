@@ -1,0 +1,3686 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITS_LIVE: calculating \(\delta_u\) and \(\delta_v\) &#8212; GLAFT</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ITS_LIVE: calculating \(\delta_{x&#39;y&#39;}\)" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html" />
+    <link rel="prev" title="Extract velocity map data at GNSS locations" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/quickstart.html">
+   GLAFT Quick Start
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/reference.html">
+   Reference
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary tables and figures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS1.html">
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
+   Table S2: Results of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS3.html">
+   Table S3: List of all 35 ITS_LIVE maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/TableS4.html">
+   Table S4: Metrics for the ITS_LIVE velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="FigureS9-S16.html">
+   Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/FigureS17-S28.html">
+   Figures S17-S28: Longitudinal strain rate analysis for all tests
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Figure scripts
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fig2.html">
+   Figure 2 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/Fig3.html">
+   Figure 3 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig4.html">
+   Figure 4 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig5.html">
+   Figure 5 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig7.html">
+   Figure 7 script
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intermediate processing steps
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.html">
+   GNSS data processing script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html">
+   Extract velocity map data at GNSS locations
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ITS_LIVE data processing scripts
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   ITS_LIVE: calculating
+   <span class="math notranslate nohighlight">
+    \(\delta_u\)
+   </span>
+   and
+   <span class="math notranslate nohighlight">
+    \(\delta_v\)
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
+   ITS_LIVE: calculating
+   <span class="math notranslate nohighlight">
+    \(\delta_{x'y'}\)
+   </span>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity-ITSLIVE.html">
+   ITS_LIVE: Extract velocity map data at GNSS locations
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/glacier-ft-test"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/glacier-ft-test/issues/new?title=Issue%20on%20page%20%2Fnotebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/glacier-ft-test/edit/master/jupyter-book/notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>ITS_LIVE: calculating \delta_u and \delta_v</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="its-live-calculating-delta-u-and-delta-v">
+<h1>ITS_LIVE: calculating <span class="math notranslate nohighlight">\(\delta_u\)</span> and <span class="math notranslate nohighlight">\(\delta_v\)</span><a class="headerlink" href="#its-live-calculating-delta-u-and-delta-v" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glaft</span>
+<span class="c1"># import matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># import matplotlib.patches as patches</span>
+<span class="c1"># from matplotlib import colors, cm</span>
+<span class="c1"># from matplotlib.colors import ListedColormap</span>
+<span class="c1"># import rasterio</span>
+<span class="c1"># from rasterio.plot import show</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="c1"># import geopandas as gpd</span>
+<span class="kn">import</span> <span class="nn">netCDF4</span> <span class="k">as</span> <span class="nn">nc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../manifest_ITSLIVE.csv&#39;, dtype=str)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_ITSLIVE.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Label</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Duration (days)</th>
+      <th>Template size (px)</th>
+      <th>Template size (m)</th>
+      <th>Pixel spacing (px)</th>
+      <th>Pixel spacing (m)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>...</th>
+      <th>pt1_vavg</th>
+      <th>pt1_vgps</th>
+      <th>pt1_vdiff</th>
+      <th>pt1_verr</th>
+      <th>pt2_vavg</th>
+      <th>pt2_vgps</th>
+      <th>pt2_vdiff</th>
+      <th>pt2_verr</th>
+      <th>LSR-uncertainty-nm</th>
+      <th>LSR-uncertainty-sh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LS8-20180304-20180405</td>
+      <td>20180304</td>
+      <td>20180405</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>126.0</td>
+      <td>135.6948534240048</td>
+      <td>-9.694853424004805</td>
+      <td>37.55555725097656</td>
+      <td>151.625</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41.5</td>
+      <td>1.075342465891158</td>
+      <td>0.8146533832508772</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LS8-20180405-20180421</td>
+      <td>20180405</td>
+      <td>20180421</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>143.77777099609375</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>75.33333587646484</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.062169780880615</td>
+      <td>1.4140592783181363</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LS8-20180421-20180523</td>
+      <td>20180421</td>
+      <td>20180523</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.513832826964479</td>
+      <td>1.7744702307984557</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LS8-20180523-20180608</td>
+      <td>20180523</td>
+      <td>20180608</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.6041953450537774</td>
+      <td>2.1307052823167263</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LS8-20180412-20180428</td>
+      <td>20180412</td>
+      <td>20180428</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.3615396791166656</td>
+      <td>2.401099770797618</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LS8-20180428-20180802</td>
+      <td>20180428</td>
+      <td>20180802</td>
+      <td>96</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0057799557092715</td>
+      <td>0.9084464116083744</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LS8-20180802-20180818</td>
+      <td>20180802</td>
+      <td>20180818</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>165.6666717529297</td>
+      <td>198.9985334199154</td>
+      <td>-33.3318616669857</td>
+      <td>45.88888931274414</td>
+      <td>73.5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>47.33333206176758</td>
+      <td>1.7956327640507181</td>
+      <td>1.4147409656157173</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LS8-20180818-20180903</td>
+      <td>20180818</td>
+      <td>20180903</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>213.0</td>
+      <td>203.33875840747976</td>
+      <td>9.661241592520241</td>
+      <td>48.33333206176758</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.697856692655922</td>
+      <td>1.3891554758093907</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LS8-20180903-20181005</td>
+      <td>20180903</td>
+      <td>20181005</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>197.55555725097656</td>
+      <td>139.35273728560398</td>
+      <td>58.20281996537258</td>
+      <td>36.11111068725586</td>
+      <td>102.33333587646484</td>
+      <td>143.20838631934</td>
+      <td>-40.875050442875164</td>
+      <td>31.11111068725586</td>
+      <td>1.4016660540555117</td>
+      <td>1.061868222769327</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Sen2-20180306-20180316</td>
+      <td>20180306</td>
+      <td>20180316</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>111.44444274902344</td>
+      <td>121.11099277297643</td>
+      <td>-9.666550023952993</td>
+      <td>64.44444274902344</td>
+      <td>354.0</td>
+      <td>134.0685614386373</td>
+      <td>219.9314385613627</td>
+      <td>99.11111450195312</td>
+      <td>1.2218326346621204</td>
+      <td>0.872737596187229</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sen2-20180316-20180515</td>
+      <td>20180316</td>
+      <td>20180515</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>133.44444274902344</td>
+      <td>138.88780586026002</td>
+      <td>-5.443363111236579</td>
+      <td>32.11111068725586</td>
+      <td>117.44444274902344</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>25.11111068725586</td>
+      <td>1.3349950348622517</td>
+      <td>1.1264020606650247</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Sen2-20180329-20180508</td>
+      <td>20180329</td>
+      <td>20180508</td>
+      <td>40</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>185.88888549804688</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>27.0</td>
+      <td>34.33333206176758</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>46.33333206176758</td>
+      <td>1.7980745940519403</td>
+      <td>1.3221136720970148</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Sen2-20180508-20180518</td>
+      <td>20180508</td>
+      <td>20180518</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.658657639340258</td>
+      <td>3.0869923831933423</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>20180508</td>
+      <td>20180627</td>
+      <td>50</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.5156653387478756</td>
+      <td>1.3689880479013068</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Sen2-20180515-20180619</td>
+      <td>20180515</td>
+      <td>20180619</td>
+      <td>35</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>217.45205804525605</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.2131495034897202</td>
+      <td>1.023594893569451</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Sen2-20180518-20180523</td>
+      <td>20180518</td>
+      <td>20180523</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>306.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>111.55555725097656</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.209016817209058</td>
+      <td>4.419771844904655</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Sen2-20180627-20180722</td>
+      <td>20180627</td>
+      <td>20180722</td>
+      <td>25</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>225.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.11111068725586</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.9104198566391578</td>
+      <td>1.0046012211190707</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Sen2-20180704-20180724</td>
+      <td>20180704</td>
+      <td>20180724</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.8498548427627404</td>
+      <td>0.8791601821683521</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Sen2-20180724-20180729</td>
+      <td>20180724</td>
+      <td>20180729</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>164.77777099609375</td>
+      <td>233.96165799443932</td>
+      <td>-69.18388699834557</td>
+      <td>67.55555725097656</td>
+      <td>337.0</td>
+      <td>226.81627646176028</td>
+      <td>110.18372353823972</td>
+      <td>68.55555725097656</td>
+      <td>3.2260468929661767</td>
+      <td>2.372093303651601</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Sen2-20180727-20180801</td>
+      <td>20180727</td>
+      <td>20180801</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>255.77777099609375</td>
+      <td>221.0451124462484</td>
+      <td>34.732658549845354</td>
+      <td>62.33333206176758</td>
+      <td>241.77777099609375</td>
+      <td>211.45798496648973</td>
+      <td>30.319786029604018</td>
+      <td>64.44444274902344</td>
+      <td>1.986436664215654</td>
+      <td>1.676055935431958</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>20180304</td>
+      <td>20180314</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>104.22222137451172</td>
+      <td>120.60847208884604</td>
+      <td>-16.386250714334324</td>
+      <td>75.33333587646484</td>
+      <td>530.5555419921875</td>
+      <td>133.4408528014774</td>
+      <td>397.1146891907101</td>
+      <td>104.33333587646484</td>
+      <td>1.185770280210038</td>
+      <td>0.9067655083959115</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Sen2-20180314-20180329</td>
+      <td>20180314</td>
+      <td>20180329</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>122.55555725097656</td>
+      <td>134.8905779287675</td>
+      <td>-12.335020677790936</td>
+      <td>54.55555725097656</td>
+      <td>174.6666717529297</td>
+      <td>144.00024034556523</td>
+      <td>30.666431407364456</td>
+      <td>60.11111068725586</td>
+      <td>1.126745505649908</td>
+      <td>0.9154807233405503</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Sen2-20180523-20180612</td>
+      <td>20180523</td>
+      <td>20180612</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.716465891789483</td>
+      <td>1.5503562893582425</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Sen2-20180612-20180627</td>
+      <td>20180612</td>
+      <td>20180627</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>252.50042363005028</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>274.6666564941406</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>74.0</td>
+      <td>1.4392445220175252</td>
+      <td>1.4392445220175252</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Sen2-20180619-20180704</td>
+      <td>20180619</td>
+      <td>20180704</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.1807513851286733</td>
+      <td>1.141393005624384</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Sen2-20180722-20180727</td>
+      <td>20180722</td>
+      <td>20180727</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.348344104529154</td>
+      <td>1.9814153381964736</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Sen2-20180729-20180818</td>
+      <td>20180729</td>
+      <td>20180818</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>191.77777099609375</td>
+      <td>204.0183360386419</td>
+      <td>-12.240565042548155</td>
+      <td>22.22222137451172</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.2633186867101927</td>
+      <td>1.1410620396092064</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Sen2-20180801-20180811</td>
+      <td>20180801</td>
+      <td>20180811</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>228.88888549804688</td>
+      <td>203.7548997053723</td>
+      <td>25.133985792674565</td>
+      <td>35.33333206176758</td>
+      <td>102.33333587646484</td>
+      <td>186.94169772479285</td>
+      <td>-84.608361848328</td>
+      <td>35.83333206176758</td>
+      <td>1.5542713644554562</td>
+      <td>1.303582434704576</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Sen2-20180811-20180831</td>
+      <td>20180811</td>
+      <td>20180831</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>232.55555725097656</td>
+      <td>210.40604751083697</td>
+      <td>22.149509740139592</td>
+      <td>31.0</td>
+      <td>114.66666412353516</td>
+      <td>184.27521513470464</td>
+      <td>-69.60855101116948</td>
+      <td>30.44444465637207</td>
+      <td>0.8848882788300764</td>
+      <td>0.9480945844607962</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Sen2-20180818-20180917</td>
+      <td>20180818</td>
+      <td>20180917</td>
+      <td>30</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>201.55555725097656</td>
+      <td>177.9823962296244</td>
+      <td>23.57316102135215</td>
+      <td>28.11111068725586</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.6938571629774319</td>
+      <td>0.7177832720456192</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Sen2-20180831-20180910</td>
+      <td>20180831</td>
+      <td>20180910</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>132.44444274902344</td>
+      <td>151.04436224755887</td>
+      <td>-18.599919498535428</td>
+      <td>63.33333206176758</td>
+      <td>102.33333587646484</td>
+      <td>149.31833129721196</td>
+      <td>-46.98499542074711</td>
+      <td>54.11111068725586</td>
+      <td>1.7261818379240579</td>
+      <td>1.5104091081835507</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Sen2-20180910-20180920</td>
+      <td>20180910</td>
+      <td>20180920</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>166.0</td>
+      <td>141.09169664562518</td>
+      <td>24.908303354374823</td>
+      <td>74.0</td>
+      <td>82.44444274902344</td>
+      <td>142.57776830748682</td>
+      <td>-60.13332555846338</td>
+      <td>72.77777862548828</td>
+      <td>1.8708923392749433</td>
+      <td>1.3756561318198113</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Sen2-20180917-20181002</td>
+      <td>20180917</td>
+      <td>20181002</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>187.3333282470703</td>
+      <td>132.87261387077285</td>
+      <td>54.46071437629746</td>
+      <td>52.77777862548828</td>
+      <td>128.3333282470703</td>
+      <td>140.52428532014358</td>
+      <td>-12.190957073073264</td>
+      <td>46.11111068725586</td>
+      <td>1.3446573468028789</td>
+      <td>1.2579052599123706</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Sen2-20180920-20180930</td>
+      <td>20180920</td>
+      <td>20180930</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>135.9158055713126</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>172.77777099609375</td>
+      <td>141.6365455617029</td>
+      <td>31.14122543439086</td>
+      <td>66.0</td>
+      <td>2.061068082418054</td>
+      <td>1.6863284310693167</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Sen2-20180930-20181005</td>
+      <td>20180930</td>
+      <td>20181005</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>194.0</td>
+      <td>124.34114455143562</td>
+      <td>69.65885544856438</td>
+      <td>100.77777862548828</td>
+      <td>95.11111450195312</td>
+      <td>137.33680356574754</td>
+      <td>-42.22568906379442</td>
+      <td>95.77777862548828</td>
+      <td>2.194719677261242</td>
+      <td>1.982327450429509</td>
+    </tr>
+  </tbody>
+</table>
+<p>35 rows × 58 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">ncfname_processed</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">[:</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">ncfname_list</span> <span class="o">=</span> <span class="n">ncfname_processed</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">ncfname_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ncfname_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ncfname_list</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;raw_nc&#39;</span>
+    <span class="n">ncfname</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ncfname_list</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">nc</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">ncfname</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
+        <span class="n">vxd</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;vx&#39;</span><span class="p">]</span>
+        <span class="n">xe</span> <span class="o">=</span> <span class="n">vxd</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span>
+        <span class="c1"># print(xe)</span>
+        <span class="n">vyd</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;vy&#39;</span><span class="p">]</span>
+        <span class="n">ye</span> <span class="o">=</span> <span class="n">vyd</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span>
+        <span class="c1"># print(ye)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;Assigned-x-error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xe</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;Assigned-y-error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ye</span>
+        
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Label</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Duration (days)</th>
+      <th>Template size (px)</th>
+      <th>Template size (m)</th>
+      <th>Pixel spacing (px)</th>
+      <th>Pixel spacing (m)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>...</th>
+      <th>pt1_vavg</th>
+      <th>pt1_vgps</th>
+      <th>pt1_vdiff</th>
+      <th>pt1_verr</th>
+      <th>pt2_vavg</th>
+      <th>pt2_vgps</th>
+      <th>pt2_vdiff</th>
+      <th>pt2_verr</th>
+      <th>LSR-uncertainty-nm</th>
+      <th>LSR-uncertainty-sh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LS8-20180304-20180405</td>
+      <td>20180304</td>
+      <td>20180405</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>126.0</td>
+      <td>135.6948534240048</td>
+      <td>-9.694853424004805</td>
+      <td>37.55555725097656</td>
+      <td>151.625</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41.5</td>
+      <td>1.075342465891158</td>
+      <td>0.8146533832508772</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LS8-20180405-20180421</td>
+      <td>20180405</td>
+      <td>20180421</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>143.77777099609375</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>75.33333587646484</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.062169780880615</td>
+      <td>1.4140592783181363</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LS8-20180421-20180523</td>
+      <td>20180421</td>
+      <td>20180523</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.513832826964479</td>
+      <td>1.7744702307984557</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LS8-20180523-20180608</td>
+      <td>20180523</td>
+      <td>20180608</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.6041953450537774</td>
+      <td>2.1307052823167263</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LS8-20180412-20180428</td>
+      <td>20180412</td>
+      <td>20180428</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.3615396791166656</td>
+      <td>2.401099770797618</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LS8-20180428-20180802</td>
+      <td>20180428</td>
+      <td>20180802</td>
+      <td>96</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0057799557092715</td>
+      <td>0.9084464116083744</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LS8-20180802-20180818</td>
+      <td>20180802</td>
+      <td>20180818</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>165.6666717529297</td>
+      <td>198.9985334199154</td>
+      <td>-33.3318616669857</td>
+      <td>45.88888931274414</td>
+      <td>73.5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>47.33333206176758</td>
+      <td>1.7956327640507181</td>
+      <td>1.4147409656157173</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LS8-20180818-20180903</td>
+      <td>20180818</td>
+      <td>20180903</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>213.0</td>
+      <td>203.33875840747976</td>
+      <td>9.661241592520241</td>
+      <td>48.33333206176758</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.697856692655922</td>
+      <td>1.3891554758093907</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LS8-20180903-20181005</td>
+      <td>20180903</td>
+      <td>20181005</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>197.55555725097656</td>
+      <td>139.35273728560398</td>
+      <td>58.20281996537258</td>
+      <td>36.11111068725586</td>
+      <td>102.33333587646484</td>
+      <td>143.20838631934</td>
+      <td>-40.875050442875164</td>
+      <td>31.11111068725586</td>
+      <td>1.4016660540555117</td>
+      <td>1.061868222769327</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Sen2-20180306-20180316</td>
+      <td>20180306</td>
+      <td>20180316</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>111.44444274902344</td>
+      <td>121.11099277297643</td>
+      <td>-9.666550023952993</td>
+      <td>64.44444274902344</td>
+      <td>354.0</td>
+      <td>134.0685614386373</td>
+      <td>219.9314385613627</td>
+      <td>99.11111450195312</td>
+      <td>1.2218326346621204</td>
+      <td>0.872737596187229</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sen2-20180316-20180515</td>
+      <td>20180316</td>
+      <td>20180515</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>133.44444274902344</td>
+      <td>138.88780586026002</td>
+      <td>-5.443363111236579</td>
+      <td>32.11111068725586</td>
+      <td>117.44444274902344</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>25.11111068725586</td>
+      <td>1.3349950348622517</td>
+      <td>1.1264020606650247</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Sen2-20180329-20180508</td>
+      <td>20180329</td>
+      <td>20180508</td>
+      <td>40</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>185.88888549804688</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>27.0</td>
+      <td>34.33333206176758</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>46.33333206176758</td>
+      <td>1.7980745940519403</td>
+      <td>1.3221136720970148</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Sen2-20180508-20180518</td>
+      <td>20180508</td>
+      <td>20180518</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.658657639340258</td>
+      <td>3.0869923831933423</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>20180508</td>
+      <td>20180627</td>
+      <td>50</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.5156653387478756</td>
+      <td>1.3689880479013068</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Sen2-20180515-20180619</td>
+      <td>20180515</td>
+      <td>20180619</td>
+      <td>35</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>217.45205804525605</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.2131495034897202</td>
+      <td>1.023594893569451</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Sen2-20180518-20180523</td>
+      <td>20180518</td>
+      <td>20180523</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>306.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>111.55555725097656</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.209016817209058</td>
+      <td>4.419771844904655</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Sen2-20180627-20180722</td>
+      <td>20180627</td>
+      <td>20180722</td>
+      <td>25</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>225.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.11111068725586</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.9104198566391578</td>
+      <td>1.0046012211190707</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Sen2-20180704-20180724</td>
+      <td>20180704</td>
+      <td>20180724</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.8498548427627404</td>
+      <td>0.8791601821683521</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Sen2-20180724-20180729</td>
+      <td>20180724</td>
+      <td>20180729</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>164.77777099609375</td>
+      <td>233.96165799443932</td>
+      <td>-69.18388699834557</td>
+      <td>67.55555725097656</td>
+      <td>337.0</td>
+      <td>226.81627646176028</td>
+      <td>110.18372353823972</td>
+      <td>68.55555725097656</td>
+      <td>3.2260468929661767</td>
+      <td>2.372093303651601</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Sen2-20180727-20180801</td>
+      <td>20180727</td>
+      <td>20180801</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>255.77777099609375</td>
+      <td>221.0451124462484</td>
+      <td>34.732658549845354</td>
+      <td>62.33333206176758</td>
+      <td>241.77777099609375</td>
+      <td>211.45798496648973</td>
+      <td>30.319786029604018</td>
+      <td>64.44444274902344</td>
+      <td>1.986436664215654</td>
+      <td>1.676055935431958</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>20180304</td>
+      <td>20180314</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>104.22222137451172</td>
+      <td>120.60847208884604</td>
+      <td>-16.386250714334324</td>
+      <td>75.33333587646484</td>
+      <td>530.5555419921875</td>
+      <td>133.4408528014774</td>
+      <td>397.1146891907101</td>
+      <td>104.33333587646484</td>
+      <td>1.185770280210038</td>
+      <td>0.9067655083959115</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Sen2-20180314-20180329</td>
+      <td>20180314</td>
+      <td>20180329</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>122.55555725097656</td>
+      <td>134.8905779287675</td>
+      <td>-12.335020677790936</td>
+      <td>54.55555725097656</td>
+      <td>174.6666717529297</td>
+      <td>144.00024034556523</td>
+      <td>30.666431407364456</td>
+      <td>60.11111068725586</td>
+      <td>1.126745505649908</td>
+      <td>0.9154807233405503</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Sen2-20180523-20180612</td>
+      <td>20180523</td>
+      <td>20180612</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.716465891789483</td>
+      <td>1.5503562893582425</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Sen2-20180612-20180627</td>
+      <td>20180612</td>
+      <td>20180627</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>252.50042363005028</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>274.6666564941406</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>74.0</td>
+      <td>1.4392445220175252</td>
+      <td>1.4392445220175252</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Sen2-20180619-20180704</td>
+      <td>20180619</td>
+      <td>20180704</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.1807513851286733</td>
+      <td>1.141393005624384</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Sen2-20180722-20180727</td>
+      <td>20180722</td>
+      <td>20180727</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.348344104529154</td>
+      <td>1.9814153381964736</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Sen2-20180729-20180818</td>
+      <td>20180729</td>
+      <td>20180818</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>191.77777099609375</td>
+      <td>204.0183360386419</td>
+      <td>-12.240565042548155</td>
+      <td>22.22222137451172</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.2633186867101927</td>
+      <td>1.1410620396092064</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Sen2-20180801-20180811</td>
+      <td>20180801</td>
+      <td>20180811</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>228.88888549804688</td>
+      <td>203.7548997053723</td>
+      <td>25.133985792674565</td>
+      <td>35.33333206176758</td>
+      <td>102.33333587646484</td>
+      <td>186.94169772479285</td>
+      <td>-84.608361848328</td>
+      <td>35.83333206176758</td>
+      <td>1.5542713644554562</td>
+      <td>1.303582434704576</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Sen2-20180811-20180831</td>
+      <td>20180811</td>
+      <td>20180831</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>232.55555725097656</td>
+      <td>210.40604751083697</td>
+      <td>22.149509740139592</td>
+      <td>31.0</td>
+      <td>114.66666412353516</td>
+      <td>184.27521513470464</td>
+      <td>-69.60855101116948</td>
+      <td>30.44444465637207</td>
+      <td>0.8848882788300764</td>
+      <td>0.9480945844607962</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Sen2-20180818-20180917</td>
+      <td>20180818</td>
+      <td>20180917</td>
+      <td>30</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>201.55555725097656</td>
+      <td>177.9823962296244</td>
+      <td>23.57316102135215</td>
+      <td>28.11111068725586</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.6938571629774319</td>
+      <td>0.7177832720456192</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Sen2-20180831-20180910</td>
+      <td>20180831</td>
+      <td>20180910</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>132.44444274902344</td>
+      <td>151.04436224755887</td>
+      <td>-18.599919498535428</td>
+      <td>63.33333206176758</td>
+      <td>102.33333587646484</td>
+      <td>149.31833129721196</td>
+      <td>-46.98499542074711</td>
+      <td>54.11111068725586</td>
+      <td>1.7261818379240579</td>
+      <td>1.5104091081835507</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Sen2-20180910-20180920</td>
+      <td>20180910</td>
+      <td>20180920</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>166.0</td>
+      <td>141.09169664562518</td>
+      <td>24.908303354374823</td>
+      <td>74.0</td>
+      <td>82.44444274902344</td>
+      <td>142.57776830748682</td>
+      <td>-60.13332555846338</td>
+      <td>72.77777862548828</td>
+      <td>1.8708923392749433</td>
+      <td>1.3756561318198113</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Sen2-20180917-20181002</td>
+      <td>20180917</td>
+      <td>20181002</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>187.3333282470703</td>
+      <td>132.87261387077285</td>
+      <td>54.46071437629746</td>
+      <td>52.77777862548828</td>
+      <td>128.3333282470703</td>
+      <td>140.52428532014358</td>
+      <td>-12.190957073073264</td>
+      <td>46.11111068725586</td>
+      <td>1.3446573468028789</td>
+      <td>1.2579052599123706</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Sen2-20180920-20180930</td>
+      <td>20180920</td>
+      <td>20180930</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>135.9158055713126</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>172.77777099609375</td>
+      <td>141.6365455617029</td>
+      <td>31.14122543439086</td>
+      <td>66.0</td>
+      <td>2.061068082418054</td>
+      <td>1.6863284310693167</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Sen2-20180930-20181005</td>
+      <td>20180930</td>
+      <td>20181005</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>194.0</td>
+      <td>124.34114455143562</td>
+      <td>69.65885544856438</td>
+      <td>100.77777862548828</td>
+      <td>95.11111450195312</td>
+      <td>137.33680356574754</td>
+      <td>-42.22568906379442</td>
+      <td>95.77777862548828</td>
+      <td>2.194719677261242</td>
+      <td>1.982327450429509</td>
+    </tr>
+  </tbody>
+</table>
+<p>35 rows × 58 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># static area</span>
+<span class="n">in_shp</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/shapefiles/bedrock_V2_EPSG3413.shp&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Vx&#39;</span><span class="p">],</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Vy&#39;</span><span class="p">],</span> <span class="n">static_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">kde_gridsize</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">thres_sigma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">velocity_unit</span><span class="o">=</span><span class="s1">&#39;m/yr&#39;</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">static_terrain_analysis</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+</pre></div>
+</div>
+<img alt="../../_images/metric_static-area-velo-ITSLIVE_9_1.png" src="../../_images/metric_static-area-velo-ITSLIVE_9_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> 
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">Label</span>
+    <span class="n">ax_sel</span> <span class="o">=</span> <span class="n">ax2</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">5</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">static_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">kde_gridsize</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">thres_sigma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">velocity_unit</span><span class="o">=</span><span class="s1">&#39;m/yr&#39;</span><span class="p">)</span>
+    <span class="n">exp</span><span class="o">.</span><span class="n">static_terrain_analysis</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="s1">&#39;zoomed&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_sel</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+    <span class="n">titletext</span> <span class="o">=</span> <span class="n">ax_sel</span><span class="o">.</span><span class="n">get_title</span><span class="p">()</span>
+    <span class="n">titletext</span> <span class="o">=</span> <span class="n">label</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">titletext</span>
+    <span class="n">ax_sel</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titletext</span><span class="p">)</span>
+    
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-uncertainty-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-peak-x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_x</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-peak-y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">kdepeak_y</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;SAV-outlier-percent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">outlier_percent</span> <span class="o">*</span> <span class="mi">100</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;xstd: </span><span class="si">{}</span><span class="s1">; xSAVuncer: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_x</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ystd: </span><span class="si">{}</span><span class="s1">; ySAVuncer: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]),</span> <span class="n">exp</span><span class="o">.</span><span class="n">metric_static_terrain_y</span><span class="p">))</span>
+    
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;figs/ITSLVE-SAV.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 39.496883392333984; xSAVuncer: 51.14884809068558
+ystd: 33.03361511230469; ySAVuncer: 44.548996724145496
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 121.10285186767578; xSAVuncer: 124.23576847338722
+ystd: 82.7453384399414; ySAVuncer: 108.70629741421381
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 83.20791625976562; xSAVuncer: 147.2743251306507
+ystd: 48.203582763671875; ySAVuncer: 81.3884428353596
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 62.919288635253906; xSAVuncer: 87.40320419594698
+ystd: 54.23698043823242; ySAVuncer: 76.12537139646994
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 87.47274017333984; xSAVuncer: 113.65691626279659
+ystd: 68.39109802246094; ySAVuncer: 98.99150771275833
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 25.722091674804688; xSAVuncer: 35.0747509574137
+ystd: 23.562461853027344; ySAVuncer: 35.0747509574137
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 32.857200622558594; xSAVuncer: 32.09119015557933
+ystd: 29.302839279174805; ySAVuncer: 32.091190155579326
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 37.6147575378418; xSAVuncer: 45.61249553922913
+ystd: 38.26398849487305; ySAVuncer: 42.66975389153693
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 30.37626838684082; xSAVuncer: 34.59215661796891
+ystd: 29.359336853027344; ySAVuncer: 29.187132146411276
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 79.85745239257812; xSAVuncer: 111.24892229271488
+ystd: 64.9723892211914; ySAVuncer: 97.34280700612553
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 47.33998489379883; xSAVuncer: 71.80031695195302
+ystd: 26.141939163208008; ySAVuncer: 40.75153124300036
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 49.47611618041992; xSAVuncer: 85.59893683463575
+ystd: 30.588346481323242; ySAVuncer: 50.89666514491856
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 88.64006805419922; xSAVuncer: 111.98173725009379
+ystd: 71.50811004638672; ySAVuncer: 90.98516151570121
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 39.34418869018555; xSAVuncer: 71.06871664051958
+ystd: 31.399913787841797; ySAVuncer: 52.2564092944997
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 45.485145568847656; xSAVuncer: 80.18436377393455
+ystd: 37.78843307495117; ySAVuncer: 63.175559337039346
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 106.7762451171875; xSAVuncer: 143.29049063187358
+ystd: 91.39488220214844; ySAVuncer: 117.23767415335114
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 40.76557540893555; xSAVuncer: 31.69440809263544
+ystd: 29.749011993408203; ySAVuncer: 26.742156828161157
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 35.86577606201172; xSAVuncer: 22.66838605896973
+ystd: 29.2535457611084; ySAVuncer: 24.231723028553855
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 82.30934143066406; xSAVuncer: 92.56655580391845
+ystd: 97.32573699951172; ySAVuncer: 118.48519142901563
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 47.411888122558594; xSAVuncer: 56.41430248588669
+ystd: 44.754249572753906; ySAVuncer: 58.35962326126208
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 76.93824005126953; xSAVuncer: 100.88883292199213
+ystd: 59.234413146972656; ySAVuncer: 77.15028399917045
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 57.759334564208984; xSAVuncer: 79.28522176251826
+ystd: 45.62628173828125; ySAVuncer: 66.89690586212478
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 51.058326721191406; xSAVuncer: 71.8164070544946
+ystd: 41.2814826965332; ySAVuncer: 56.58262373990484
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 92.22754669189453; xSAVuncer: 141.10830077527197
+ystd: 72.22838592529297; ySAVuncer: 103.7561035112294
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 72.83692932128906; xSAVuncer: 93.4422738259384
+ystd: 65.63919067382812; ySAVuncer: 78.8419185406355
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 55.69933319091797; xSAVuncer: 58.95959131277702
+ystd: 54.03276443481445; ySAVuncer: 63.02577002400302
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 24.717741012573242; xSAVuncer: 25.687939383940375
+ystd: 23.67876434326172; ySAVuncer: 28.440218603648276
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 31.067092895507812; xSAVuncer: 41.70414109052437
+ystd: 26.959758758544922; ySAVuncer: 23.04702533950031
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 31.331037521362305; xSAVuncer: 37.848589665372636
+ystd: 32.315574645996094; ySAVuncer: 36.586970009860224
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 29.311100006103516; xSAVuncer: 40.71174912001661
+ystd: 24.886030197143555; ySAVuncer: 32.07592354910399
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 70.9832763671875; xSAVuncer: 82.0364088955474
+ystd: 74.93070220947266; ySAVuncer: 87.69409226765411
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 68.39533996582031; xSAVuncer: 95.278771151358
+ystd: 73.4205551147461; ySAVuncer: 95.278771151358
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 52.98209762573242; xSAVuncer: 73.46944327276843
+ystd: 57.83235549926758; ySAVuncer: 83.96507802602105
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 67.14309692382812; xSAVuncer: 89.86318574406062
+ystd: 69.16436004638672; ySAVuncer: 83.87230669445657
+Running clip_static_area
+Running calculate_xystd
+Running calculate_bandwidth
+Running calculate_kde
+Running construct_crude_mesh
+Running eval_crude_mesh
+Running construct_fine_mesh
+Running eval_fine_mesh
+Running thresholding_fine_mesh
+Running thresholding_metric
+Running cal_outlier_percent
+xstd: 80.27301788330078; xSAVuncer: 75.88787787203856
+ystd: 78.3895034790039; ySAVuncer: 75.88787787203856
+</pre></div>
+</div>
+<img alt="../../_images/metric_static-area-velo-ITSLIVE_10_1.png" src="../../_images/metric_static-area-velo-ITSLIVE_10_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for i in range(n, 48):</span>
+<span class="c1">#     ax_sel = ax2[i // 6, i % 6]</span>
+<span class="c1">#     fig.delaxes(ax_sel)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Label</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Duration (days)</th>
+      <th>Template size (px)</th>
+      <th>Template size (m)</th>
+      <th>Pixel spacing (px)</th>
+      <th>Pixel spacing (m)</th>
+      <th>Prefilter</th>
+      <th>Subpixel</th>
+      <th>...</th>
+      <th>pt1_vavg</th>
+      <th>pt1_vgps</th>
+      <th>pt1_vdiff</th>
+      <th>pt1_verr</th>
+      <th>pt2_vavg</th>
+      <th>pt2_vgps</th>
+      <th>pt2_vdiff</th>
+      <th>pt2_verr</th>
+      <th>LSR-uncertainty-nm</th>
+      <th>LSR-uncertainty-sh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LS8-20180304-20180405</td>
+      <td>20180304</td>
+      <td>20180405</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>126.0</td>
+      <td>135.6948534240048</td>
+      <td>-9.694853424004805</td>
+      <td>37.55555725097656</td>
+      <td>151.625</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41.5</td>
+      <td>1.075342465891158</td>
+      <td>0.8146533832508772</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LS8-20180405-20180421</td>
+      <td>20180405</td>
+      <td>20180421</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>143.77777099609375</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>75.33333587646484</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.062169780880615</td>
+      <td>1.4140592783181363</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LS8-20180421-20180523</td>
+      <td>20180421</td>
+      <td>20180523</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.513832826964479</td>
+      <td>1.7744702307984557</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LS8-20180523-20180608</td>
+      <td>20180523</td>
+      <td>20180608</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.6041953450537774</td>
+      <td>2.1307052823167263</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LS8-20180412-20180428</td>
+      <td>20180412</td>
+      <td>20180428</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.3615396791166656</td>
+      <td>2.401099770797618</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LS8-20180428-20180802</td>
+      <td>20180428</td>
+      <td>20180802</td>
+      <td>96</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0057799557092715</td>
+      <td>0.9084464116083744</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LS8-20180802-20180818</td>
+      <td>20180802</td>
+      <td>20180818</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>165.6666717529297</td>
+      <td>198.9985334199154</td>
+      <td>-33.3318616669857</td>
+      <td>45.88888931274414</td>
+      <td>73.5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>47.33333206176758</td>
+      <td>1.7956327640507181</td>
+      <td>1.4147409656157173</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LS8-20180818-20180903</td>
+      <td>20180818</td>
+      <td>20180903</td>
+      <td>16</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>213.0</td>
+      <td>203.33875840747976</td>
+      <td>9.661241592520241</td>
+      <td>48.33333206176758</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.697856692655922</td>
+      <td>1.3891554758093907</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>LS8-20180903-20181005</td>
+      <td>20180903</td>
+      <td>20181005</td>
+      <td>32</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>197.55555725097656</td>
+      <td>139.35273728560398</td>
+      <td>58.20281996537258</td>
+      <td>36.11111068725586</td>
+      <td>102.33333587646484</td>
+      <td>143.20838631934</td>
+      <td>-40.875050442875164</td>
+      <td>31.11111068725586</td>
+      <td>1.4016660540555117</td>
+      <td>1.061868222769327</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Sen2-20180306-20180316</td>
+      <td>20180306</td>
+      <td>20180316</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>111.44444274902344</td>
+      <td>121.11099277297643</td>
+      <td>-9.666550023952993</td>
+      <td>64.44444274902344</td>
+      <td>354.0</td>
+      <td>134.0685614386373</td>
+      <td>219.9314385613627</td>
+      <td>99.11111450195312</td>
+      <td>1.2218326346621204</td>
+      <td>0.872737596187229</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Sen2-20180316-20180515</td>
+      <td>20180316</td>
+      <td>20180515</td>
+      <td>60</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>133.44444274902344</td>
+      <td>138.88780586026002</td>
+      <td>-5.443363111236579</td>
+      <td>32.11111068725586</td>
+      <td>117.44444274902344</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>25.11111068725586</td>
+      <td>1.3349950348622517</td>
+      <td>1.1264020606650247</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Sen2-20180329-20180508</td>
+      <td>20180329</td>
+      <td>20180508</td>
+      <td>40</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>185.88888549804688</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>27.0</td>
+      <td>34.33333206176758</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>46.33333206176758</td>
+      <td>1.7980745940519403</td>
+      <td>1.3221136720970148</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Sen2-20180508-20180518</td>
+      <td>20180508</td>
+      <td>20180518</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.658657639340258</td>
+      <td>3.0869923831933423</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Sen2-20180508-20180627</td>
+      <td>20180508</td>
+      <td>20180627</td>
+      <td>50</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.5156653387478756</td>
+      <td>1.3689880479013068</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Sen2-20180515-20180619</td>
+      <td>20180515</td>
+      <td>20180619</td>
+      <td>35</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>217.45205804525605</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.2131495034897202</td>
+      <td>1.023594893569451</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Sen2-20180518-20180523</td>
+      <td>20180518</td>
+      <td>20180523</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>306.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>111.55555725097656</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5.209016817209058</td>
+      <td>4.419771844904655</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Sen2-20180627-20180722</td>
+      <td>20180627</td>
+      <td>20180722</td>
+      <td>25</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>225.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.11111068725586</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.9104198566391578</td>
+      <td>1.0046012211190707</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Sen2-20180704-20180724</td>
+      <td>20180704</td>
+      <td>20180724</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.8498548427627404</td>
+      <td>0.8791601821683521</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Sen2-20180724-20180729</td>
+      <td>20180724</td>
+      <td>20180729</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>164.77777099609375</td>
+      <td>233.96165799443932</td>
+      <td>-69.18388699834557</td>
+      <td>67.55555725097656</td>
+      <td>337.0</td>
+      <td>226.81627646176028</td>
+      <td>110.18372353823972</td>
+      <td>68.55555725097656</td>
+      <td>3.2260468929661767</td>
+      <td>2.372093303651601</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Sen2-20180727-20180801</td>
+      <td>20180727</td>
+      <td>20180801</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>255.77777099609375</td>
+      <td>221.0451124462484</td>
+      <td>34.732658549845354</td>
+      <td>62.33333206176758</td>
+      <td>241.77777099609375</td>
+      <td>211.45798496648973</td>
+      <td>30.319786029604018</td>
+      <td>64.44444274902344</td>
+      <td>1.986436664215654</td>
+      <td>1.676055935431958</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Sen2-20180304-20180314</td>
+      <td>20180304</td>
+      <td>20180314</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>104.22222137451172</td>
+      <td>120.60847208884604</td>
+      <td>-16.386250714334324</td>
+      <td>75.33333587646484</td>
+      <td>530.5555419921875</td>
+      <td>133.4408528014774</td>
+      <td>397.1146891907101</td>
+      <td>104.33333587646484</td>
+      <td>1.185770280210038</td>
+      <td>0.9067655083959115</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Sen2-20180314-20180329</td>
+      <td>20180314</td>
+      <td>20180329</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>122.55555725097656</td>
+      <td>134.8905779287675</td>
+      <td>-12.335020677790936</td>
+      <td>54.55555725097656</td>
+      <td>174.6666717529297</td>
+      <td>144.00024034556523</td>
+      <td>30.666431407364456</td>
+      <td>60.11111068725586</td>
+      <td>1.126745505649908</td>
+      <td>0.9154807233405503</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Sen2-20180523-20180612</td>
+      <td>20180523</td>
+      <td>20180612</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.716465891789483</td>
+      <td>1.5503562893582425</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Sen2-20180612-20180627</td>
+      <td>20180612</td>
+      <td>20180627</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>252.50042363005028</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>274.6666564941406</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>74.0</td>
+      <td>1.4392445220175252</td>
+      <td>1.4392445220175252</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Sen2-20180619-20180704</td>
+      <td>20180619</td>
+      <td>20180704</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.1807513851286733</td>
+      <td>1.141393005624384</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Sen2-20180722-20180727</td>
+      <td>20180722</td>
+      <td>20180727</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.348344104529154</td>
+      <td>1.9814153381964736</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Sen2-20180729-20180818</td>
+      <td>20180729</td>
+      <td>20180818</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>191.77777099609375</td>
+      <td>204.0183360386419</td>
+      <td>-12.240565042548155</td>
+      <td>22.22222137451172</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.2633186867101927</td>
+      <td>1.1410620396092064</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Sen2-20180801-20180811</td>
+      <td>20180801</td>
+      <td>20180811</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>228.88888549804688</td>
+      <td>203.7548997053723</td>
+      <td>25.133985792674565</td>
+      <td>35.33333206176758</td>
+      <td>102.33333587646484</td>
+      <td>186.94169772479285</td>
+      <td>-84.608361848328</td>
+      <td>35.83333206176758</td>
+      <td>1.5542713644554562</td>
+      <td>1.303582434704576</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Sen2-20180811-20180831</td>
+      <td>20180811</td>
+      <td>20180831</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>232.55555725097656</td>
+      <td>210.40604751083697</td>
+      <td>22.149509740139592</td>
+      <td>31.0</td>
+      <td>114.66666412353516</td>
+      <td>184.27521513470464</td>
+      <td>-69.60855101116948</td>
+      <td>30.44444465637207</td>
+      <td>0.8848882788300764</td>
+      <td>0.9480945844607962</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Sen2-20180818-20180917</td>
+      <td>20180818</td>
+      <td>20180917</td>
+      <td>30</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>201.55555725097656</td>
+      <td>177.9823962296244</td>
+      <td>23.57316102135215</td>
+      <td>28.11111068725586</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.6938571629774319</td>
+      <td>0.7177832720456192</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Sen2-20180831-20180910</td>
+      <td>20180831</td>
+      <td>20180910</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>132.44444274902344</td>
+      <td>151.04436224755887</td>
+      <td>-18.599919498535428</td>
+      <td>63.33333206176758</td>
+      <td>102.33333587646484</td>
+      <td>149.31833129721196</td>
+      <td>-46.98499542074711</td>
+      <td>54.11111068725586</td>
+      <td>1.7261818379240579</td>
+      <td>1.5104091081835507</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Sen2-20180910-20180920</td>
+      <td>20180910</td>
+      <td>20180920</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>166.0</td>
+      <td>141.09169664562518</td>
+      <td>24.908303354374823</td>
+      <td>74.0</td>
+      <td>82.44444274902344</td>
+      <td>142.57776830748682</td>
+      <td>-60.13332555846338</td>
+      <td>72.77777862548828</td>
+      <td>1.8708923392749433</td>
+      <td>1.3756561318198113</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Sen2-20180917-20181002</td>
+      <td>20180917</td>
+      <td>20181002</td>
+      <td>15</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>187.3333282470703</td>
+      <td>132.87261387077285</td>
+      <td>54.46071437629746</td>
+      <td>52.77777862548828</td>
+      <td>128.3333282470703</td>
+      <td>140.52428532014358</td>
+      <td>-12.190957073073264</td>
+      <td>46.11111068725586</td>
+      <td>1.3446573468028789</td>
+      <td>1.2579052599123706</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Sen2-20180920-20180930</td>
+      <td>20180920</td>
+      <td>20180930</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>135.9158055713126</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>172.77777099609375</td>
+      <td>141.6365455617029</td>
+      <td>31.14122543439086</td>
+      <td>66.0</td>
+      <td>2.061068082418054</td>
+      <td>1.6863284310693167</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Sen2-20180930-20181005</td>
+      <td>20180930</td>
+      <td>20181005</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>varying (240-480)</td>
+      <td>NaN</td>
+      <td>120</td>
+      <td>ITS_LIVE (5x5 Wallis operator)</td>
+      <td>ITS_LIVE (16-node oversampling)</td>
+      <td>...</td>
+      <td>194.0</td>
+      <td>124.34114455143562</td>
+      <td>69.65885544856438</td>
+      <td>100.77777862548828</td>
+      <td>95.11111450195312</td>
+      <td>137.33680356574754</td>
+      <td>-42.22568906379442</td>
+      <td>95.77777862548828</td>
+      <td>2.194719677261242</td>
+      <td>1.982327450429509</td>
+    </tr>
+  </tbody>
+</table>
+<p>35 rows × 58 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../results_ITSLIVE.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># df</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-.conda-eztrack-py"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-.conda-eztrack-py",
+            path: "./notebooks/1_static_area_error"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-.conda-eztrack-py'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Extract velocity map data at GNSS locations</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">ITS_LIVE: calculating <span class="math notranslate nohighlight">\(\delta_{x'y'}\)</span></p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+    
+        &copy; Copyright 2022.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
