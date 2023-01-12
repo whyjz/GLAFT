@@ -19,3 +19,5 @@ dependencies:
   - cmcrameri
   - tabulate
   - scikit-learn
+  - pip:
+    - glaft

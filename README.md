@@ -2,16 +2,14 @@
 
 Python module for assessing glacier velocity maps using statistics- and physics-based metrics. Includes demo Notebook examples using data from Kaskawulsh glacier, Canada.
 
-## installation
+## Installation
 
-Download the repository, go to the repo folder, and 
-
-```
-pip install .
-```
-
-Alternatively, for a development installation you can type
+GLAFT is available through `pip` installation:  
 
 ```
-pip install -e .
+pip install glaft
 ```
+
+## Using GLAFT
+
+See our [user manual](https://whyjz.github.io/GLAFT/doc/introduction.html) for more information.
