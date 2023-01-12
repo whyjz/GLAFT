@@ -8,29 +8,33 @@ parts:
   - file: doc/quickstart
   - file: doc/reference
 
-- caption: Supplementary material
+- caption: Supplementary tables and figures
   numbered: false
   chapters:
   - file: notebooks/0_velocity_plots/TableS1
-  - file: notebooks/0_velocity_plots/FigureS1-S8
-  - file: notebooks/1_static_area_error/Fig2
-  - file: notebooks/1_static_area_error/FigureS9-S16
-  - file: notebooks/2_longitudinal_shear_strain/Fig3
-  - file: notebooks/2_longitudinal_shear_strain/FigureS17-S28
   - file: notebooks/5_multiple_metrics/TableS2
-  - file: notebooks/5_multiple_metrics/Fig4.ipynb
-  - file: notebooks/5_multiple_metrics/Fig5.ipynb
   - file: notebooks/0_velocity_plots/TableS3
   - file: notebooks/5_multiple_metrics/TableS4
+  - file: notebooks/0_velocity_plots/FigureS1-S8
+  - file: notebooks/1_static_area_error/FigureS9-S16
+  - file: notebooks/2_longitudinal_shear_strain/FigureS17-S28
+  
+- caption: Figure scripts
+  numbered: false
+  - file: notebooks/1_static_area_error/Fig2
+  - file: notebooks/2_longitudinal_shear_strain/Fig3
+  - file: notebooks/5_multiple_metrics/Fig4.ipynb
+  - file: notebooks/5_multiple_metrics/Fig5.ipynb
   - file: notebooks/5_multiple_metrics/Fig7.ipynb
-#   - file: notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-full-analysis.ipynb
-#   - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.ipynb
-#   - file: notebooks/4_invalid_pixel_percent/invalid_pixel_percenty.ipynb
-#   - file: notebooks/5_multiple_metrics/validation1.ipynb
-#   - file: notebooks/6_synthetic_offset/validation_synthetic.ipynb
 
-# sections:
-# - file: notebooks/stable_area_error_assessment/AGU21_metric_off-ice-error
-# - file: notebooks/along_flow_shear_strain/sobel_filter_AGU
-# - file: notebooks/multiple_metrics/oie-vs-sobel
-# - file: notebooks/velocity_gps_comparison/validation_gnss_comparison
+- caption: Intermediate processing steps
+  numbered: false
+  - file: notebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript
+  - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity
+  - file: notebooks/4_invalid_pixel_percent/invalid_pixel_percent
+
+- caption: ITS_LIVE data processing scripts
+  numbered: false
+  - file: notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE
+  - file: notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE
+  - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity-ITSLIVE

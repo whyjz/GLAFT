@@ -21,4 +21,9 @@ TBD. (Our AGU 2021 poster is available at https://doi.org/10.1002/essoar.1050935
 
 **Part 1**: GLAFT user manual.
 
-**Part 2**: Supplemental material for the manuscript "Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images," including ALL necessary components to reproduce the presented work. (Binder-ready TBD) 
+**Part 2**: Supplemental material for the manuscript "Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images." ALL necessary components to reproduce the presented work are available here, including the following parts:
+
+- Supplementary tables and figures
+- Figure scripts
+- Intermediate processing steps
+- ITS_LIVE data processing scripts
