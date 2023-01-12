@@ -21,6 +21,7 @@ parts:
   
 - caption: Figure scripts
   numbered: false
+  chapters:
   - file: notebooks/1_static_area_error/Fig2
   - file: notebooks/2_longitudinal_shear_strain/Fig3
   - file: notebooks/5_multiple_metrics/Fig4.ipynb
@@ -29,12 +30,14 @@ parts:
 
 - caption: Intermediate processing steps
   numbered: false
+  chapters:
   - file: notebooks/7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript
   - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity
   - file: notebooks/4_invalid_pixel_percent/invalid_pixel_percent
 
 - caption: ITS_LIVE data processing scripts
   numbered: false
+  chapters:
   - file: notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE
   - file: notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE
   - file: notebooks/3_extract_gnss-pos_velocity/extract_gnss-pos_velocity-ITSLIVE
