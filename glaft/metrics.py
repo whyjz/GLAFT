@@ -114,6 +114,7 @@ class Velocity():
             clipped_data = out_image.data[0]
         except NotImplementedError:
             clipped_data = out_image[0]
+        clipped_data = clipped_data.astype(float)   # convert all dtype to float (so that we can replace some values with NaN)
         return clipped_data
     
     @staticmethod
