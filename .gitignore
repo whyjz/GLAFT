@@ -4,6 +4,7 @@ notebooks/*/*.tif
 notebooks/*/*.p
 notebooks/*/tmp*
 isce.log
+jupyter-book/_build
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
