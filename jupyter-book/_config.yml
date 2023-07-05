@@ -1,6 +1,6 @@
-title          : GLAFT
-author         : Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez
-copyright      : "2022"  
+title          : GLAFT manual and supporting material
+author         : Whyjay Zheng et al. 
+copyright      : "2023"  
 logo           : glaft_cover_img.png
 only_build_toc_files: true
 
@@ -30,3 +30,7 @@ execute:
   execute_notebooks : 'off'
   timeout           : 30
   allow_errors      : false
+  
+latex:
+  latex_documents:
+     targetname: glaft.tex
