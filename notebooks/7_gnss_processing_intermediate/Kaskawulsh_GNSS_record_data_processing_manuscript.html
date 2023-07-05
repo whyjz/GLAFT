@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GNSS data processing script &#8212; GLAFT</title>
+    <title>GNSS data processing script &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,7 +352,7 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="gnss-data-processing-script">
 <h1>GNSS data processing script<a class="headerlink" href="#gnss-data-processing-script" title="Permalink to this headline">¶</a></h1>
-<p><strong>Note: This notebook is not reproducible by default</strong> because the source data paths direct to a large database. It is meant to give readers a sense about how the provided GNSS records (<code class="docutils literal notranslate"><span class="pre">Kaskawulsh_v2_2018-mm-dd_to_2018-mm-dd_GPS.csv</span></code>) were made.</p>
+<p><strong>Note: This notebook is not reproducible</strong> because the source data paths direct to a large database. It is meant to give readers a sense about how the provided GNSS records (<code class="docutils literal notranslate"><span class="pre">Kaskawulsh_v2_2018-mm-dd_to_2018-mm-dd_GPS.csv</span></code>) were made.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -622,8 +612,24 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#calculate velocity between two dates:</span>
 
 <span class="c1"># Whyjay project</span>
-<span class="n">start_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span><span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-28&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-12&#39;</span><span class="p">,</span><span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-21&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-04&#39;</span><span class="p">,</span><span class="s1">&#39;2018-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-11&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-12&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-04&#39;</span><span class="p">,</span><span class="s1">&#39;2018-09-17&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-24&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-19&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-16&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-06&#39;</span><span class="p">]</span>
-<span class="n">end_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span><span class="s1">&#39;2018-10-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-28&#39;</span><span class="p">,</span><span class="s1">&#39;2018-06-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-21&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-05&#39;</span><span class="p">,</span><span class="s1">&#39;2018-10-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-11&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-12&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-14&#39;</span><span class="p">,</span><span class="s1">&#39;2018-10-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-17&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-24&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-19&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-16&#39;</span><span class="p">]</span>
+<span class="n">start_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-02&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-04-28&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-12&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-21&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-04-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-20&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-09-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-11&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-01&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-07-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-12&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-29&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-03-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-17&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-07-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-24&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-04&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-19&#39;</span><span class="p">,</span> 
+               <span class="s1">&#39;2018-05-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-16&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-06&#39;</span><span class="p">]</span>
+<span class="n">end_dates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-10-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-03&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-08-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-28&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-08&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-04-21&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-04-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-10-05&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-30&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-09-20&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-10&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-08-11&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-08-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-27&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-22&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-06-27&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-06-12&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-08&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-03-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-14&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-10-02&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-09-17&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-08-18&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-29&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-24&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-07-04&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;2018-06-19&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-05-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-16&#39;</span><span class="p">]</span>
 
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">start_dates</span><span class="p">)):</span>
@@ -744,9 +750,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

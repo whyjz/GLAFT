@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction &#8212; GLAFT</title>
+    <title>Introduction &#8212; GLAFT manual and supporting material</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GLAFT Quick Start" href="quickstart.html" />
-    <link rel="prev" title="GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”" href="../index.html" />
+    <link rel="prev" title="GLAFT user manual | Other supplementary material for “GLAcier Feature Tracking testkit (GLAFT): A statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking”" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -381,11 +371,13 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>GLAcier Feature Tracking testkit (GLAFT) is based on the scientific Python ecosystem and focuses on calculating the metrics and benchmarking glacier velocity products derived using the feature tracking technique. To be compatible with most feature tracking tools, GLAFT aims to process only the most common and essential product, which are the velocity maps (and optional input of reliability file used as weight). GLAFT also provides visualization tools for the derived metrics, making the scientific communication much easier.</p>
-<p>GLAFT is an open source project with all source code hosted on Github (<a class="reference external" href="https://github.com/whyjz/GLAFT">https://github.com/whyjz/GLAFT</a>). Users can find relevant documentation and cloud-executable demos in the same repository and on its Jupyter Book-based Github pages (<a class="reference external" href="https://whyjz.github.io/GLAFT/">https://whyjz.github.io/GLAFT/</a>).</p>
+<p>GLAcier Feature Tracking testkit (GLAFT) is a Python package for assessing and benchmarking feature-tracked glacier velocity maps derived from satellite imagery.
+To be compatible with as many feature tracking tools as possible, GLAFT analyzes velocity maps (and optional reliability files used as weight) and calculating two metrics based on statistics and ice flow dynamics. Along with GLAFT’s visualization tools, users can intercompare the quality of velocity maps processed by different methods and parameter sets. In the associated <a class="reference external" href="https://doi.org/10.5194/tc-2023-38">GLAFT pubication</a>, we further provide a guideline for optimizing glacier velocity maps by comparing the calculated metrics to an ideal threshold value.</p>
+<p>GLAFT is an open sourced project and is hosted on Github (<a class="reference external" href="https://github.com/whyjz/GLAFT">https://github.com/whyjz/GLAFT</a>). All documentation and cloud-executable demos are deployed as Jupyter Book pages (<a class="reference external" href="https://whyjz.github.io/GLAFT/">https://whyjz.github.io/GLAFT/</a>).</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p><strong>For cloud access</strong>: users are recommended to use the <a class="reference external" href="https://theghub.org/tools/glaft/status">Ghub portal and launch GLAFT</a> (registration required).</p>
+<p><strong>Try GLAFT without installing</strong>: We recommend running our <a class="reference external" href="https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/doc/quickstart.ipynb">Quick Start notebook on MyBinder.org</a>.</p>
+<p><strong>For cloud access</strong>: We recommend using the <a class="reference external" href="https://theghub.org/tools/glaft/status">Ghub portal to launch GLAFT</a> (registration required).</p>
 <p><strong>For local installation</strong>: GLAFT is available on PyPI and can be installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">glaft</span>
 </pre></div>
@@ -426,7 +418,7 @@ const thebe_selector_output = ".output, .cell_output"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">GLAFT user manual | Other supplementary material for “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images”</p>
+            <p class="prev-next-title">GLAFT user manual | Other supplementary material for “GLAcier Feature Tracking testkit (GLAFT): A statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking”</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="quickstart.html" title="next page">
@@ -443,9 +435,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

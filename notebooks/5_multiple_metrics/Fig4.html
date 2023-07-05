@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Figure 4 script &#8212; GLAFT</title>
+    <title>Figure 4 script &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -375,7 +365,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># font and linewidth settings</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
@@ -413,7 +404,10 @@ const thebe_selector_output = ".output, .cell_output"
               <span class="s1">&#39;Invalid-pixel-percent&#39;</span><span class="p">]:</span>
     <span class="n">df</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
-<span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LS8-20180304-20180405&#39;</span><span class="p">,</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span><span class="p">]</span>
+<span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LS8-20180304-20180405&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;LS8-20180802-20180818&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;Sen2-20180304-20180314&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;Sen2-20180508-20180627&#39;</span><span class="p">]</span>
 
 <span class="c1"># df</span>
 </pre></div>
@@ -421,7 +415,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>Now plot the figure:</p>
-<div class="cell docutils container">
+<div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Prefilter&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;LoG&#39;</span><span class="p">]</span>
 <span class="n">demo2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Template size (px)&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;48&quot;</span><span class="p">]</span>
@@ -523,24 +517,8 @@ const thebe_selector_output = ".output, .cell_output"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jovyan/.conda/envs/eztrack/lib/python3.9/site-packages/pandas/core/indexing.py:1684: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  self.obj[key] = infer_fill_value(value)
-/home/jovyan/.conda/envs/eztrack/lib/python3.9/site-packages/pandas/core/indexing.py:1817: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  self._setitem_single_column(loc, value, pi)
-</pre></div>
 </div>
-<img alt="../../_images/Fig4_6_1.png" src="../../_images/Fig4_6_1.png" />
-</div>
-</div>
+<p><img alt="" src="../../_images/Fig4.png" /></p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -589,9 +567,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

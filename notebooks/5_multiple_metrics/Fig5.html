@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Figure 5 script &#8212; GLAFT</title>
+    <title>Figure 5 script &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/5_multiple_metrics/Fig5.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -84,7 +86,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +129,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +220,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -348,8 +340,8 @@ const thebe_selector_output = ".output, .cell_output"
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#additional-note">
-   Additional note
+  <a class="reference internal nav-link" href="#additional-notes">
+   Additional notes
   </a>
  </li>
 </ul>
@@ -373,8 +365,8 @@ const thebe_selector_output = ".output, .cell_output"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#additional-note">
-   Additional note
+  <a class="reference internal nav-link" href="#additional-notes">
+   Additional notes
   </a>
  </li>
 </ul>
@@ -401,7 +393,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># font and linewidth settings</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
@@ -410,6 +403,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
+<p>Now read the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
@@ -438,13 +432,17 @@ const thebe_selector_output = ".output, .cell_output"
               <span class="s1">&#39;Invalid-pixel-percent&#39;</span><span class="p">]:</span>
     <span class="n">df</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
-<span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LS8-20180304-20180405&#39;</span><span class="p">,</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span><span class="p">]</span>
+<span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LS8-20180304-20180405&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;LS8-20180802-20180818&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;Sen2-20180304-20180314&#39;</span><span class="p">,</span> 
+            <span class="s1">&#39;Sen2-20180508-20180627&#39;</span><span class="p">]</span>
 
 <span class="c1"># df</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Create additional column fields for grouping data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;large_vxdiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt0_vxdiff&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">]</span>
@@ -461,25 +459,6 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for idx, row in df.iterrows():</span>
-<span class="c1">#     if row[&#39;SAV-uncertainty-x&#39;] &lt;= 0.1:</span>
-<span class="c1">#         df.loc[idx, &#39;SAV-uncertainty-x (class)&#39;] = &quot;x &lt;= 0.1&quot;</span>
-<span class="c1">#     elif row[&#39;SAV-uncertainty-x&#39;] &lt;= 0.2:</span>
-<span class="c1">#         df.loc[idx, &#39;SAV-uncertainty-x (class)&#39;] = &quot;0.1 &lt; x &lt;= 0.2&quot;</span>
-<span class="c1">#     elif row[&#39;SAV-uncertainty-x&#39;] &lt;= 0.3:</span>
-<span class="c1">#         df.loc[idx, &#39;SAV-uncertainty-x (class)&#39;] = &quot;0.2 &lt; x &lt;= 0.3&quot;</span>
-<span class="c1">#     elif row[&#39;SAV-uncertainty-x&#39;] &lt;= 0.4:</span>
-<span class="c1">#         df.loc[idx, &#39;SAV-uncertainty-x (class)&#39;] = &quot;0.3 &lt; x &lt;= 0.4&quot;</span>
-<span class="c1">#     elif row[&#39;SAV-uncertainty-x&#39;] &lt;= 0.5:</span>
-<span class="c1">#         df.loc[idx, &#39;SAV-uncertainty-x (class)&#39;] = &quot;0.4 &lt; x &lt;= 0.5&quot;</span>
-<span class="c1">#     else:</span>
-<span class="c1">#         df.loc[idx, &#39;SAV-uncertainty-x (class)&#39;] = &quot;x &gt; 0.5&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.004</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span> 
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;LSR-uncertainty-sh&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Invalid+Incorrect&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;mako_r&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
@@ -487,12 +466,6 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;LSR-uncertainty-sh&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;large_vxdiff&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> 
              <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="c1"># sns.stripplot(data=df, x=&quot;large_vxdiff&quot;, y=&quot;LSR-uncertainty-sh&quot;, palette=&quot;mako&quot;,</span>
-<span class="c1">#              ax=axs[1])</span>
-<span class="c1"># sns.stripplot(data=df, x=&quot;LSR-uncertainty-sh&quot;, y=&quot;large_vxdiff&quot;, hue=&quot;SAV-uncertainty-x (class)&quot;, palette=&quot;mako&quot;, </span>
-<span class="c1">#               hue_order=[&quot;x &lt;= 0.1&quot;, &quot;0.1 &lt; x &lt;= 0.2&quot;, &quot;0.2 &lt; x &lt;= 0.3&quot;, &quot;0.3 &lt; x &lt;= 0.4&quot;, &quot;0.4 &lt; x &lt;= 0.5&quot;, &quot;x &gt; 0.5&quot;], ax=axs[1])</span>
-<span class="c1"># sns.scatterplot(data=df, x=&#39;SAV-uncertainty-y&#39;, y=&#39;LSR-uncertainty-sh&#39;, hue=&#39;large_vydiff&#39;, ax=axs[1])</span>
-<span class="c1"># axs[1].set_ylim(0, 0.02)</span>
 <span class="n">kawgs2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="p">}</span>
 
 <span class="n">tmp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;large_vxdiff&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;False&#39;</span><span class="p">]</span>
@@ -504,7 +477,6 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">tmp_mean</span><span class="p">,</span> <span class="n">tmp_mean</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span> <span class="o">**</span><span class="n">kawgs2</span><span class="p">)</span>
 
 <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">)</span>
-<span class="c1"># axs[1].set_ylim(0, 0.025)</span>
 
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.16</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$\mathbf</span><span class="si">{a}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.16</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;$\mathbf</span><span class="si">{b}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
@@ -522,13 +494,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Fig5_6_0.png" src="../../_images/Fig5_6_0.png" />
+<img alt="../../_images/Fig5_7_0.png" src="../../_images/Fig5_7_0.png" />
 </div>
 </div>
-<div class="section" id="additional-note">
-<h2>Additional note<a class="headerlink" href="#additional-note" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="additional-notes">
+<h2>Additional notes<a class="headerlink" href="#additional-notes" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>If using <code class="docutils literal notranslate"><span class="pre">large_vxavgdiff</span></code> instead of <code class="docutils literal notranslate"><span class="pre">large_vxdiff</span></code>, the results won’t change much.</p></li>
+<li><p>If we replace <code class="docutils literal notranslate"><span class="pre">large_vxdiff</span></code> with <code class="docutils literal notranslate"><span class="pre">large_vxavgdiff</span></code> (which is the status averaged from the nearest 3x3 array), the results won’t change much.</p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -542,19 +514,16 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">tmp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;large_vxavgdiff&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">]</span>
 <span class="n">tmp_mean</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-sh&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">tmp_mean</span><span class="p">,</span> <span class="n">tmp_mean</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span> <span class="o">**</span><span class="n">kawgs2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 0.025)
-</pre></div>
-</div>
-<img alt="../../_images/Fig5_8_1.png" src="../../_images/Fig5_8_1.png" />
+<img alt="../../_images/Fig5_9_0.png" src="../../_images/Fig5_9_0.png" />
 </div>
 </div>
 <ol class="simple">
-<li><p>Here shows how the difference compares to the static area uncertainty for each test pair.</p></li>
+<li><p>Here shows how the static-area correct-match uncertainty (<span class="math notranslate nohighlight">\(\delta_x\)</span>, gray bar) compares to the ground truth deviation at the GNSS station (pt0) for each test pair.</p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -564,15 +533,12 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;pt0_vxdiff&#39;</span><span class="p">],</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;xkcd:orange&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">172</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Test #&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Orange: sampled velocity from each test - GNSS (m/d) </span><span class="se">\n</span><span class="s1"> gray: 2-sigma uncertainty by the static area velocities&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Orange: sampled velocity from each test - GNSS (m/d) </span><span class="se">\n</span><span class="s1"> gray: 2-sigma uncertainty by the static area velocities&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Orange: sampled velocity from each test - GNSS (m/d) \n gray: 2-sigma uncertainty by the static area velocities&#39;)
-</pre></div>
-</div>
-<img alt="../../_images/Fig5_10_1.png" src="../../_images/Fig5_10_1.png" />
+<img alt="../../_images/Fig5_11_0.png" src="../../_images/Fig5_11_0.png" />
 </div>
 </div>
 </div>
@@ -624,9 +590,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

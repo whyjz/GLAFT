@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reference &#8212; GLAFT</title>
+    <title>Reference &#8212; GLAFT manual and supporting material</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -446,13 +436,10 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
+      <a class="reference internal nav-link" href="#velocity-plot-zoomed-extent-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Velocity.plot_zoomed_extent(self,
-        </span>
-        <span class="pre">
-         ax=None,
+         Velocity.plot_zoomed_extent(ax=None,
         </span>
         <span class="pre">
          rect=None,
@@ -705,13 +692,10 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
+      <a class="reference internal nav-link" href="#velocity-plot-zoomed-extent-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
        <code class="docutils literal notranslate">
         <span class="pre">
-         Velocity.plot_zoomed_extent(self,
-        </span>
-        <span class="pre">
-         ax=None,
+         Velocity.plot_zoomed_extent(ax=None,
         </span>
         <span class="pre">
          rect=None,
@@ -844,50 +828,66 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="glaft-velocity-vxfile-str-none-vyfile-str-none-wfile-str-none-static-area-str-none-on-ice-area-str-none-nodata-float-9999-0-velocity-unit-str-m-day-thres-sigma-float-2-0-kde-gridsize-int-60">
 <h3><code class="docutils literal notranslate"><span class="pre">glaft.Velocity(vxfile:</span> <span class="pre">str=None,</span> <span class="pre">vyfile:</span> <span class="pre">str=None,</span> <span class="pre">wfile:</span> <span class="pre">str=None,</span> <span class="pre">static_area:</span> <span class="pre">str=None,</span> <span class="pre">on_ice_area:</span> <span class="pre">str=None,</span> <span class="pre">nodata:</span> <span class="pre">float=-9999.0,</span> <span class="pre">velocity_unit:</span> <span class="pre">str='m/day',</span> <span class="pre">thres_sigma:</span> <span class="pre">float=2.0,</span> <span class="pre">kde_gridsize:</span> <span class="pre">int=60)</span></code><a class="headerlink" href="#glaft-velocity-vxfile-str-none-vyfile-str-none-wfile-str-none-static-area-str-none-on-ice-area-str-none-nodata-float-9999-0-velocity-unit-str-m-day-thres-sigma-float-2-0-kde-gridsize-int-60" title="Permalink to this headline">¶</a></h3>
 <p>Construct an experiment to calculate velocity map benchmarking metrics.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vxfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
-vyfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
-wfile:         str, goetiff file path (as weight)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vxfile:        str, Vx raster file path 
+                    (single band with meters as the geotransform unit)
+vyfile:        str, Vy raster file path 
+                    (single band with meters as the geotransform unit)
+wfile:         str, weight raster file path [Optional]
 static_area:   str, static area (shapefile) file path
 on_ice_area:   str, on-ice area (shapefile) file path
 nodata:      float, nodata value in the provided geotiff. NOT FULLY IMPLEMENTED YET.
 velocity_unit: str, velocity unit to be shown on the result plots.
 thres_sigma: float, selected thresholding z values.
-kde_gridsize:  int, grid size used for evaluating a crude KDE surface (larger value means a faster but less precise process)
+kde_gridsize:  int, grid size used for evaluating a crude KDE surface 
+                    (larger value means a faster but less precise process)
 </pre></div>
 </div>
 <div class="section" id="velocity-static-terrain-analysis-plot-none-ax-none">
 <h4><code class="docutils literal notranslate"><span class="pre">Velocity.static_terrain_analysis(plot=None,</span> <span class="pre">ax=None)</span></code><a class="headerlink" href="#velocity-static-terrain-analysis-plot-none-ax-none" title="Permalink to this headline">¶</a></h4>
 <p>Perform the static terrain analysis and calculate the correct-match uncertainty.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot: None for no plot; &quot;full&quot; for plotting the results in the full extent; &quot;zoomed&quot; for plotting the results in the zoomed extent.
-ax: matplotlib.axes object to be visualized when plot is not set to None.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot: None for no plot; 
+      &quot;full&quot; for plotting the results in the full extent; 
+      &quot;zoomed&quot; for plotting the results in the zoomed extent.
+ax:   matplotlib.axes object to place the plot.
 </pre></div>
 </div>
 </div>
 <div class="section" id="velocity-longitudinal-shear-analysis-plot-none-ax-none">
 <h4><code class="docutils literal notranslate"><span class="pre">Velocity.longitudinal_shear_analysis(plot=None,</span> <span class="pre">ax=None)</span></code><a class="headerlink" href="#velocity-longitudinal-shear-analysis-plot-none-ax-none" title="Permalink to this headline">¶</a></h4>
 <p>Perform the longitudinal strain rate analysis and calculate the associated metrics.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot: None for no plot; &quot;full&quot; for plotting the results in the full extent; &quot;zoomed&quot; for plotting the results in the zoomed extent.
-ax: matplotlib.axes object to be visualized when plot is not set to None.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plot: None for no plot; 
+      &quot;full&quot; for plotting the results in the full extent; 
+      &quot;zoomed&quot; for plotting the results in the zoomed extent.
+ax:   matplotlib.axes object to place the plot.
 </pre></div>
 </div>
 </div>
 <div class="section" id="velocity-plot-full-extent-ax-none-rect-none-metric-int-1-pt-style">
 <h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_full_extent(ax=None,</span> <span class="pre">rect=None,</span> <span class="pre">metric:</span> <span class="pre">int=1,</span> <span class="pre">**pt_style)</span></code><a class="headerlink" href="#velocity-plot-full-extent-ax-none-rect-none-metric-int-1-pt-style" title="Permalink to this headline">¶</a></h4>
 <p>Plot the analysis results in the full extent.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax: matplotlib.axes object to be visualized when plot is not set to None.
-rect: style of the rectanglar box indicating the correct match area. If None, the plot uses thick red line as default. See Velocity.create_rectangle_patch
-metric: which metric to be plotted. 1: static terrain; 2: along-flow strain rate.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax:       matplotlib.axes object to place the plot.
+rect:     style of the rectanglar box indicating the correct match area. 
+          If None, the plot uses thick red line as default. 
+          See Velocity.create_rectangle_patch for details.
+metric:   which metric to be plotted. 
+          1 for static terrain; 
+          2 for along-flow strain rate.
 pt_style: point style passed to plt.scatter.
 </pre></div>
 </div>
 </div>
-<div class="section" id="velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
-<h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_zoomed_extent(self,</span> <span class="pre">ax=None,</span> <span class="pre">rect=None,</span> <span class="pre">base_colormap=None,</span> <span class="pre">metric:</span> <span class="pre">int=1,</span> <span class="pre">**pt_style)</span></code><a class="headerlink" href="#velocity-plot-zoomed-extent-self-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style" title="Permalink to this headline">¶</a></h4>
-<p>Plot the analysis results in the zoomed extent (focusing on the correct-match area).</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax: matplotlib.axes object to be visualized when plot is not set to None.
-rect: style of the rectanglar box indicating the correct match area. If None, the plot uses thick red line as default. See Velocity.create_rectangle_patch
-base_colormap: colormap for showing the KDE probability distribtuion. If None, the default (cramericm.bamako_r) is used. 
-metric: which metric to be plotted. 1: static terrain; 2: along-flow strain rate.
+<div class="section" id="velocity-plot-zoomed-extent-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style">
+<h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_zoomed_extent(ax=None,</span> <span class="pre">rect=None,</span> <span class="pre">base_colormap=None,</span> <span class="pre">metric:</span> <span class="pre">int=1,</span> <span class="pre">**pt_style)</span></code><a class="headerlink" href="#velocity-plot-zoomed-extent-ax-none-rect-none-base-colormap-none-metric-int-1-pt-style" title="Permalink to this headline">¶</a></h4>
+<p>Plot the analysis results in the zoomed extent focusing on the correct-match area.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax:       matplotlib.axes object to place the plot.
+rect:     style of the rectanglar box indicating the correct match area. 
+          If None, the plot uses thick red line as default. 
+          See Velocity.create_rectangle_patch for details.
+base_colormap: colormap for showing the KDE probability distribtuion. 
+          If None, the default (cramericm.bamako_r) is used. 
+metric:   which metric to be plotted. 
+          1 for static terrain; 
+          2 for along-flow strain rate.
 pt_style: point style passed to plt.scatter.
 </pre></div>
 </div>
@@ -897,7 +897,9 @@ pt_style: point style passed to plt.scatter.
 <p>Create a rectangle patch to be plotted on the visualization of the processing results.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var_x: half width of the rectangle
 var_y: half height of the rectangle
-rect_style: style of the rectangle. Default is {&#39;linewidth&#39;: 2, &#39;edgecolor&#39;: &#39;xkcd:cranberry&#39;, &#39;facecolor&#39;: &#39;none&#39;, &#39;alpha&#39;: 0.7}
+rect_style: style of the rectangle. 
+            Default is {&#39;linewidth&#39;: 2, &#39;edgecolor&#39;: &#39;xkcd:cranberry&#39;, 
+            &#39;facecolor&#39;: &#39;none&#39;, &#39;alpha&#39;: 0.7}
 
 Returns
 --------------
@@ -907,10 +909,12 @@ matplotlib.patches.Rectangle object.
 </div>
 <div class="section" id="velocity-plot-strain-map-ax-none-base-colormap-none-vmax-none">
 <h4><code class="docutils literal notranslate"><span class="pre">Velocity.plot_strain_map(ax=None,</span> <span class="pre">base_colormap=None,</span> <span class="pre">vmax=None)</span></code><a class="headerlink" href="#velocity-plot-strain-map-ax-none-base-colormap-none-vmax-none" title="Permalink to this headline">¶</a></h4>
-<p>Show the strain map (only works after <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> is performed).</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax: plotting axes (matplotlib.axes object)
-base_colormap: colormap for showing the strain map. If None, the default (cramericm.bamako) is used. 
-vmax: value at where color is saturated. If None, this upper limit will be automatically scaled.
+<p>Show the strain map. Only works after <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> is performed).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ax:       matplotlib.axes object to place the plot.
+base_colormap: colormap for showing the strain map. 
+          If None, the default (cramericm.bamako) is used. 
+vmax:     value at where color is saturated. 
+          If None, the saturation limit will be automatically determined.
 </pre></div>
 </div>
 </div>
@@ -919,7 +923,7 @@ vmax: value at where color is saturated. If None, this upper limit will be autom
 <p>Calculate the amount of invalid pixels in a velocity map.</p>
 </div>
 <div class="section" id="important-attributes">
-<h4>Important attributes<a class="headerlink" href="#important-attributes" title="Permalink to this headline">¶</a></h4>
+<span id="reference-attr"></span><h4>Important attributes<a class="headerlink" href="#important-attributes" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.vxfile</span></code> Vx file path.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.vyfile</span></code> Vy file path.</p></li>
@@ -952,9 +956,9 @@ vmax: value at where color is saturated. If None, this upper limit will be autom
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.exx</span></code> normal strain rate exx, image axis</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.eyy</span></code> normal strain rate eyy, image axis</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.exy</span></code> shear strain rate exy, image axis</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_exx</span></code> normal strain rate exx, flow axis</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_eyy</span></code> normal strain rate eyy, flow axis</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_exy</span></code> shear strain rate exy, flow axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_exx</span></code> normal strain rate exx, flow axis (that is, ex’x’)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_eyy</span></code> normal strain rate eyy, flow axis (that is, ey’y’)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Velocity.flow_exy</span></code> shear strain rate exy, flow axis (that is, ex’y’)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.metric_alongflow_normal</span></code> delta_x’x’</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Velocity.metric_alongflow_shear</span></code> delta_x’y’</p></li>
 </ul>
@@ -969,13 +973,13 @@ vmax: value at where color is saturated. If None, this upper limit will be autom
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Parameters
 -------------
 gtiff: geotiff file path (much be single band. e.g., Velocity component, such as Vx)
-ax: plotting axes (matplotlib.axes object)
-cm_settings: colormap settings to be used in the visualization. Default: {&#39;vmin&#39;: -2, &#39;vmax&#39;: 2, &#39;cmap&#39;: cramericm.broc_r}
+ax:    matplotlib.axes object to place the plot
+cm_settings: colormap settings to be used in the visualization. 
+       Default: {&#39;vmin&#39;: -2, &#39;vmax&#39;: 2, &#39;cmap&#39;: cramericm.broc_r}
 
 Returns
 --------------
 cm_settings: colormap settings using in the visualization.
-    image with NAOF filtered applied
 </pre></div>
 </div>
 </div>
@@ -986,27 +990,25 @@ cm_settings: colormap settings using in the visualization.
 -------------
 vmin: colormap lower range
 vmax: colormap upper range
-cmap: master colormap (a colormap object)
+cmap: colormap object as the master colormap
 
 Returns
 --------------
-mappable: a matplotlib.mappable object
+mappable: matplotlib.mappable object
 </pre></div>
 </div>
 </div>
 <div class="section" id="glaft-naof2-im">
 <h3><code class="docutils literal notranslate"><span class="pre">glaft.naof2(im)</span></code><a class="headerlink" href="#glaft-naof2-im" title="Permalink to this headline">¶</a></h3>
-<p>NAOF preprocessing filter. Translated to Python from GIV source code. All implementation credit to <a class="reference external" href="https://github.com/MaxVWDV/glacier-image-velocimetry/blob/16fb4d2d243b6dc24f35c531d3ea8d91bf3c84a4/functions/image%20processing%20and%20filters/NAOF2.m">Max VWDV</a>.</p>
+<p>NAOF preprocessing filter. Translated to Python from the GIV source code. All implementation credit to <a class="reference external" href="https://github.com/MaxVWDV/glacier-image-velocimetry/blob/16fb4d2d243b6dc24f35c531d3ea8d91bf3c84a4/functions/image%20processing%20and%20filters/NAOF2.m">Max VWDV</a>.</p>
 <p>MaxVWDV. (2021). MaxVWDV/glacier-image-velocimetry: Glacie Image Velocimetry (v1.0.1). Zenodo. <a class="reference external" href="https://doi.org/10.5281/zenodo.4904544">https://doi.org/10.5281/zenodo.4904544</a></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Parameters
 -------------
-im: np.ma.array
-    input image
+im:       np.ma.array;  input image
 
 Returns
 --------------
-naof_im: np.ma.array
-    image with NAOF filtered applied
+naof_im:  np.ma.array;  image with NAOF filter applied
 </pre></div>
 </div>
 </div>
@@ -1059,9 +1061,9 @@ naof_im: np.ma.array
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

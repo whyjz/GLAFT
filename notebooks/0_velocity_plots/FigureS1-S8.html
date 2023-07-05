@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Figures S1-S8: All 172 test velocity maps &#8212; GLAFT</title>
+    <title>Figures S1-S8: All 172 test velocity maps &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -86,7 +86,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -129,7 +129,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -220,22 +220,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -468,11 +458,20 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>To reproduce the figures, uncomment and run the cell below.</p>
+<p>To reproduce the figures:</p>
+<ol class="simple">
+<li><p>download the source velocity maps from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a></p></li>
+<li><p>locate <code class="docutils literal notranslate"><span class="pre">notebooks/manifest.csv</span></code></p></li>
+<li><p>update the <code class="docutils literal notranslate"><span class="pre">Vx</span></code> and <code class="docutils literal notranslate"><span class="pre">Vy</span></code> columns with the downloaded file paths</p></li>
+<li><p>uncomment and run the cell below.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../manifest.csv&#39;, dtype=str)</span>
-<span class="c1"># datestrs = [&#39;LS8-20180304-20180405&#39;, &#39;LS8-20180802-20180818&#39;, &#39;Sen2-20180304-20180314&#39;, &#39;Sen2-20180508-20180627&#39;]</span>
+<span class="c1"># datestrs = [&#39;LS8-20180304-20180405&#39;, </span>
+<span class="c1">#             &#39;LS8-20180802-20180818&#39;, </span>
+<span class="c1">#             &#39;Sen2-20180304-20180314&#39;, </span>
+<span class="c1">#             &#39;Sen2-20180508-20180627&#39;]</span>
 
 <span class="c1"># for datestr in datestrs:</span>
 <span class="c1">#     sub_df = df.loc[df[&#39;Date&#39;] == datestr]</span>
@@ -533,9 +532,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

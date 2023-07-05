@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Extract velocity map data at GNSS locations &#8212; GLAFT</title>
+    <title>Extract velocity map data at GNSS locations &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,317 +352,23 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="extract-velocity-map-data-at-gnss-locations">
 <h1>Extract velocity map data at GNSS locations<a class="headerlink" href="#extract-velocity-map-data-at-gnss-locations" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
-<span class="o">%</span><span class="k">autoreload</span> 2
-</pre></div>
-</div>
-</div>
-</div>
+<p>This script samples velocity at GNSS locations and updates all <code class="docutils literal notranslate"><span class="pre">pt*</span></code> fields in <code class="docutils literal notranslate"><span class="pre">notebooks/results_2022.csv</span></code>.</p>
+<p>To reproduce this workflow, make sure you have downloaded all necessary input files (velocity maps and static terrain geometries) from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a> and have updated the <code class="docutils literal notranslate"><span class="pre">Vx</span></code> and <code class="docutils literal notranslate"><span class="pre">Vy</span></code> columns in <code class="docutils literal notranslate"><span class="pre">notebooks/results_2022.csv</span></code> with the downloaded file paths before starting the analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">glaft.georaster</span> <span class="kn">import</span> <span class="n">Raster</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
-<span class="c1"># import matplotlib.pyplot as plt</span>
-<span class="c1"># from rasterio.plot import show as rio_show</span>
-<span class="c1"># import matplotlib as mpl</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="c1"># df</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">df</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Duration (days)</th>
-      <th>Template size (px)</th>
-      <th>Template size (m)</th>
-      <th>Pixel spacing (px)</th>
-      <th>Pixel spacing (m)</th>
-      <th>Prefilter</th>
-      <th>Subpixel</th>
-      <th>Software</th>
-      <th>Vx</th>
-      <th>Vy</th>
-      <th>SAV-uncertainty-x</th>
-      <th>SAV-uncertainty-y</th>
-      <th>SAV-peak-x</th>
-      <th>SAV-peak-y</th>
-      <th>SAV-outlier-percent</th>
-      <th>LSR-uncertainty-nm</th>
-      <th>LSR-uncertainty-sh</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.32637951498361006</td>
-      <td>0.35901746648197114</td>
-      <td>-0.07337931716612034</td>
-      <td>0.17662068283387966</td>
-      <td>6.816027574321414</td>
-      <td>0.0017456245187072372</td>
-      <td>0.0013862312354439828</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.2904061391872022</td>
-      <td>0.299206325223178</td>
-      <td>-0.05369981396402412</td>
-      <td>0.16505018603597588</td>
-      <td>2.8578612135434125</td>
-      <td>0.009696277915313002</td>
-      <td>0.009108624708324334</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.4480050686250796</td>
-      <td>0.47890196990956785</td>
-      <td>-0.031426549357755906</td>
-      <td>0.1095515493577558</td>
-      <td>14.40274841437632</td>
-      <td>0.012744702296493292</td>
-      <td>0.012744702296493292</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>1</td>
-      <td>10</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.19932657031566106</td>
-      <td>0.21744716761708482</td>
-      <td>-0.0685401991004746</td>
-      <td>0.20562059730142374</td>
-      <td>13.832589617204242</td>
-      <td>0.0075318103275894</td>
-      <td>0.0075318103275894</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>1</td>
-      <td>10</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>0.170416834102238</td>
-      <td>0.18288635854874324</td>
-      <td>-0.05834349185116494</td>
-      <td>0.16871952444650518</td>
-      <td>6.481863477164512</td>
-      <td>0.05414784514500587</td>
-      <td>0.05414784514500587</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>167</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>8</td>
-      <td>80</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.17952278944131322</td>
-      <td>0.2593106958596746</td>
-      <td>0.04335100854352797</td>
-      <td>-0.05744697809470645</td>
-      <td>21.10048596958771</td>
-      <td>0.007606484754625452</td>
-      <td>0.007606484754625452</td>
-    </tr>
-    <tr>
-      <th>168</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>32</td>
-      <td>320</td>
-      <td>4</td>
-      <td>40</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.11496105665321626</td>
-      <td>0.15063862595938682</td>
-      <td>0.041464175857468366</td>
-      <td>-0.016464174553616817</td>
-      <td>18.1238530683338</td>
-      <td>0.006968377551435475</td>
-      <td>0.006546051639227265</td>
-    </tr>
-    <tr>
-      <th>169</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>32</td>
-      <td>320</td>
-      <td>8</td>
-      <td>80</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.07502428079962462</td>
-      <td>0.1110359355834444</td>
-      <td>0.0405009727221011</td>
-      <td>-0.021502913882219477</td>
-      <td>25.219156194671154</td>
-      <td>0.0032284029549105872</td>
-      <td>0.0033360163867409403</td>
-    </tr>
-    <tr>
-      <th>170</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>4</td>
-      <td>40</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.07284891177652728</td>
-      <td>0.11073034590032146</td>
-      <td>0.04041395796117722</td>
-      <td>-0.015413956657325617</td>
-      <td>18.682405636168525</td>
-      <td>0.004378758498193732</td>
-      <td>0.004237508224058451</td>
-    </tr>
-    <tr>
-      <th>171</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>8</td>
-      <td>80</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>0.06232283079917451</td>
-      <td>0.0986778154320263</td>
-      <td>0.04009678610674838</td>
-      <td>-0.015096784802896807</td>
-      <td>21.78997161778619</td>
-      <td>0.0027631530951893793</td>
-      <td>0.0029358501636387157</td>
-    </tr>
-  </tbody>
-</table>
-<p>172 rows × 18 columns</p>
-</div></div></div>
-</div>
+<p>The cell below provides a sanity check for <code class="docutils literal notranslate"><span class="pre">glaft.georaster.Raster</span></code>’s <code class="docutils literal notranslate"><span class="pre">value_at_coords</span></code> method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">Raster</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Vx&#39;</span><span class="p">])</span>
@@ -684,13 +380,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sampled</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Now let’s start the analysis. If you download these files from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a>, make sure to change the paths to the correct file locations on your local machine.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gps_files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/jovyan/Projects/PX_comparison/GPS/Kaskawulsh_2018-04-05_to_2018-03-04_GPS&#39;</span><span class="p">,</span> 
@@ -698,14 +388,18 @@ const thebe_selector_output = ".output, .cell_output"
              <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/GPS/Kaskawulsh_2018-03-14_to_2018-03-04_GPS&#39;</span><span class="p">,</span>
              <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/GPS/Kaskawulsh_2018-06-27_to_2018-05-08_GPS&#39;</span><span class="p">]</span>
 
-<span class="c1"># &#39;/home/jovyan/Projects/PX_comparison/GPS/Kaskawulsh_v2_2018-05-08_to_2018-06-27_GPS.csv&#39;</span>
-
 <span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LS8-20180304-20180405&#39;</span><span class="p">,</span> <span class="s1">&#39;LS8-20180802-20180818&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180304-20180314&#39;</span><span class="p">,</span> <span class="s1">&#39;Sen2-20180508-20180627&#39;</span><span class="p">]</span>
 <span class="n">datenums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Steps here:</p>
+<ol class="simple">
+<li><p>Get and print the UTM coordinates of three GNSS statations for each scene pair.</p></li>
+<li><p>Sample every velocity maps.</p></li>
+<li><p>Create additional fields and calculate the difference between GNSS and feature tracked measurements.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">gps_file</span><span class="p">,</span> <span class="n">datestr</span><span class="p">,</span> <span class="n">datenum</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gps_files</span><span class="p">,</span> <span class="n">datestrs</span><span class="p">,</span> <span class="n">datenums</span><span class="p">):</span>
@@ -721,9 +415,6 @@ const thebe_selector_output = ".output, .cell_output"
     <span class="n">gps</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">gps</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">gpd</span><span class="o">.</span><span class="n">points_from_xy</span><span class="p">(</span><span class="n">gps</span><span class="p">[</span><span class="s1">&#39;end_easting&#39;</span><span class="p">],</span> <span class="n">gps</span><span class="p">[</span><span class="s1">&#39;end_northing&#39;</span><span class="p">]),</span> <span class="n">crs</span><span class="o">=</span><span class="s1">&#39;EPSG:32607&#39;</span><span class="p">)</span>
     <span class="c1"># This is beginning coordinates</span>
     <span class="n">gps_xy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">gps</span><span class="p">[[</span><span class="s1">&#39;end_easting&#39;</span><span class="p">,</span> <span class="s1">&#39;end_northing&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_records</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-    <span class="c1"># if datestr == &#39;Sen2-20180508-20180627&#39;:</span>
-    <span class="c1">#     gps_xy[-2] = (601790.43877479, 6733753.77267354)  # it should be (nan, nan), (nan, nan) but nans does not work with rio.sample</span>
-    <span class="c1">#     gps_xy = gps_xy[:-1]</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">datestr</span><span class="p">,</span> <span class="n">gps_xy</span><span class="p">)</span>
     
     <span class="n">gps</span><span class="p">[</span><span class="s1">&#39;vx (m/d)&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">(</span><span class="n">gps</span><span class="p">[</span><span class="s1">&#39;start_easting&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">gps</span><span class="p">[</span><span class="s1">&#39;end_easting&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">datenum</span>
@@ -774,27 +465,6 @@ const thebe_selector_output = ".output, .cell_output"
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;pt2_vxavgdiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">gps</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;vx (m/d)&#39;</span><span class="p">]</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;pt2_vydiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">gps</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;vy (m/d)&#39;</span><span class="p">]</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s1">&#39;pt2_vyavgdiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">gps</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;vy (m/d)&#39;</span><span class="p">]</span>
-        
-        <span class="c1"># vx_grid = rasterio.open(row.Vx)</span>
-        <span class="c1"># vy_grid = rasterio.open(row.Vy)</span>
-        <span class="c1"># sample_gen_vx = vx_grid.sample(gps_xy)</span>
-        <span class="c1"># vx_sampled = np.array([float(record) for record in sample_gen_vx])</span>
-        <span class="c1"># sample_gen_vy = vy_grid.sample(gps_xy)</span>
-        <span class="c1"># vy_sampled = np.array([float(record) for record in sample_gen_vy])</span>
-        <span class="c1"># vx_sampled[vx_sampled &lt; -9998] = np.nan</span>
-        <span class="c1"># vy_sampled[vy_sampled &lt; -9998] = np.nan</span>
-        <span class="c1"># vx_sampled -= float(df.loc[idx, &#39;SAV-peak-x&#39;])</span>
-        <span class="c1"># vy_sampled -= float(df.loc[idx, &#39;SAV-peak-y&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt0_vxdiff&#39;] = vx_sampled[0] - np.abs(gps.loc[0, &#39;vx (m/d)&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt0_vydiff&#39;] = vy_sampled[0] - np.abs(gps.loc[0, &#39;vy (m/d)&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt1_vxdiff&#39;] = vx_sampled[1] - np.abs(gps.loc[1, &#39;vx (m/d)&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt1_vydiff&#39;] = vy_sampled[1] - np.abs(gps.loc[1, &#39;vy (m/d)&#39;])        </span>
-        <span class="c1"># df.loc[idx, &#39;pt2_vxdiff&#39;] = vx_sampled[2] - np.abs(gps.loc[2, &#39;vx (m/d)&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt2_vydiff&#39;] = vy_sampled[2] - np.abs(gps.loc[2, &#39;vy (m/d)&#39;])        </span>
-        <span class="c1"># v_sampled = np.sqrt(vx_sampled ** 2 + vy_sampled ** 2)</span>
-        <span class="c1"># df.loc[idx, &#39;pt0_velodiff&#39;] = v_sampled[0] - np.abs(gps.loc[0, &#39;velocity (m/d)&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt1_velodiff&#39;] = v_sampled[1] - np.abs(gps.loc[1, &#39;velocity (m/d)&#39;])</span>
-        <span class="c1"># df.loc[idx, &#39;pt2_velodiff&#39;] = v_sampled[2] - np.abs(gps.loc[2, &#39;velocity (m/d)&#39;])</span>
 </pre></div>
 </div>
 </div>
@@ -807,9 +477,11 @@ Sen2-20180508-20180627 [(621324.96198502, 6738852.60218059), (610481.28682665, 6
 </div>
 </div>
 </div>
+<p>You can comment/uncomment these lines to examine the data/results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gps</span>
+<span class="c1"># df</span>
 </pre></div>
 </div>
 </div>
@@ -894,415 +566,6 @@ Sen2-20180508-20180627 [(621324.96198502, 6738852.60218059), (610481.28682665, 6
     </tr>
   </tbody>
 </table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># gps.loc[0, &#39;start_easting&#39;] + 1</span>
-<span class="n">gps</span>
-<span class="c1"># gps[&#39;end_easting&#39;] - gps[&#39;start_easting&#39;]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Unnamed: 0</th>
-      <th>date1</th>
-      <th>date2</th>
-      <th>start_easting</th>
-      <th>start_northing</th>
-      <th>end_easting</th>
-      <th>end_northing</th>
-      <th>distance_traveled (m)</th>
-      <th>velocity (m/d)</th>
-      <th>geometry</th>
-      <th>vx (m/d)</th>
-      <th>vy (m/d)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>2018-06-27</td>
-      <td>2018-05-08</td>
-      <td>621348.115449</td>
-      <td>6.738880e+06</td>
-      <td>621324.961985</td>
-      <td>6.738853e+06</td>
-      <td>36.045525</td>
-      <td>0.720837</td>
-      <td>POINT (621324.962 6738852.602)</td>
-      <td>0.463069</td>
-      <td>0.55252</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2018-06-27</td>
-      <td>2018-05-08</td>
-      <td>610481.286827</td>
-      <td>6.737103e+06</td>
-      <td>610481.286827</td>
-      <td>6.737103e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>POINT (610481.287 6737102.954)</td>
-      <td>0.000000</td>
-      <td>0.00000</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>2018-06-27</td>
-      <td>2018-05-08</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>601790.438775</td>
-      <td>6.733754e+06</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>POINT (601790.439 6733753.773)</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Duration (days)</th>
-      <th>Template size (px)</th>
-      <th>Template size (m)</th>
-      <th>Pixel spacing (px)</th>
-      <th>Pixel spacing (m)</th>
-      <th>Prefilter</th>
-      <th>Subpixel</th>
-      <th>Software</th>
-      <th>Vx</th>
-      <th>...</th>
-      <th>pt0_vydiff</th>
-      <th>pt0_vyavgdiff</th>
-      <th>pt1_vxdiff</th>
-      <th>pt1_vxavgdiff</th>
-      <th>pt1_vydiff</th>
-      <th>pt1_vyavgdiff</th>
-      <th>pt2_vxdiff</th>
-      <th>pt2_vxavgdiff</th>
-      <th>pt2_vydiff</th>
-      <th>pt2_vyavgdiff</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>0.095937</td>
-      <td>0.087257</td>
-      <td>0.005895</td>
-      <td>0.013707</td>
-      <td>0.082225</td>
-      <td>0.082225</td>
-      <td>0.512210</td>
-      <td>0.546933</td>
-      <td>0.805385</td>
-      <td>0.777608</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>0.005945</td>
-      <td>-0.007944</td>
-      <td>0.017465</td>
-      <td>0.018333</td>
-      <td>0.062545</td>
-      <td>0.066018</td>
-      <td>NaN</td>
-      <td>1.305031</td>
-      <td>NaN</td>
-      <td>3.134664</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>-0.118244</td>
-      <td>-0.116508</td>
-      <td>-0.153245</td>
-      <td>-0.154982</td>
-      <td>0.149294</td>
-      <td>0.142350</td>
-      <td>3.657758</td>
-      <td>3.546646</td>
-      <td>-3.252546</td>
-      <td>-3.582407</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>1</td>
-      <td>10</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>0.004437</td>
-      <td>0.021798</td>
-      <td>0.001056</td>
-      <td>0.001056</td>
-      <td>0.053225</td>
-      <td>0.053225</td>
-      <td>0.569871</td>
-      <td>0.549038</td>
-      <td>0.713885</td>
-      <td>0.675691</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>1</td>
-      <td>10</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>-0.052412</td>
-      <td>-0.052412</td>
-      <td>0.022109</td>
-      <td>0.018637</td>
-      <td>0.058876</td>
-      <td>0.058876</td>
-      <td>5.653424</td>
-      <td>0.731549</td>
-      <td>-5.436714</td>
-      <td>-5.421089</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>167</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>8</td>
-      <td>80</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>0.029927</td>
-      <td>0.024371</td>
-      <td>0.644149</td>
-      <td>0.646927</td>
-      <td>-0.205053</td>
-      <td>-0.198109</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>168</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>32</td>
-      <td>320</td>
-      <td>4</td>
-      <td>40</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.048556</td>
-      <td>-0.040223</td>
-      <td>0.521036</td>
-      <td>0.550202</td>
-      <td>-0.221036</td>
-      <td>-0.236314</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>169</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>32</td>
-      <td>320</td>
-      <td>8</td>
-      <td>80</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.043517</td>
-      <td>-0.031017</td>
-      <td>0.546999</td>
-      <td>0.556721</td>
-      <td>-0.228497</td>
-      <td>-0.242386</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>170</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>4</td>
-      <td>40</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.037106</td>
-      <td>-0.034329</td>
-      <td>0.534586</td>
-      <td>0.540142</td>
-      <td>-0.259586</td>
-      <td>-0.266530</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>171</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>8</td>
-      <td>80</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.049924</td>
-      <td>-0.049924</td>
-      <td>0.547403</td>
-      <td>0.536292</td>
-      <td>-0.259903</td>
-      <td>-0.255737</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>172 rows × 30 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1360,9 +623,9 @@ Sen2-20180508-20180627 [(621324.96198502, 6738852.60218059), (610481.28682665, 6
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

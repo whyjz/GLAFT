@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Figure 7 script &#8212; GLAFT</title>
+    <title>Figure 7 script &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -370,14 +360,14 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="c1"># from datetime import datetime</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># font and linewidth settings</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;legend&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">axes_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;linewidth&#39;</span>   <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
@@ -386,62 +376,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../results_ITSLIVE.csv&#39;, dtype=str)</span>
-<span class="c1"># for field in [&#39;Duration (days)&#39;,</span>
-<span class="c1">#               &#39;Pixel spacing (m)&#39;,</span>
-<span class="c1">#               &#39;Assigned-x-error&#39;,</span>
-<span class="c1">#               &#39;Assigned-y-error&#39;,</span>
-<span class="c1">#               &#39;SAV-uncertainty-x&#39;,</span>
-<span class="c1">#               &#39;SAV-uncertainty-y&#39;,</span>
-<span class="c1">#               &#39;SAV-peak-x&#39;,</span>
-<span class="c1">#               &#39;SAV-peak-y&#39;,</span>
-<span class="c1">#               &#39;SAV-outlier-percent&#39;,</span>
-<span class="c1">#               &#39;LSR-uncertainty-nm&#39;,</span>
-<span class="c1">#               &#39;LSR-uncertainty-sh&#39;,</span>
-<span class="c1">#               &#39;pt0_vxavg&#39;,</span>
-<span class="c1">#               &#39;pt0_vxgps&#39;,</span>
-<span class="c1">#               &#39;pt0_vyavg&#39;,</span>
-<span class="c1">#               &#39;pt0_vygps&#39;,</span>
-<span class="c1">#               &#39;pt1_vxavg&#39;,</span>
-<span class="c1">#               &#39;pt1_vxgps&#39;,</span>
-<span class="c1">#               &#39;pt1_vyavg&#39;,</span>
-<span class="c1">#               &#39;pt1_vygps&#39;,</span>
-<span class="c1">#               &#39;pt2_vxavg&#39;,</span>
-<span class="c1">#               &#39;pt2_vxgps&#39;,</span>
-<span class="c1">#               &#39;pt2_vyavg&#39;,</span>
-<span class="c1">#               &#39;pt2_vygps&#39;,</span>
-<span class="c1">#               &#39;pt0_vxdiff&#39;,</span>
-<span class="c1">#               &#39;pt0_vydiff&#39;,</span>
-<span class="c1">#               &#39;pt1_vxdiff&#39;,</span>
-<span class="c1">#               &#39;pt1_vydiff&#39;,</span>
-<span class="c1">#               &#39;pt2_vxdiff&#39;,</span>
-<span class="c1">#               &#39;pt2_vydiff&#39;,</span>
-<span class="c1">#               &#39;pt0_vxavgdiff&#39;,</span>
-<span class="c1">#               &#39;pt0_vyavgdiff&#39;,</span>
-<span class="c1">#               &#39;pt1_vxavgdiff&#39;,</span>
-<span class="c1">#               &#39;pt1_vyavgdiff&#39;,</span>
-<span class="c1">#               &#39;pt2_vxavgdiff&#39;,</span>
-<span class="c1">#               &#39;pt2_vyavgdiff&#39;,</span>
-<span class="c1">#               &#39;pt0_vavg&#39;, </span>
-<span class="c1">#               &#39;pt0_vgps&#39;,</span>
-<span class="c1">#               &#39;pt0_vdiff&#39;,</span>
-<span class="c1">#               &#39;pt0_verr&#39;,</span>
-<span class="c1">#               &#39;pt1_vavg&#39;, </span>
-<span class="c1">#               &#39;pt1_vgps&#39;,</span>
-<span class="c1">#               &#39;pt1_vdiff&#39;,</span>
-<span class="c1">#               &#39;pt1_verr&#39;,</span>
-<span class="c1">#               &#39;pt2_vavg&#39;, </span>
-<span class="c1">#               &#39;pt2_vgps&#39;,</span>
-<span class="c1">#               &#39;pt2_vdiff&#39;,</span>
-<span class="c1">#               &#39;pt2_verr&#39;,</span>
-<span class="c1">#               ]:</span>
-<span class="c1">#     df[field] = df[field].astype(float)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Now read the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_ITSLIVE.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
@@ -460,22 +395,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for idx, row in df.iterrows():</span>
-<span class="c1">#     df.loc[idx, &#39;Start date&#39;] = datetime.strptime(row[&#39;Start date&#39;], &#39;%Y%m%d&#39;)</span>
-<span class="c1">#     df.loc[idx, &#39;End date&#39;] = datetime.strptime(row[&#39;End date&#39;], &#39;%Y%m%d&#39;)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[&#39;Center date&#39;] = (df[&#39;End date&#39;] - df[&#39;Start date&#39;]) / 2 + df[&#39;Start date&#39;]</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Create additional column fields for grouping data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-x-m/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;SAV-uncertainty-x&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
@@ -484,18 +404,13 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error-m/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-nm-1/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-nm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-sh-1/day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;LSR-uncertainty-sh&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">365</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day-95CI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day-95CI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-x-error-m/day&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error-m/day-95CI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Assigned-y-error-m/day&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Make custom colormap:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;rocket_r&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -518,29 +433,21 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\delta_u$ (m day$^{-1}$)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;ITS_LIVE $V_x$ error (2-$\sigma$, m day$^{-1}$)&#39;</span><span class="p">)</span>
-<span class="c1"># ax.get_legend().set_title(&quot;$\delta_{x&#39;y&#39;}$ (day$^{-1}$)&quot;)</span>
+
+
+<span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">mappable</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">discrete_cmap</span><span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mf">0.004</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">,</span> <span class="mf">0.008</span><span class="p">])</span> 
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;$\delta_{x&#39;y&#39;}$ (day$^{-1}$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">19</span><span class="p">)</span>
 
 <span class="c1">## legend:</span>
 <span class="c1">## &lt; 0.004 lvl 1 </span>
 <span class="c1">## 0.004 - 0.006 lvl 2</span>
 <span class="c1">## 0.006 - 0.008 lvl 3</span>
 <span class="c1">## &gt; 0.008 lvl 4</span>
-
-<span class="c1"># bounds = np.linspace(0, 256, 5)</span>
-<span class="c1"># norm = mpl.colors.BoundaryNorm(bounds, cmap.N)</span>
-<span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="n">mappable</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">discrete_cmap</span><span class="p">)</span>
-<span class="c1"># mappable = mpl.cm.ScalarMappable(norm=norm, cmap=discrete_cmap)</span>
-
-<span class="c1"># cax = subfigs[3].add_axes([0.0, bbox_top.y0 + 0.02, 0.15, bbox_top.y1 - bbox_top.y0 - 0.02])</span>
-<span class="c1"># subfigs[3].colorbar(mappable_velo, cax=cax, orientation=&#39;vertical&#39;, label=&#39;$V_x$ ({})&#39;.format(exp.velocity_unit), ticks=[-2, -1, 0, 1, 2])</span>
-
-<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mf">0.004</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">,</span> <span class="mf">0.008</span><span class="p">])</span> <span class="c1">#, label=&#39;$V_x$ ({})&#39;.format(exp.velocity_unit))</span>
-<span class="c1"># , norm=norm,</span>
-<span class="c1">#    spacing=&#39;proportional&#39;, ticks=bounds, boundaries=bounds, format=&#39;%1i&#39;)</span>
-
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;$\delta_{x&#39;y&#39;}$ (day$^{-1}$)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">19</span><span class="p">)</span>
 
 <span class="c1"># save figure</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;xkcd:white&#39;</span><span class="p">)</span>
@@ -549,7 +456,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Fig7_11_0.png" src="../../_images/Fig7_11_0.png" />
+<img alt="../../_images/Fig7_9_0.png" src="../../_images/Fig7_9_0.png" />
 </div>
 </div>
 </div>
@@ -600,9 +507,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Figure 3 script &#8212; GLAFT</title>
+    <title>Figure 3 script &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,6 +352,7 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="figure-3-script">
 <h1>Figure 3 script<a class="headerlink" href="#figure-3-script" title="Permalink to this headline">¶</a></h1>
+<p>To reproduce this figure, make sure you have downloaded all necessary input files (velocity maps and static terrain geometries) from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a> and have updated the <code class="docutils literal notranslate"><span class="pre">Vx</span></code> and <code class="docutils literal notranslate"><span class="pre">Vy</span></code> columns in <code class="docutils literal notranslate"><span class="pre">notebooks/manifest.csv</span></code> with the downloaded file paths before starting the analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glaft</span>
@@ -483,14 +474,15 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>The following functions plot the braces on the axes with annotations, which is necessary for Figure 2. They are modified from guzey’s answer to <a class="reference external" href="https://stackoverflow.com/questions/18386210/annotating-ranges-of-data-in-matplotlib/68180887#68180887">this StackOverflow thread</a>.</p>
+<p>The following functions plot the braces on the axes with annotations, which is necessary for Figure 3. They are modified from guzey’s answer to <a class="reference external" href="https://stackoverflow.com/questions/18386210/annotating-ranges-of-data-in-matplotlib/68180887#68180887">this StackOverflow thread</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_brace_x</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">xspan</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">yy</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ax: axes to be drawn.</span>
 <span class="sd">    xspan: x coordinates of the two brace ending points.</span>
-<span class="sd">    yy: y coordinate of the two brace ending points. (The brace will be placed horizontally)</span>
+<span class="sd">    yy: y coordinate of the two brace ending points. </span>
+<span class="sd">        (The brace will be placed horizontally)</span>
 <span class="sd">    text: annotation text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -518,7 +510,8 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ax: axes to be drawn.</span>
 <span class="sd">    yspan: y coordinates of the two brace ending points.</span>
-<span class="sd">    xx: x coordinate of the two brace ending points. (The brace will be placed vertically)</span>
+<span class="sd">    xx: x coordinate of the two brace ending points. </span>
+<span class="sd">        (The brace will be placed vertically)</span>
 <span class="sd">    text: annotation text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -698,9 +691,9 @@ const thebe_selector_output = ".output, .cell_output"
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

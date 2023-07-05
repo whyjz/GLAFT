@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculate invalid pixel percentage &#8212; GLAFT</title>
+    <title>Calculate invalid pixel percentage &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://whyjz.github.io/glacier-ft-test/notebooks/4_invalid_pixel_percent/invalid_pixel_percent.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ITS_LIVE: calculating \(\delta_u\) and \(\delta_v\)" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html" />
+    <link rel="next" title="ITS_LIVE: calculate Metric 1" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html" />
     <link rel="prev" title="Extract velocity map data at GNSS locations" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,350 +352,31 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="calculate-invalid-pixel-percentage">
 <h1>Calculate invalid pixel percentage<a class="headerlink" href="#calculate-invalid-pixel-percentage" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Developer&#39;s setting</span>
-<span class="o">%</span><span class="k">load_ext</span> autoreload
-<span class="o">%</span><span class="k">autoreload</span> 2
-</pre></div>
-</div>
-</div>
-</div>
+<p>This script calculates invalid pixel percentage and updates the <code class="docutils literal notranslate"><span class="pre">Invalid-pixel-percent</span></code> field in <code class="docutils literal notranslate"><span class="pre">notebooks/results_2022.csv</span></code>.</p>
+<p>To reproduce this workflow, make sure you have downloaded all necessary input files (velocity maps and static terrain geometries) from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a> and have updated the <code class="docutils literal notranslate"><span class="pre">Vx</span></code> and <code class="docutils literal notranslate"><span class="pre">Vy</span></code> columns in <code class="docutils literal notranslate"><span class="pre">notebooks/results_2022.csv</span></code> with the downloaded file paths before starting the analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glaft</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="c1"># import numpy as np</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../manifest.csv&#39;, dtype=str)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../results_2022.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="c1"># df</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Date</th>
-      <th>Duration (days)</th>
-      <th>Template size (px)</th>
-      <th>Template size (m)</th>
-      <th>Pixel spacing (px)</th>
-      <th>Pixel spacing (m)</th>
-      <th>Prefilter</th>
-      <th>Subpixel</th>
-      <th>Software</th>
-      <th>Vx</th>
-      <th>...</th>
-      <th>pt0_vydiff</th>
-      <th>pt0_vyavgdiff</th>
-      <th>pt1_vxdiff</th>
-      <th>pt1_vxavgdiff</th>
-      <th>pt1_vydiff</th>
-      <th>pt1_vyavgdiff</th>
-      <th>pt2_vxdiff</th>
-      <th>pt2_vxavgdiff</th>
-      <th>pt2_vydiff</th>
-      <th>pt2_vyavgdiff</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>0.09593725498563105</td>
-      <td>0.08725667293912226</td>
-      <td>0.005894817186356094</td>
-      <td>0.013707317186356094</td>
-      <td>0.08222490098124796</td>
-      <td>0.08222490098124796</td>
-      <td>0.5122103172194441</td>
-      <td>0.5469325261961897</td>
-      <td>0.8053853176141387</td>
-      <td>0.7776075265908843</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>0.005945251783534833</td>
-      <td>-0.007943643728092364</td>
-      <td>0.017465313984259878</td>
-      <td>0.01833336622844628</td>
-      <td>0.06254539777915175</td>
-      <td>0.06601762165705855</td>
-      <td>NaN</td>
-      <td>1.3050308140173479</td>
-      <td>NaN</td>
-      <td>3.134664068272516</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>12</td>
-      <td>120</td>
-      <td>None</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>-0.11824361153824509</td>
-      <td>-0.11650750704987228</td>
-      <td>-0.15324545062200834</td>
-      <td>-0.15498156256096174</td>
-      <td>0.14929403445737183</td>
-      <td>0.14234958670155823</td>
-      <td>3.65775754941108</td>
-      <td>3.5466463853180623</td>
-      <td>-3.2525455489097377</td>
-      <td>-3.5824067130027553</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>1</td>
-      <td>10</td>
-      <td>Gau</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>0.004437340518086974</td>
-      <td>0.021798445006459777</td>
-      <td>0.0010556991207103517</td>
-      <td>0.0010556991207103517</td>
-      <td>0.05322498651370389</td>
-      <td>0.05322498651370389</td>
-      <td>0.5698711991537984</td>
-      <td>0.54903788568868</td>
-      <td>0.7138854031465945</td>
-      <td>0.6756909851931033</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Sen2-20180304-20180314</td>
-      <td>10</td>
-      <td>48</td>
-      <td>480</td>
-      <td>1</td>
-      <td>10</td>
-      <td>NAOF</td>
-      <td>16-node oversampling</td>
-      <td>CARST</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/CARST/2...</td>
-      <td>...</td>
-      <td>-0.052411586626994466</td>
-      <td>-0.052411586626994466</td>
-      <td>0.022108991871400696</td>
-      <td>0.018636767993493897</td>
-      <td>0.058876059368622446</td>
-      <td>0.058876059368622446</td>
-      <td>5.653424491904489</td>
-      <td>0.7315494919044887</td>
-      <td>-5.4367135239984865</td>
-      <td>-5.4210885239984865</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>167</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>8</td>
-      <td>80</td>
-      <td>Gau</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>0.029926568197736647</td>
-      <td>0.02437105767680159</td>
-      <td>0.644148991456472</td>
-      <td>0.6469267467169395</td>
-      <td>-0.2050530099843646</td>
-      <td>-0.198108562228551</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>168</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>32</td>
-      <td>320</td>
-      <td>4</td>
-      <td>40</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.04855619958056612</td>
-      <td>-0.040222874194518754</td>
-      <td>0.5210358241425317</td>
-      <td>0.5502024629936975</td>
-      <td>-0.22103582246615094</td>
-      <td>-0.2363136105091731</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>169</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>32</td>
-      <td>320</td>
-      <td>8</td>
-      <td>80</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.04351746025196346</td>
-      <td>-0.031017472172892413</td>
-      <td>0.546999003436041</td>
-      <td>0.5567212362546445</td>
-      <td>-0.22849708611778052</td>
-      <td>-0.2423860114317301</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>170</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>4</td>
-      <td>40</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.0371064293977863</td>
-      <td>-0.03432867413731877</td>
-      <td>0.5345860301178939</td>
-      <td>0.5401415406388289</td>
-      <td>-0.2595860493031389</td>
-      <td>-0.2665304672566301</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>171</th>
-      <td>Sen2-20180508-20180627</td>
-      <td>50</td>
-      <td>64</td>
-      <td>640</td>
-      <td>8</td>
-      <td>80</td>
-      <td>NAOF</td>
-      <td>pyrUP</td>
-      <td>autoRIFT</td>
-      <td>/home/jovyan/Projects/PX_comparison/PX/autoRIF...</td>
-      <td>...</td>
-      <td>-0.049923589331286156</td>
-      <td>-0.04992355952896377</td>
-      <td>0.5474031900513937</td>
-      <td>0.536292049800234</td>
-      <td>-0.2599032211575677</td>
-      <td>-0.255736558464544</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>172 rows × 30 columns</p>
-</div></div></div>
 </div>
 <div class="cell tag_remove-output docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
     <span class="c1"># print(row.Vx)</span>
     <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">Software</span> <span class="o">==</span> <span class="s1">&#39;Vmap&#39;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
+        <span class="c1"># print(&#39;yes&#39;)</span>
+        <span class="c1">## Vmap derived velocity maps have a NoData value of 0, which needs a special attention.</span>
         <span class="n">exp</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">,</span> <span class="n">nodata</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">exp</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">Vy</span><span class="p">)</span>
@@ -721,193 +392,6 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="c1"># df</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmpx</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/Vmap/parabolic_subpixel/noprefilter/T07VFH_20180508T204021_B04_s__T07VFH_20180627T204021_B04_s_vmap_minm_31px_spm1-F_vx.tif&#39;</span>
-<span class="n">tmpy</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/PX/Vmap/parabolic_subpixel/noprefilter/T07VFH_20180508T204021_B04_s__T07VFH_20180627T204021_B04_s_vmap_minm_31px_spm1-F_vy.tif&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">tmpx</span><span class="p">)</span> <span class="k">as</span> <span class="n">srcx</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">srcx</span><span class="o">.</span><span class="n">nodatavals</span><span class="p">)</span>
-    <span class="n">vx_noclip</span> <span class="o">=</span> <span class="n">srcx</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0,)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx_noclip</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3720, 4158)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx_noclip</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0., 0., ..., 0., 0., 0.],
-       [0., 0., 0., ..., 0., 0., 0.],
-       [0., 0., 0., ..., 0., 0., 0.],
-       ...,
-       [0., 0., 0., ..., 0., 0., 0.],
-       [0., 0., 0., ..., 0., 0., 0.],
-       [0., 0., 0., ..., 0., 0., 0.]], dtype=float32)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vx_noclip</span> <span class="o">==</span> <span class="mi">0</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ True,  True,  True, ...,  True,  True,  True],
-       [ True,  True,  True, ...,  True,  True,  True],
-       [ True,  True,  True, ...,  True,  True,  True],
-       ...,
-       [ True,  True,  True, ...,  True,  True,  True],
-       [ True,  True,  True, ...,  True,  True,  True],
-       [ True,  True,  True, ...,  True,  True,  True]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_shp</span> <span class="o">=</span> <span class="s1">&#39;../../data/shapefiles/bedrock_V1.shp&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">tmpx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">tmpy</span><span class="p">,</span> <span class="n">static_area</span><span class="o">=</span><span class="n">in_shp</span><span class="p">,</span> <span class="n">nodata</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">static_terrain_analysis</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running clip_static_area
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jovyan/Projects/Github/GLAFT/glaft/metrics.py:164: UserWarning: NoData values other than -9999 has not implemented yet. Falling back to -9999.
-  warnings.warn(&quot;NoData values other than -9999 has not implemented yet. Falling back to -9999.&quot;)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running calculate_xystd
-Running calculate_bandwidth
-Running calculate_kde
-Running construct_crude_mesh
-Running eval_crude_mesh
-Running construct_fine_mesh
-Running eval_fine_mesh
-Running thresholding_fine_mesh
-Running thresholding_metric
-Running cal_outlier_percent
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.05575006,  0.47064772,  0.1825832 , ..., -0.12997177,
-        0.02469868,  0.03218165], dtype=float32)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aaa</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">_clip</span><span class="p">(</span><span class="n">gtiff</span><span class="o">=</span><span class="n">exp</span><span class="o">.</span><span class="n">vxfile</span><span class="p">,</span> <span class="n">shp</span><span class="o">=</span><span class="n">exp</span><span class="o">.</span><span class="n">static_area</span><span class="p">,</span> <span class="n">nodata</span><span class="o">=-</span><span class="mf">9999.0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aaa</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-9999., -9999., -9999., ..., -9999., -9999., -9999.],
-       [-9999., -9999., -9999., ..., -9999., -9999., -9999.],
-       [-9999., -9999., -9999., ..., -9999., -9999., -9999.],
-       ...,
-       [-9999., -9999., -9999., ..., -9999., -9999., -9999.],
-       [-9999., -9999., -9999., ..., -9999., -9999., -9999.],
-       [-9999., -9999., -9999., ..., -9999., -9999., -9999.]],
-      dtype=float32)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">aaa</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">9998</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>202774
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">aaa</span><span class="p">)</span>
-<span class="c1"># plt.clim(-2, 2)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f72cda576d0&gt;
-</pre></div>
-</div>
-<img alt="../../_images/invalid_pixel_percent_21_1.png" src="../../_images/invalid_pixel_percent_21_1.png" />
 </div>
 </div>
 </div>
@@ -947,7 +431,7 @@ Running cal_outlier_percent
     <a class='right-next' id="next-link" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ITS_LIVE: calculating <span class="math notranslate nohighlight">\(\delta_u\)</span> and <span class="math notranslate nohighlight">\(\delta_v\)</span></p>
+        <p class="prev-next-title">ITS_LIVE: calculate Metric 1</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -958,9 +442,9 @@ Running cal_outlier_percent
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

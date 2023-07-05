@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GLAFT Quick Start &#8212; GLAFT</title>
+    <title>GLAFT Quick Start &#8212; GLAFT manual and supporting material</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -86,7 +86,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -129,7 +129,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -220,22 +220,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../notebooks/2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -350,8 +340,8 @@ const thebe_selector_output = ".output, .cell_output"
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#input-file-format">
-   Input file format
+  <a class="reference internal nav-link" href="#input-files">
+   Input files
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -397,8 +387,8 @@ const thebe_selector_output = ".output, .cell_output"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#input-file-format">
-   Input file format
+  <a class="reference internal nav-link" href="#input-files">
+   Input files
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -434,18 +424,18 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="glaft-quick-start">
 <h1>GLAFT Quick Start<a class="headerlink" href="#glaft-quick-start" title="Permalink to this headline">¶</a></h1>
-<p>This notebook shows how to use the GLAcier Feature Tracking testkit (GLAFT) to calculate and visualize the benchmarking metrics accosiated with a glacier velocity map.</p>
-<div class="section" id="input-file-format">
-<h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
-<p>To begin, you have to acquire the following files:</p>
+<p>GLAcier Feature Tracking testkit (GLAFT) calculates two metrics for visualizing and benchmarking the quality of glacier velocity maps. Here we describe its basic usage.</p>
+<div class="section" id="input-files">
+<h2>Input files<a class="headerlink" href="#input-files" title="Permalink to this headline">¶</a></h2>
+<p>To begin, the following files are necessary:</p>
 <ol class="simple">
-<li><p><strong>Velocity map as two files</strong>; one showing the <span class="math notranslate nohighlight">\(V_x\)</span> component and the other showing the <span class="math notranslate nohighlight">\(V_y\)</span> component. GLAFT accepts any format readable by the Python rasterio package, abd we recommend using GeoTiff as the preferred velocity map format.</p></li>
-<li><p><strong>Polygon geometries indicating static terrain or ice flow locations</strong>. We have tested ESRI shapefile as the geometry format. The geometries will be parsed by the Python geopandas module, and the other compatible formats should work too (such as geopackage or geojson, although not tested). Polygon geometries should use the same coordinate reference system (CRS) from the velocity maps</p></li>
+<li><p><strong>Velocity map as two files</strong>; one showing the <span class="math notranslate nohighlight">\(V_x\)</span> component and the other showing <span class="math notranslate nohighlight">\(V_y\)</span>. GLAFT accepts any raster format readable by the Python rasterio package, and we recommend GeoTiff as the preferred format.</p></li>
+<li><p><strong>Polygon geometries indicating static terrain or ice flow locations</strong>. GLAFT uses the Python geopandas module to parse the geometries. While there are many compatible formats, we recommend using ESRI shapefile for these geometries since this format has been tested. The other common formats should work too, such as geopackage or geojson, but please use them with discretion as if you choose to. Polygon geometries must use the <strong>same coordinate reference system (CRS)</strong> as the velocity maps.</p></li>
 </ol>
 </div>
 <div class="section" id="procedure">
 <h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h2>
-<p>First, import the GLAFT module:</p>
+<p>First, import the GLAFT module,</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glaft</span>
@@ -453,8 +443,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>And specify the input velocity maps and polygon geometries. We use one of the test pairs presented in the previously mentioned study as a demo example: Kaskawulsh glacier velocity between March 4 and April 5, 2018, processed with the CARST software with the following key parameters. More details are available in the study “Statistics and flow dynamics based assessments of feature-tracked glacier velocities derived from satellite images.”</p>
+<p>and specify the input velocity maps and polygon geometries. We use one of the test pairs presented in the <a class="reference external" href="https://doi.org/10.5194/tc-2023-38">GLAFT publication</a> as a demo: Kaskawulsh glacier velocity between March 4 and April 5, 2018, processed with the CARST software with the following key parameters. More details are available in the paper.</p>
 <ul class="simple">
+<li><p>Image source: Landsat 8</p></li>
 <li><p>Matching template size: 64 pixels (960 m)</p></li>
 <li><p>Output resolution (aka skip size): 4 pixels (60 m)</p></li>
 <li><p>Pre-processing filter: Gaussian filter</p></li>
@@ -482,7 +473,7 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/quickstart_5_0.png" src="../_images/quickstart_5_0.png" />
 </div>
 </div>
-<p>We can use the <code class="docutils literal notranslate"><span class="pre">prep_colorbar_mappable</span></code> function to prepare and show colorbar.</p>
+<p>To prepare and show colorbar, we can use the <code class="docutils literal notranslate"><span class="pre">prep_colorbar_mappable</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -499,7 +490,7 @@ const thebe_selector_output = ".output, .cell_output"
 <img alt="../_images/quickstart_7_0.png" src="../_images/quickstart_7_0.png" />
 </div>
 </div>
-<p>GLAFT does not provide functions to visualize and check the polygon geometries, but one can use geopandas to achieve that.</p>
+<p>GLAFT does not provide functions to visualize and check the polygon geometries since we can simply use geopandas to achieve that.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
@@ -519,7 +510,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="metric-1-correct-match-uncertainty-on-static-terrains">
 <h3>Metric 1: Correct-match uncertainty on static terrains<a class="headerlink" href="#metric-1-correct-match-uncertainty-on-static-terrains" title="Permalink to this headline">¶</a></h3>
-<p>To calculate the metric, we first construct a <code class="docutils literal notranslate"><span class="pre">glaft.Velocity</span></code> object with all necessary files as arguments.</p>
+<p>To calculate Metric 1, we construct a <code class="docutils literal notranslate"><span class="pre">glaft.Velocity</span></code> object with all necessary files as arguments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">vy</span><span class="p">,</span> <span class="n">static_area</span><span class="o">=</span><span class="n">static_area</span><span class="p">)</span>
@@ -527,7 +518,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>And then we can use the method <code class="docutils literal notranslate"><span class="pre">static_terrain_analysis</span></code> to perform the entire analysis. This method is essentially a wrapper script containing 11 steps for calculating kernel density estimate (KDE).</p>
+<p>And then we can use the method <code class="docutils literal notranslate"><span class="pre">static_terrain_analysis</span></code> to perform the entire analysis. This method is essentially a wrapper script containing eleven steps for calculating kernel density estimate (KDE).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment</span><span class="o">.</span><span class="n">static_terrain_analysis</span><span class="p">()</span>
@@ -595,7 +586,7 @@ Running cal_outlier_percent
 <img alt="../_images/quickstart_17_1.png" src="../_images/quickstart_17_1.png" />
 </div>
 </div>
-<p>Alternatively, once you have performed the analysis, you can use the <code class="docutils literal notranslate"><span class="pre">plot_full_extent</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_zoomed_extent</span></code> method for the same plotting functionality (with the <code class="docutils literal notranslate"><span class="pre">metric</span></code> flag set to 1).</p>
+<p>If you have performed the analysis and do not want to repeat, you can alternatively use the <code class="docutils literal notranslate"><span class="pre">plot_full_extent</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_zoomed_extent</span></code> method for the same plotting functionality (with the <code class="docutils literal notranslate"><span class="pre">metric</span></code> flag set to 1).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment</span><span class="o">.</span><span class="n">plot_zoomed_extent</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -609,7 +600,7 @@ Running cal_outlier_percent
 </div>
 <div class="section" id="metric-2-along-flow-strain-rate-variability">
 <h3>Metric 2: Along-flow strain rate variability<a class="headerlink" href="#metric-2-along-flow-strain-rate-variability" title="Permalink to this headline">¶</a></h3>
-<p>Again, we need to construct a <code class="docutils literal notranslate"><span class="pre">glaft.Velocity</span></code> object first. Instead of using the <code class="docutils literal notranslate"><span class="pre">static_area</span></code> argument, we pass the polygon file path to the <code class="docutils literal notranslate"><span class="pre">on_ice_area</span></code> argument.</p>
+<p>Again, we start by constructing a <code class="docutils literal notranslate"><span class="pre">glaft.Velocity</span></code> object. Instead of using the <code class="docutils literal notranslate"><span class="pre">static_area</span></code> argument, we pass the polygon file path to the <code class="docutils literal notranslate"><span class="pre">on_ice_area</span></code> argument.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment</span> <span class="o">=</span> <span class="n">glaft</span><span class="o">.</span><span class="n">Velocity</span><span class="p">(</span><span class="n">vxfile</span><span class="o">=</span><span class="n">vx</span><span class="p">,</span> <span class="n">vyfile</span><span class="o">=</span><span class="n">vy</span><span class="p">,</span> <span class="n">on_ice_area</span><span class="o">=</span><span class="n">iceflow_area</span><span class="p">)</span>
@@ -617,7 +608,7 @@ Running cal_outlier_percent
 </div>
 </div>
 </div>
-<p>And then we can execute the wrapper method <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> to calculate Metric 2. This method contains 15 sub-steps.</p>
+<p>And then we can execute the wrapper method <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> to calculate Metric 2. This method contains fifteen sub-steps.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment</span><span class="o">.</span><span class="n">longitudinal_shear_analysis</span><span class="p">()</span>
@@ -644,7 +635,7 @@ Running cal_outlier_percent
 </div>
 </div>
 </div>
-<p>Now the metric and the other derived values are accessible via the following object attributes.</p>
+<p>Now the metric are accessible via the following object attributes. Other derived values are also available; see <a class="reference internal" href="reference.html#reference-attr"><span class="std std-ref">reference</span></a> for detail.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;delta_x&#39;x&#39;: </span><span class="si">{:.4}</span><span class="s2"> (1/day)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">experiment</span><span class="o">.</span><span class="n">metric_alongflow_normal</span><span class="p">))</span>
@@ -659,7 +650,7 @@ delta_x&#39;y&#39;: 0.001646 (1/day)
 </div>
 </div>
 </div>
-<p>We have the same two ways to visualize the results: by setting the <code class="docutils literal notranslate"><span class="pre">plot</span></code> argument for <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code>, or by calling <code class="docutils literal notranslate"><span class="pre">plot_full_extent</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_zoomed_extent</span></code> (with a <code class="docutils literal notranslate"><span class="pre">metric</span></code> argument set to <code class="docutils literal notranslate"><span class="pre">2</span></code>) after <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> is executed.</p>
+<p>We have the same two ways to visualize the results: setting the <code class="docutils literal notranslate"><span class="pre">plot</span></code> argument for <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code>, or calling <code class="docutils literal notranslate"><span class="pre">plot_full_extent</span></code> or <code class="docutils literal notranslate"><span class="pre">plot_zoomed_extent</span></code> (with a <code class="docutils literal notranslate"><span class="pre">metric</span></code> argument set to <code class="docutils literal notranslate"><span class="pre">2</span></code>) after <code class="docutils literal notranslate"><span class="pre">longitudinal_shear_analysis</span></code> is executed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">experiment</span><span class="o">.</span><span class="n">longitudinal_shear_analysis</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="s1">&#39;zoomed&#39;</span><span class="p">)</span>
@@ -748,9 +739,9 @@ Running cal_outlier_percent
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>

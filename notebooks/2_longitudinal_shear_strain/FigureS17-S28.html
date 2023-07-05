@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Figures S17-S28: Longitudinal strain rate analysis for all tests &#8212; GLAFT</title>
+    <title>Figures S17-S28: Longitudinal strain rate analysis for all tests &#8212; GLAFT manual and supporting material</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -84,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GLAFT</h1>
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -127,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
-   Table S2: Results of all 172 tests
+   Table S2: Metrics and other results for all 172 tests
   </a>
  </li>
  <li class="toctree-l1">
@@ -218,22 +218,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_u\)
-   </span>
-   and
-   <span class="math notranslate nohighlight">
-    \(\delta_v\)
-   </span>
+   ITS_LIVE: calculate Metric 1
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="metric_longitudinal-shear-strain-ITSLIVE.html">
-   ITS_LIVE: calculating
-   <span class="math notranslate nohighlight">
-    \(\delta_{x'y'}\)
-   </span>
+   ITS_LIVE: calculate Metric 2
   </a>
  </li>
  <li class="toctree-l1">
@@ -442,7 +432,7 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="figures-s17-s28-longitudinal-strain-rate-analysis-for-all-tests">
 <h1>Figures S17-S28: Longitudinal strain rate analysis for all tests<a class="headerlink" href="#figures-s17-s28-longitudinal-strain-rate-analysis-for-all-tests" title="Permalink to this headline">¶</a></h1>
-<p>This notebooks shows the analysis of longitudinal strain rate (sometimes abbreviated as <strong>LSR</strong> in this study) with the supplemental figures in the bottom.</p>
+<p>This notebooks shows the analysis of longitudinal strain rate (abbreviated as <strong>LSR</strong> in Table S2) with the supplemental figures in the bottom.</p>
 <div class="section" id="basic-information-importing-modules-load-data-list-and-flow-area-shapefile">
 <h2>1. Basic information, importing modules, load data list and flow-area shapefile<a class="headerlink" href="#basic-information-importing-modules-load-data-list-and-flow-area-shapefile" title="Permalink to this headline">¶</a></h2>
 <p>See Table S1 for all the Kaskawulsh glacier images and parameter sets used in this study.</p>
@@ -457,9 +447,12 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>We start by loading the data list. Whichever line works for reproducing the figures.
-<code class="docutils literal notranslate"><span class="pre">../manifest.csv</span></code> contains only the parameter table (<strong>Table S1</strong>),
-and <code class="docutils literal notranslate"><span class="pre">../results_2022.csv</span></code> contains both the parameter table and all the metrics calculated in this study.</p>
+<p>We start by loading the data list. Whichever line in the cell blow works for reproducing the figures.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">../manifest.csv</span></code> contains only the parameter table (<strong>Table S1</strong>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">../results_2022.csv</span></code> contains both the parameter table and all the metrics calculated (<strong>Table S2</strong>) in this study.</p></li>
+</ul>
+<p>If you want to reproduce the workflow and the figures, make sure you have downloaded all necessary input files from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a> and have updated the <code class="docutils literal notranslate"><span class="pre">Vx</span></code> and <code class="docutils literal notranslate"><span class="pre">Vy</span></code> columns in either csv file with the downloaded file paths before starting the analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df = pd.read_csv(&#39;../manifest.csv&#39;, dtype=str)</span>
@@ -468,7 +461,7 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
 </div>
 </div>
 </div>
-<p>Specify flow area:</p>
+<p>Specify flow area. Change the path to the downloaded shapefile from <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a> before running the cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_shp</span> <span class="o">=</span> <span class="s1">&#39;/home/jovyan/Projects/PX_comparison/shapefiles/glacier_V1_Kaskawulsh_s_inwardBuffer600m.shp&#39;</span>
@@ -496,7 +489,6 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
 <h2>3. Visualize results<a class="headerlink" href="#visualize-results" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="distribution-of-longitudinal-strain-rate">
 <h3>3.1. Distribution of longitudinal strain rate<a class="headerlink" href="#distribution-of-longitudinal-strain-rate" title="Permalink to this headline">¶</a></h3>
-<p>Click to reveal the plot settings and the batch script.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Font and line width settings</span>
@@ -563,10 +555,11 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
 </div>
 </div>
 </div>
-<p>To reproduce the figures, uncomment and run the cell below.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for datestr in [&#39;LS8-20180304-20180405&#39;, &#39;LS8-20180802-20180818&#39;, &#39;Sen2-20180304-20180314&#39;, &#39;Sen2-20180508-20180627&#39;]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### To reproduce the figures, uncomment and run the rest of this cell. </span>
+
+<span class="c1"># for datestr in [&#39;LS8-20180304-20180405&#39;, &#39;LS8-20180802-20180818&#39;, &#39;Sen2-20180304-20180314&#39;, &#39;Sen2-20180508-20180627&#39;]:</span>
 <span class="c1">#     sub_df = df.loc[df[&#39;Date&#39;] == datestr]</span>
 <span class="c1">#     fig, axs = plot_batch(sub_df, zoom=False, datestr=datestr)</span>
 <span class="c1">#     fig.patch.set_facecolor(&#39;xkcd:white&#39;)</span>
@@ -597,7 +590,6 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
 </div>
 <div class="section" id="map-of-longitudinal-strain-rate">
 <h3>3.2. Map of longitudinal strain rate<a class="headerlink" href="#map-of-longitudinal-strain-rate" title="Permalink to this headline">¶</a></h3>
-<p>Click to reveal the plot settings and the batch script.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_batch_strainrate</span><span class="p">(</span><span class="n">sub_df</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">datestr</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -645,10 +637,11 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
 </div>
 </div>
 </div>
-<p>To reproduce the figures, uncomment and run the cell below.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for datestr in [&#39;LS8-20180304-20180405&#39;, &#39;LS8-20180802-20180818&#39;, &#39;Sen2-20180304-20180314&#39;, &#39;Sen2-20180508-20180627&#39;]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### To reproduce the figures, uncomment and run the rest of this cell. </span>
+
+<span class="c1"># for datestr in [&#39;LS8-20180304-20180405&#39;, &#39;LS8-20180802-20180818&#39;, &#39;Sen2-20180304-20180314&#39;, &#39;Sen2-20180508-20180627&#39;]:</span>
 <span class="c1">#     sub_df = df.loc[df[&#39;Date&#39;] == datestr]</span>
 <span class="c1">#     fig, axs = plot_batch_strainrate(sub_df, datestr=datestr)</span>
 <span class="c1">#     fig.patch.set_facecolor(&#39;xkcd:white&#39;)</span>
@@ -729,9 +722,9 @@ and <code class="docutils literal notranslate"><span class="pre">../results_2022
     <footer class="footer">
   <p>
     
-      By Whyjay Zheng, Shashank Bhushan, Maximillian Van Wyk De Vries, William Kochtitzky, David Shean, Luke Copland, Christine Dow, Fernando Pérez<br/>
+      By Whyjay Zheng et al.<br/>
     
-        &copy; Copyright 2022.<br/>
+        &copy; Copyright 2023.<br/>
   </p>
 </footer>
 </main>
