@@ -6,47 +6,63 @@
 
 Construct an experiment to calculate velocity map benchmarking metrics.
 
-    vxfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
-    vyfile:        str, geotiff file path (must contain only one band and use meters as the geotransform unit)
-    wfile:         str, goetiff file path (as weight)
+    vxfile:        str, Vx raster file path 
+                        (single band with meters as the geotransform unit)
+    vyfile:        str, Vy raster file path 
+                        (single band with meters as the geotransform unit)
+    wfile:         str, weight raster file path [Optional]
     static_area:   str, static area (shapefile) file path
     on_ice_area:   str, on-ice area (shapefile) file path
     nodata:      float, nodata value in the provided geotiff. NOT FULLY IMPLEMENTED YET.
     velocity_unit: str, velocity unit to be shown on the result plots.
     thres_sigma: float, selected thresholding z values.
-    kde_gridsize:  int, grid size used for evaluating a crude KDE surface (larger value means a faster but less precise process)
+    kde_gridsize:  int, grid size used for evaluating a crude KDE surface 
+                        (larger value means a faster but less precise process)
     
 #### `Velocity.static_terrain_analysis(plot=None, ax=None)`
 
 Perform the static terrain analysis and calculate the correct-match uncertainty. 
 
-    plot: None for no plot; "full" for plotting the results in the full extent; "zoomed" for plotting the results in the zoomed extent.
-    ax: matplotlib.axes object to be visualized when plot is not set to None.
+    plot: None for no plot; 
+          "full" for plotting the results in the full extent; 
+          "zoomed" for plotting the results in the zoomed extent.
+    ax:   matplotlib.axes object to place the plot.
     
 #### `Velocity.longitudinal_shear_analysis(plot=None, ax=None)`
 
 Perform the longitudinal strain rate analysis and calculate the associated metrics. 
 
-    plot: None for no plot; "full" for plotting the results in the full extent; "zoomed" for plotting the results in the zoomed extent.
-    ax: matplotlib.axes object to be visualized when plot is not set to None.
+    plot: None for no plot; 
+          "full" for plotting the results in the full extent; 
+          "zoomed" for plotting the results in the zoomed extent.
+    ax:   matplotlib.axes object to place the plot.
 
 #### `Velocity.plot_full_extent(ax=None, rect=None, metric: int=1, **pt_style)`
 
 Plot the analysis results in the full extent.
 
-    ax: matplotlib.axes object to be visualized when plot is not set to None.
-    rect: style of the rectanglar box indicating the correct match area. If None, the plot uses thick red line as default. See Velocity.create_rectangle_patch
-    metric: which metric to be plotted. 1: static terrain; 2: along-flow strain rate.
+    ax:       matplotlib.axes object to place the plot.
+    rect:     style of the rectanglar box indicating the correct match area. 
+              If None, the plot uses thick red line as default. 
+              See Velocity.create_rectangle_patch for details.
+    metric:   which metric to be plotted. 
+              1 for static terrain; 
+              2 for along-flow strain rate.
     pt_style: point style passed to plt.scatter.
 
-#### `Velocity.plot_zoomed_extent(self, ax=None, rect=None, base_colormap=None, metric: int=1, **pt_style)`
+#### `Velocity.plot_zoomed_extent(ax=None, rect=None, base_colormap=None, metric: int=1, **pt_style)`
 
-Plot the analysis results in the zoomed extent (focusing on the correct-match area).
+Plot the analysis results in the zoomed extent focusing on the correct-match area.
 
-    ax: matplotlib.axes object to be visualized when plot is not set to None.
-    rect: style of the rectanglar box indicating the correct match area. If None, the plot uses thick red line as default. See Velocity.create_rectangle_patch
-    base_colormap: colormap for showing the KDE probability distribtuion. If None, the default (cramericm.bamako_r) is used. 
-    metric: which metric to be plotted. 1: static terrain; 2: along-flow strain rate.
+    ax:       matplotlib.axes object to place the plot.
+    rect:     style of the rectanglar box indicating the correct match area. 
+              If None, the plot uses thick red line as default. 
+              See Velocity.create_rectangle_patch for details.
+    base_colormap: colormap for showing the KDE probability distribtuion. 
+              If None, the default (cramericm.bamako_r) is used. 
+    metric:   which metric to be plotted. 
+              1 for static terrain; 
+              2 for along-flow strain rate.
     pt_style: point style passed to plt.scatter.
 
 #### `Velocity.create_rectangle_patch(var_x, var_y, **rect_style)`
@@ -55,7 +71,9 @@ Create a rectangle patch to be plotted on the visualization of the processing re
 
     var_x: half width of the rectangle
     var_y: half height of the rectangle
-    rect_style: style of the rectangle. Default is {'linewidth': 2, 'edgecolor': 'xkcd:cranberry', 'facecolor': 'none', 'alpha': 0.7}
+    rect_style: style of the rectangle. 
+                Default is {'linewidth': 2, 'edgecolor': 'xkcd:cranberry', 
+                'facecolor': 'none', 'alpha': 0.7}
 
     Returns
     --------------
@@ -63,16 +81,19 @@ Create a rectangle patch to be plotted on the visualization of the processing re
 
 #### `Velocity.plot_strain_map(ax=None, base_colormap=None, vmax=None)`
 
-Show the strain map (only works after `longitudinal_shear_analysis` is performed).
+Show the strain map. Only works after `longitudinal_shear_analysis` is performed).
 
-    ax: plotting axes (matplotlib.axes object)
-    base_colormap: colormap for showing the strain map. If None, the default (cramericm.bamako) is used. 
-    vmax: value at where color is saturated. If None, this upper limit will be automatically scaled.
+    ax:       matplotlib.axes object to place the plot.
+    base_colormap: colormap for showing the strain map. 
+              If None, the default (cramericm.bamako) is used. 
+    vmax:     value at where color is saturated. 
+              If None, the saturation limit will be automatically determined.
 
 #### `Velocity.cal_invalid_pixel_percent()`
 
 Calculate the amount of invalid pixels in a velocity map.
 
+(reference:attr)=
 #### Important attributes
 
 - `Velocity.vxfile` Vx file path.
@@ -110,9 +131,9 @@ Calculate the amount of invalid pixels in a velocity map.
 - `Velocity.exx` normal strain rate exx, image axis
 - `Velocity.eyy` normal strain rate eyy, image axis
 - `Velocity.exy` shear strain rate exy, image axis
-- `Velocity.flow_exx` normal strain rate exx, flow axis
-- `Velocity.flow_eyy` normal strain rate eyy, flow axis
-- `Velocity.flow_exy` shear strain rate exy, flow axis
+- `Velocity.flow_exx` normal strain rate exx, flow axis (that is, ex'x')
+- `Velocity.flow_eyy` normal strain rate eyy, flow axis (that is, ey'y')
+- `Velocity.flow_exy` shear strain rate exy, flow axis (that is, ex'y')
 - `Velocity.metric_alongflow_normal` delta_x'x'
 - `Velocity.metric_alongflow_shear` delta_x'y'
 
@@ -125,13 +146,13 @@ Preview a geotiff file (presuming a velocity map).
     Parameters
     -------------
     gtiff: geotiff file path (much be single band. e.g., Velocity component, such as Vx)
-    ax: plotting axes (matplotlib.axes object)
-    cm_settings: colormap settings to be used in the visualization. Default: {'vmin': -2, 'vmax': 2, 'cmap': cramericm.broc_r}
+    ax:    matplotlib.axes object to place the plot
+    cm_settings: colormap settings to be used in the visualization. 
+           Default: {'vmin': -2, 'vmax': 2, 'cmap': cramericm.broc_r}
     
     Returns
     --------------
     cm_settings: colormap settings using in the visualization.
-        image with NAOF filtered applied
        
 ### `glaft.prep_colorbar_mappable(vmin=-2, vmax=2, cmap=cramericm.broc_r)`
 
@@ -141,24 +162,22 @@ Generate a mappbale object for creating a colorbar.
     -------------
     vmin: colormap lower range
     vmax: colormap upper range
-    cmap: master colormap (a colormap object)
+    cmap: colormap object as the master colormap
     
     Returns
     --------------
-    mappable: a matplotlib.mappable object
+    mappable: matplotlib.mappable object
         
 ### `glaft.naof2(im)`
 
-NAOF preprocessing filter. Translated to Python from GIV source code. All implementation credit to [Max VWDV]( https://github.com/MaxVWDV/glacier-image-velocimetry/blob/16fb4d2d243b6dc24f35c531d3ea8d91bf3c84a4/functions/image%20processing%20and%20filters/NAOF2.m). 
+NAOF preprocessing filter. Translated to Python from the GIV source code. All implementation credit to [Max VWDV]( https://github.com/MaxVWDV/glacier-image-velocimetry/blob/16fb4d2d243b6dc24f35c531d3ea8d91bf3c84a4/functions/image%20processing%20and%20filters/NAOF2.m). 
 
 MaxVWDV. (2021). MaxVWDV/glacier-image-velocimetry: Glacie Image Velocimetry (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.4904544
     
     Parameters
     -------------
-    im: np.ma.array
-        input image
+    im:       np.ma.array;  input image
     
     Returns
     --------------
-    naof_im: np.ma.array
-        image with NAOF filtered applied
+    naof_im:  np.ma.array;  image with NAOF filter applied

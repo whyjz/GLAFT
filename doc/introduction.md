@@ -1,12 +1,15 @@
 # Introduction
 
-GLAcier Feature Tracking testkit (GLAFT) is based on the scientific Python ecosystem and focuses on calculating the metrics and benchmarking glacier velocity products derived using the feature tracking technique. To be compatible with most feature tracking tools, GLAFT aims to process only the most common and essential product, which are the velocity maps (and optional input of reliability file used as weight). GLAFT also provides visualization tools for the derived metrics, making the scientific communication much easier. 
+GLAcier Feature Tracking testkit (GLAFT) is a Python package for assessing and benchmarking feature-tracked glacier velocity maps derived from satellite imagery. 
+To be compatible with as many feature tracking tools as possible, GLAFT analyzes velocity maps (and optional reliability files used as weight) and calculating two metrics based on statistics and ice flow dynamics. Along with GLAFT's visualization tools, users can intercompare the quality of velocity maps processed by different methods and parameter sets. In the associated [GLAFT pubication](https://doi.org/10.5194/tc-2023-38), we further provide a guideline for optimizing glacier velocity maps by comparing the calculated metrics to an ideal threshold value. 
 
-GLAFT is an open source project with all source code hosted on Github (https://github.com/whyjz/GLAFT). Users can find relevant documentation and cloud-executable demos in the same repository and on its Jupyter Book-based Github pages (https://whyjz.github.io/GLAFT/). 
+GLAFT is an open sourced project and is hosted on Github (https://github.com/whyjz/GLAFT). All documentation and cloud-executable demos are deployed as Jupyter Book pages (https://whyjz.github.io/GLAFT/). 
 
 ## Installation
 
-**For cloud access**: users are recommended to use the [Ghub portal and launch GLAFT](https://theghub.org/tools/glaft/status) (registration required).
+**Try GLAFT without installing**: We recommend running our [Quick Start notebook on MyBinder.org](https://mybinder.org/v2/gh/whyjz/glacier-ft-test/master?urlpath=tree/jupyter-book/doc/quickstart.ipynb).
+
+**For cloud access**: We recommend using the [Ghub portal to launch GLAFT](https://theghub.org/tools/glaft/status) (registration required).
 
 **For local installation**: GLAFT is available on PyPI and can be installed via `pip`. 
 
