@@ -12,4 +12,4 @@ pip install glaft
 
 ## Using GLAFT
 
-See our [user manual](https://whyjz.github.io/GLAFT/doc/introduction.html) for more information.
+Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/whyjz/GLAFT/master?labpath=doc%2Fquickstart.ipynb), or see our [user manual](https://whyjz.github.io/GLAFT/doc/introduction.html) for more information.

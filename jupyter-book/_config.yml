@@ -9,7 +9,7 @@ html:
   use_repository_button: true
   use_issues_button: true
   home_page_in_navbar: false
-  baseurl: https://whyjz.github.io/glacier-ft-test
+  baseurl: https://whyjz.github.io/GLAFT
 
 # bibtex_bibfiles:
 #  - refs.bib
@@ -17,7 +17,7 @@ html:
 # bibtex_reference_style: author_year
 
 repository:
-  url: https://github.com/whyjz/glacier-ft-test
+  url: https://github.com/whyjz/GLAFT
   branch: master
   path_to_book: jupyter-book
 
