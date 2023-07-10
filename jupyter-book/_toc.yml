@@ -26,6 +26,7 @@ parts:
   - file: notebooks/2_longitudinal_shear_strain/Fig3
   - file: notebooks/5_multiple_metrics/Fig4.ipynb
   - file: notebooks/5_multiple_metrics/Fig5.ipynb
+  - file: notebooks/6_synthetic_offset/feature_tracking_figure6.ipynb
   - file: notebooks/5_multiple_metrics/Fig7.ipynb
 
 - caption: Intermediate processing steps
