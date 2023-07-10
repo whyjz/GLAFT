@@ -1,0 +1,947 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figure 6 script &#8212; GLAFT manual and supporting material</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://whyjz.github.io/GLAFT/notebooks/6_synthetic_offset/feature_tracking_figure6.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Figure 7 script" href="../5_multiple_metrics/Fig7.html" />
+    <link rel="prev" title="Figure 5 script" href="../5_multiple_metrics/Fig5.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/glaft_cover_img.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">GLAFT manual and supporting material</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  GLAFT user manual
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/quickstart.html">
+   GLAFT Quick Start
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../doc/reference.html">
+   Reference
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Supplementary tables and figures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS1.html">
+   Table S1: Parameters of all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/TableS2.html">
+   Table S2: Metrics and other results for all 172 tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/TableS3.html">
+   Table S3: List of all 35 ITS_LIVE maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/TableS4.html">
+   Table S4: Metrics for the ITS_LIVE velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_velocity_plots/FigureS1-S8.html">
+   Figures S1-S8: All 172 test velocity maps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/FigureS9-S16.html">
+   Figures S9-S16: Static area velocity analysis for all tests
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/FigureS17-S28.html">
+   Figures S17-S28: Longitudinal strain rate analysis for all tests
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Figure scripts
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/Fig2.html">
+   Figure 2 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/Fig3.html">
+   Figure 3 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig4.html">
+   Figure 4 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig5.html">
+   Figure 5 script
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Figure 6 script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../5_multiple_metrics/Fig7.html">
+   Figure 7 script
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intermediate processing steps
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../7_gnss_processing_intermediate/Kaskawulsh_GNSS_record_data_processing_manuscript.html">
+   GNSS data processing script
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity.html">
+   Extract velocity map data at GNSS locations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../4_invalid_pixel_percent/invalid_pixel_percent.html">
+   Calculate invalid pixel percentage
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ITS_LIVE data processing scripts
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../1_static_area_error/metric_static-area-velo-ITSLIVE.html">
+   ITS_LIVE: calculate Metric 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../2_longitudinal_shear_strain/metric_longitudinal-shear-strain-ITSLIVE.html">
+   ITS_LIVE: calculate Metric 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../3_extract_gnss-pos_velocity/extract_gnss-pos_velocity-ITSLIVE.html">
+   ITS_LIVE: Extract velocity map data at GNSS locations
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/notebooks/6_synthetic_offset/feature_tracking_figure6.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/whyjz/GLAFT"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/whyjz/GLAFT/issues/new?title=Issue%20on%20page%20%2Fnotebooks/6_synthetic_offset/feature_tracking_figure6.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/whyjz/GLAFT/edit/master/jupyter-book/notebooks/6_synthetic_offset/feature_tracking_figure6.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/whyjz/GLAFT/master?urlpath=tree/jupyter-book/notebooks/6_synthetic_offset/feature_tracking_figure6.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Figure 6 script</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="figure-6-script">
+<h1>Figure 6 script<a class="headerlink" href="#figure-6-script" title="Permalink to this headline">¶</a></h1>
+<p>This notebook requires additional steps to be reproduced:</p>
+<ol class="simple">
+<li><p>Make sure you have installed all necessary packages, including vmap and others specified in the cell below.</p></li>
+<li><p>Update the input file paths so they point to the actual files on your local machine. These files include the source Landsat 8 image (<code class="docutils literal notranslate"><span class="pre">LC08_L1TP_061018_20180304_20180319_01_T1_B8_s.TIF</span></code>, downloadable at <a class="reference external" href="https://doi.org/10.17605/OSF.IO/HE7YR">https://doi.org/10.17605/OSF.IO/HE7YR</a>) and the RGI glacier outline (<code class="docutils literal notranslate"><span class="pre">01_rgi60_Alaska.shp</span></code>, downloadable at <a class="reference external" href="https://doi.org/10.7265/4m1f-gd79">https://doi.org/10.7265/4m1f-gd79</a>).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span><span class="o">,</span><span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">pygeotools.lib</span> <span class="kn">import</span> <span class="n">geolib</span><span class="p">,</span><span class="n">iolib</span><span class="p">,</span><span class="n">warplib</span><span class="p">,</span><span class="n">malib</span>
+<span class="kn">from</span> <span class="nn">imview</span> <span class="kn">import</span> <span class="n">pltlib</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> /nobackup/sbhusha1/feature_tracking_wg
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_fn</span> <span class="o">=</span> <span class="s1">&#39;Cropped/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s.TIF&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_synthetic_offset</span><span class="p">(</span><span class="n">imgfile</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;subpixel&#39;</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    imgfile: str, geotiff file path</span>
+<span class="sd">    mode: &#39;subpixel&#39; or &#39;multipixel&#39;</span>
+<span class="sd">    block_size: int, increment block size</span>
+<span class="sd">    ----</span>
+<span class="sd">    returns:</span>
+<span class="sd">    shift_arx: np.ndarray, offset field (x), in pixels</span>
+<span class="sd">    shift_ary: np.ndarray, offset field (y), in pixels</span>
+<span class="sd">    ----</span>
+<span class="sd">    &quot;&quot;&quot;</span>  
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">imgfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+        <span class="n">data_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+    <span class="n">idxy</span><span class="p">,</span> <span class="n">idxx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">data_shape</span><span class="p">)</span>   
+    <span class="c1"># for Numpy array, first is row element (-&gt; geotiff&#39;s y direction, height) </span>
+    <span class="c1"># and second is column element (-&gt; geotiff&#39;s x direction, width)</span>
+    
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;subpixel&#39;</span><span class="p">:</span>
+        <span class="n">shift_arx</span> <span class="o">=</span> <span class="n">idxx</span> <span class="o">//</span> <span class="n">block_size</span>
+        <span class="n">shift_arx</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">shift_arx</span> <span class="o">+</span> <span class="mf">0.1</span>
+        <span class="n">shift_ary</span> <span class="o">=</span> <span class="n">idxy</span> <span class="o">//</span> <span class="n">block_size</span>
+        <span class="n">shift_ary</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">shift_ary</span> <span class="o">-</span> <span class="mf">0.1</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;multipixel&#39;</span><span class="p">:</span>
+        <span class="n">shift_arx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">idxx</span> <span class="o">//</span> <span class="n">block_size</span>
+        <span class="n">shift_ary</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">idxy</span> <span class="o">//</span> <span class="n">block_size</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Mode is not defined.&#39;</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">shift_arx</span><span class="p">,</span> <span class="n">shift_ary</span>
+
+<span class="k">def</span> <span class="nf">apply_synthetic_offset</span><span class="p">(</span><span class="n">imgfile</span><span class="p">,</span> <span class="n">shift_arx</span><span class="p">,</span> <span class="n">shift_ary</span><span class="p">,</span> <span class="n">spline_order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    imgfile: str, geotiff file path</span>
+<span class="sd">    shift_arx: np.ndarray, offset field (x) from gftt.create_synthetic_offset</span>
+<span class="sd">    shift_ary: np.ndarray, offset field (y) from gftt.create_synthetic_offset</span>
+<span class="sd">    ----</span>
+<span class="sd">    returns:</span>
+<span class="sd">    ----</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="kn">import</span> <span class="nn">rasterio</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">map_coordinates</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">imgfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+        <span class="n">data_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">idxy</span><span class="p">,</span> <span class="n">idxx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">data_shape</span><span class="p">)</span>
+    <span class="n">shifted_y</span> <span class="o">=</span> <span class="n">idxy</span> <span class="o">+</span> <span class="n">shift_ary</span>
+    <span class="n">shifted_x</span> <span class="o">=</span> <span class="n">idxx</span> <span class="o">+</span> <span class="n">shift_arx</span>
+    <span class="n">shifted_yx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">shifted_y</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">shifted_x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>
+    
+    <span class="n">shifted_val</span> <span class="o">=</span> <span class="n">map_coordinates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">shifted_yx</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">spline_order</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">shifted_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shifted_val</span><span class="p">,</span> <span class="n">data_shape</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">shifted_val</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_shape</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">shift_arx</span><span class="p">,</span> <span class="n">shift_ary</span> <span class="o">=</span> <span class="n">create_synthetic_offset</span><span class="p">(</span><span class="n">img_fn</span><span class="p">)</span>
+<span class="n">shift_arx</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       ...,
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8],
+       [0.1, 0.1, 0.1, ..., 0.8, 0.8, 0.8]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shifted_image</span> <span class="o">=</span> <span class="n">apply_synthetic_offset</span><span class="p">(</span><span class="n">img_fn</span><span class="p">,</span> <span class="n">shift_arx</span><span class="p">,</span> <span class="n">shift_ary</span><span class="p">)</span>
+<span class="n">outfn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">img_fn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_subpixel_shift.tif&#39;</span>
+<span class="n">iolib</span><span class="o">.</span><span class="n">writeGTiff</span><span class="p">(</span><span class="n">shifted_image</span><span class="p">,</span><span class="n">outfn</span><span class="p">,</span><span class="n">src_ds</span><span class="o">=</span><span class="n">ds_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">ndv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">outfn</span><span class="p">),</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_figure6_8_1.png" src="../../_images/feature_tracking_figure6_8_1.png" />
+</div>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>vmap.py<span class="w"> </span><span class="nv">$img_fn</span><span class="w"> </span><span class="nv">$outfn</span><span class="w"> </span>-dt<span class="w"> </span>none
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-07-08 02:11:05.369578
+2023-07-08 09:11:05.369647 UTC
+
+
+Warping all inputs to the following:
+Resolution: 15.0
+Extent: [584872.5, 6717982.5, 641572.5, 6755182.5]
+Projection: &#39;+proj=utm +zone=7 +datum=WGS84 +units=m +no_defs&#39;
+Resampling alg: average
+
+1 of 2: Cropped/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s.TIF
+2 of 2: Cropped/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift.tif
+/nobackupp16/swbuild3/sbhusha1/StereoPipeline-3.2.1-alpha-2023-04-19-x86_64-Linux/bin/stereo_pprc -t pinhole --threads 56 --alignment-method None --corr-kernel 35 35 --corr-max-levels 5 --corr-timeout 1200 --subpixel-mode 1 --subpixel-kernel 35 35 --stereo-algorithm asp_bm --erode-max-size 1024 LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap
+
+[ 2023-Jul-08 02:11:24 ] : Stage 0 --&gt; PREPROCESSING 
+	--&gt; Setting number of processing threads to: 56
+Stereo file ./stereo.default could not be found. Will use default settings and command line options only.
+Writing log info to: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-log-stereo_pprc-07-08-0211-78852.txt
+Using session: pinhole
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai
+Georef 1: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Georef 2: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Warning: It appears that the input images are map-projected. In that case a DEM needs to be provided for stereo to give correct results.
+Warning: Your cameras appear to be in the same location!
+	You should double check your given camera
+	models as most likely stereo won&#39;t be able
+	to triangulate or perform epipolar rectification.
+Distance between camera centers in meters: 0.
+Using image files:  LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif, LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif
+Using camera files: /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai, /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai
+Computing statistics for left
+Using downsample scale: 4
+	    Writing stats file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp-stats.tif
+	    left: [ lo: 6430 hi: 46285 mean: 18455.6 std_dev: 8616.76 ]
+Computing statistics for right
+Using downsample scale: 4
+	    Writing stats file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp-stats.tif
+	    right: [ lo: 6444 hi: 45544 mean: 18432.6 std_dev: 8477.22 ]
+	--&gt; Applying alignment method: none
+	--&gt; Normalizing globally to: [1222.04 35689.1]
+	--&gt; Writing pre-aligned images.
+	--&gt; Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-L.tif.
+          L:  [******************************************************] Complete!
+	--&gt; Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-R.tif.
+          R:  [******************************************************] Complete!
+	--&gt; Generating image masks... 
+Writing masks: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-lMask.tif LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-rMask.tif.
+         Mask L: [***************************************************] Complete!
+         Mask R: [***************************************************] Complete!
+	--&gt; Creating previews. Subsampling by 0.489914 by using a tile of size 256 and 56 threads.
+            Sub L: [*************************************************] Complete!
+            Sub R: [*************************************************] Complete!
+            Sub L Mask: [********************************************] Complete!
+            Sub R Mask: [********************************************] Complete!
+
+[ 2023-Jul-08 02:11:32 ] : PREPROCESSING FINISHED 
+/nobackupp16/swbuild3/sbhusha1/StereoPipeline-3.2.1-alpha-2023-04-19-x86_64-Linux/bin/stereo_corr --compute-low-res-disparity-only -t pinhole --threads 56 --alignment-method None --corr-kernel 35 35 --corr-max-levels 5 --corr-timeout 1200 --subpixel-mode 1 --subpixel-kernel 35 35 --stereo-algorithm asp_bm --erode-max-size 1024 LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap
+	--&gt; Setting number of processing threads to: 56
+Stereo file ./stereo.default could not be found. Will use default settings and command line options only.
+Writing log info to: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-log-stereo_corr-07-08-0211-79772.txt
+Using session: pinhole
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai
+Georef 1: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Georef 2: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Warning: It appears that the input images are map-projected. In that case a DEM needs to be provided for stereo to give correct results.
+Warning: Your cameras appear to be in the same location!
+	You should double check your given camera
+	models as most likely stereo won&#39;t be able
+	to triangulate or perform epipolar rectification.
+Distance between camera centers in meters: 0.
+	--&gt; Using LOG pre-processing filter with 1.5 sigma blur.
+
+[ 2023-Jul-08 02:11:35 ] : Stage 1 --&gt; CORRELATION
+
+[ 2023-Jul-08 02:11:35 ] : Stage 1 --&gt; LOW-RESOLUTION CORRELATION
+No IP file found, computing IP now.
+	    * Detecting interest points.
+	--&gt; Matching interest points using homography.
+	    Looking for IP in left image...
+	    Using 559 interest points per tile (1024^2 px).
+	    Detecting IP
+	    Removing IP near nodata with radius 4
+	    Building descriptors
+	    Found interest points: 5000
+	    Recording interest points to file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-L.vwip
+	    Looking for IP in right image...
+	    Using 559 interest points per tile (1024^2 px).
+	    Detecting IP
+	    Removing IP near nodata with radius 4
+	    Building descriptors
+	    Found interest points: 5000
+	    Recording interest points to file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-R.vwip
+	--&gt; Uniqueness threshold: 0.8
+           Matching: [***************************************************.] 100%
+	    Matched points: 4103
+	    Inlier threshold:                     200
+	    RANSAC iterations:                    100
+	    * Writing match file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-L__R.match
+	--&gt; Using interest points to determine search window.
+	    * Loading match file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-L__R.match
+Removed 21 outliers based on percentiles of differences of interest points with --outlier-removal-params.
+D_sub search range: (Origin: (-8.75, -2.625) width: 17.5 height: 6.25) px
+Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-D_sub.tif
+        --&gt; Low-resolution disparity:[*******************************] Complete!
+	--&gt; Full-res search range based on D_sub: (Origin: (-3, -3) width: 6 height: 6)
+
+[ 2023-Jul-08 02:11:53 ] : LOW-RESOLUTION CORRELATION FINISHED
+
+[ 2023-Jul-08 02:11:53 ] : CORRELATION FINISHED
+/nobackupp16/swbuild3/sbhusha1/StereoPipeline-3.2.1-alpha-2023-04-19-x86_64-Linux/bin/stereo_corr -t pinhole --threads 56 --alignment-method None --corr-kernel 35 35 --corr-max-levels 5 --corr-timeout 1200 --subpixel-mode 1 --subpixel-kernel 35 35 --stereo-algorithm asp_bm --erode-max-size 1024 LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap
+	--&gt; Setting number of processing threads to: 56
+Stereo file ./stereo.default could not be found. Will use default settings and command line options only.
+Writing log info to: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-log-stereo_corr-07-08-0211-79938.txt
+Using session: pinhole
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai
+Georef 1: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Georef 2: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Warning: It appears that the input images are map-projected. In that case a DEM needs to be provided for stereo to give correct results.
+Warning: Your cameras appear to be in the same location!
+	You should double check your given camera
+	models as most likely stereo won&#39;t be able
+	to triangulate or perform epipolar rectification.
+Distance between camera centers in meters: 0.
+	--&gt; Using LOG pre-processing filter with 1.5 sigma blur.
+
+[ 2023-Jul-08 02:11:55 ] : Stage 1 --&gt; CORRELATION
+
+[ 2023-Jul-08 02:11:55 ] : Stage 1 --&gt; LOW-RESOLUTION CORRELATION
+Cached IP match file found: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-L__R.match
+	--&gt; Using interest points to determine search window.
+	    * Loading match file: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-L__R.match
+Removed 21 outliers based on percentiles of differences of interest points with --outlier-removal-params.
+	--&gt; Using cached low-resolution disparity: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-D_sub.tif
+
+[ 2023-Jul-08 02:11:55 ] : LOW-RESOLUTION CORRELATION FINISHED
+	--&gt; Full-res search range based on D_sub: (Origin: (-3, -3) width: 6 height: 6)
+	--------------------------------------------------
+	   Kernel size:    Vector2(35,35)
+	   Search range:   (Origin: (-3, -3) width: 6 height: 6)
+	   Cost mode:      2
+	--------------------------------------------------
+Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-D.tif
+        --&gt; Correlation :[*******************************************] Complete!
+
+[ 2023-Jul-08 02:12:22 ] : CORRELATION FINISHED
+/nobackupp16/swbuild3/sbhusha1/StereoPipeline-3.2.1-alpha-2023-04-19-x86_64-Linux/bin/stereo_rfne -t pinhole --threads 56 --alignment-method None --corr-kernel 35 35 --corr-max-levels 5 --corr-timeout 1200 --subpixel-mode 1 --subpixel-kernel 35 35 --stereo-algorithm asp_bm --erode-max-size 1024 LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap
+
+[ 2023-Jul-08 02:12:23 ] : Stage 2 --&gt; REFINEMENT 
+	--&gt; Setting number of processing threads to: 56
+Stereo file ./stereo.default could not be found. Will use default settings and command line options only.
+Writing log info to: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-log-stereo_rfne-07-08-0212-80059.txt
+Using session: pinhole
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai
+Georef 1: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Georef 2: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Warning: It appears that the input images are map-projected. In that case a DEM needs to be provided for stereo to give correct results.
+Warning: Your cameras appear to be in the same location!
+	You should double check your given camera
+	models as most likely stereo won&#39;t be able
+	to triangulate or perform epipolar rectification.
+Distance between camera centers in meters: 0.
+Left image nodata: -32768
+Right image nodata: -32768
+	--&gt; Using LOG pre-processing filter with 1.5 sigma blur.
+	--&gt; Using parabola subpixel mode.
+Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-RD.tif
+        --&gt; Refinement :[********************************************] Complete!
+
+[ 2023-Jul-08 02:12:29 ] : REFINEMENT FINISHED 
+/nobackupp16/swbuild3/sbhusha1/StereoPipeline-3.2.1-alpha-2023-04-19-x86_64-Linux/bin/stereo_fltr -t pinhole --threads 56 --alignment-method None --corr-kernel 35 35 --corr-max-levels 5 --corr-timeout 1200 --subpixel-mode 1 --subpixel-kernel 35 35 --stereo-algorithm asp_bm --erode-max-size 1024 LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap
+
+[ 2023-Jul-08 02:12:30 ] : Stage 3 --&gt; FILTERING 
+Warning: Hole-filling is disabled by default in stereo_fltr. It is suggested to use instead point2dem&#39;s analogous functionality. It can be re-enabled using --enable-fill-holes.
+	--&gt; Setting number of processing threads to: 56
+Stereo file ./stereo.default could not be found. Will use default settings and command line options only.
+Writing log info to: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-log-stereo_fltr-07-08-0212-80235.txt
+Using session: pinhole
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy.tsai
+Loading camera model: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_warp.tif /nobackupp16/swbuild3/sbhusha1/pip_git_sw/vmap/vmap/dummy2.tsai
+Georef 1: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Georef 2: -- Proj.4 Geospatial Reference Object --
+	PROJCS name: WGS 84 / UTM zone 7N
+	Transform  : Matrix3x3((15,0,584872)(0,-15,6.75518e+06)(0,0,1))
+	Geodetic Datum --&gt; Name: WGS_1984  Spheroid: WGS 84  Semi-major axis: 6378137  Semi-minor axis: 6356752.3142451793  Meridian: Greenwich at 0  Proj4 Str: +datum=WGS84
+	Proj.4 String: +proj=utm +zone=7 +units=m
+	Pixel Interpretation: pixel as point
+longitude range: [-180, 180]
+
+Warning: It appears that the input images are map-projected. In that case a DEM needs to be provided for stereo to give correct results.
+Warning: Your cameras appear to be in the same location!
+	You should double check your given camera
+	models as most likely stereo won&#39;t be able
+	to triangulate or perform epipolar rectification.
+Distance between camera centers in meters: 0.
+	--&gt; Cleaning up disparity map prior to filtering processes (1 pass).
+Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-GoodPixelMap.tif
+        --&gt; Good pixel map: [****************************************] Complete!
+	--&gt; Removing small blobs.
+Writing: LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-F.tif
+        --&gt; Filtering: [*********************************************] Complete!
+
+[ 2023-Jul-08 02:12:44 ] : FILTERING FINISHED 
+
+2023-07-08 02:12:44.657561
+2023-07-08 09:12:44.657648 UTC
+
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+swig/python detected a memory leak of type &#39;OSRSpatialReferenceShadow *&#39;, no destructor found.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_disp_fn</span> <span class="o">=</span> <span class="s1">&#39;LC08_L1TP_061018_20180304_20180319_01_T1_B8_s__LC08_L1TP_061018_20180304_20180319_01_T1_B8_s_subpixel_shift_vmap_minm_35px_spm1/vmap-F.tif&#39;</span>
+<span class="n">out_dx</span><span class="p">,</span><span class="n">out_dy</span> <span class="o">=</span> <span class="p">[</span><span class="n">iolib</span><span class="o">.</span><span class="n">fn_getma</span><span class="p">(</span><span class="n">out_disp_fn</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">clim_x</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">clim_y</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span><span class="o">-</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">cb1</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shift_arx</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_x</span><span class="p">)</span>
+<span class="n">cb2</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shift_ary</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/feature_tracking_figure6_11_0.png" src="../../_images/feature_tracking_figure6_11_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">iolib</span><span class="o">.</span><span class="n">fn_getds</span><span class="p">(</span><span class="n">out_disp_fn</span><span class="p">)</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="n">geolib</span><span class="o">.</span><span class="n">ds_extent</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+<span class="n">fig_extent</span> <span class="o">=</span> <span class="p">[</span><span class="n">extent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">extent</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">extent</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">extent</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glac_shp</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;/nobackup/sbhusha1/reference_data/rgi60/regions/01_rgi60_Alaska.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kaskwulsh_mask</span> <span class="o">=</span> <span class="n">glac_shp</span><span class="p">[</span><span class="s1">&#39;RGIId&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;RGI60-01.16201&#39;</span>
+<span class="n">kaskwulsh_shp</span> <span class="o">=</span> <span class="p">(</span><span class="n">glac_shp</span><span class="p">[</span><span class="n">kaskwulsh_mask</span><span class="p">])</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s2">&quot;EPSG:32607&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kaskwulsh_shp</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
+</pre></div>
+</div>
+<img alt="../../_images/feature_tracking_figure6_15_1.png" src="../../_images/feature_tracking_figure6_15_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span><span class="n">axa</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axa</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">clim_x</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">clim_y</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span><span class="o">-</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">shift_arx</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_x</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;input shift in x (px)&#39;</span><span class="p">,</span><span class="n">extent</span><span class="o">=</span><span class="n">fig_extent</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="n">shift_ary</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_y</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;input shift in y (px)&#39;</span><span class="p">,</span><span class="n">extent</span><span class="o">=</span><span class="n">fig_extent</span><span class="p">)</span>
+<span class="n">kaskwulsh_shp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="n">kaskwulsh_shp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">out_dx</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_x</span><span class="p">,</span><span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;measured shift in x (px)&#39;</span><span class="p">,</span><span class="n">extent</span><span class="o">=</span><span class="n">fig_extent</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">add_cbar</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">mappable</span><span class="o">=</span><span class="n">cb1</span><span class="p">)</span>
+<span class="n">pltlib</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">out_dy</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span><span class="n">clim</span><span class="o">=</span><span class="n">clim_y</span><span class="p">,</span><span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;measured shift in y (px)&#39;</span><span class="p">,</span><span class="n">extent</span><span class="o">=</span><span class="n">fig_extent</span><span class="p">)</span>
+
+<span class="n">pltlib</span><span class="o">.</span><span class="n">add_cbar</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">cb2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="c1">#f.savefig(&#39;figure6_manuscript.png&#39;,dpi=300,bbox_inches=&#39;tight&#39;, pad_inches=0.1)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;/nobackup/sbhusha1/notebooks/velocity/figure6_manuscript_revised_kaskawulsh_only.png&#39;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/feature_tracking_figure6_16_0.png" src="../../_images/feature_tracking_figure6_16_0.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks/6_synthetic_offset"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="../5_multiple_metrics/Fig5.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Figure 5 script</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../5_multiple_metrics/Fig7.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Figure 7 script</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Whyjay Zheng et al.<br/>
+    
+        &copy; Copyright 2023.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
