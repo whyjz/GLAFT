@@ -1,6 +1,6 @@
 # Introduction
 
-GLAcier Feature Tracking testkit (GLAFT) is a Python package for assessing and benchmarking feature-tracked glacier velocity maps derived from satellite imagery. To be compatible with as many feature-tracking tools as possible, GLAFT analyzes velocity maps (and optional reliability files used as weight) and calculates two metrics based on statistics and ice flow dynamics. Along with GLAFT’s visualization tools, users can intercompare the quality of velocity maps processed by different methods and parameter sets. In the [GLAFT publication](https://doi.org/10.5194/tc-2023-38), we further provide a guideline for optimizing glacier velocity maps by comparing the calculated metrics to an ideal threshold value.
+GLAcier Feature Tracking testkit (GLAFT) is a Python package for assessing and benchmarking feature-tracked glacier velocity maps derived from satellite imagery. To be compatible with as many feature-tracking tools as possible, GLAFT analyzes velocity maps (and optional reliability files used as weight) and calculates two metrics based on statistics and ice flow dynamics. Along with GLAFT’s visualization tools, users can intercompare the quality of velocity maps processed by different methods and parameter sets. In the [GLAFT publication](https://doi.org/10.5194/tc-17-4063-2023), we further provide a guideline for optimizing glacier velocity maps by comparing the calculated metrics to an ideal threshold value.
 
 GLAFT is an open sourced project and is hosted on Github (https://github.com/whyjz/GLAFT). All documentation and cloud-executable demos are deployed as Jupyter Book pages (https://whyjz.github.io/GLAFT/). 
 
@@ -20,3 +20,6 @@ pip install glaft
 
 GLAFT uses the MIT License. More information is available [here](https://github.com/whyjz/GLAFT/blob/master/LICENSE).
 
+## Citing GLAFT
+
+Zheng, W., Bhushan, S., Van Wyk De Vries, M., Kochtitzky, W., Shean, D., Copland, L., Dow, C., Jones-Ivey, R., and Pérez, F.: GLAcier Feature Tracking testkit (GLAFT): a statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking, The Cryosphere, 17, 4063–4078, https://doi.org/10.5194/tc-17-4063-2023, 2023.
