@@ -1,4 +1,4 @@
-# GLAFT user manual | Other supplementary material for "GLAcier Feature Tracking testkit (GLAFT): A statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking"
+# GLAFT user manual | Other supplementary material for "GLAcier Feature Tracking testkit (GLAFT): a statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking"
 
 Whyjay Zheng$^{1,2}$, Shashank Bhushan$^3$, Maximillian Van Wyk De Vries$^{4,5,6}$, William Kochtitzky$^{7,8}$, David Shean$^3$, Luke Copland$^7$, Christine Dow$^9$, Renette Jones-Ivey$^{10}$, Fernando Pérez$^1$
 
@@ -16,13 +16,13 @@ Corresponding author and email: Whyjay Zheng (whyjayzheng@gmail.com)
 
 ## Article link
 
-The article is currectly in review, and the [preprint is available in The Cryosphere Discuss](https://doi.org/10.5194/tc-2023-38). The early work of this project was presented at the AGU 2021 meeting with a poster [available on ESSOAR](https://doi.org/10.1002/essoar.10509355.1).
+[The main article](https://doi.org/10.5194/tc-17-4063-2023) was published in The Cryosphere. The early work of this project was presented at the AGU 2021 meeting with a poster [available on ESSOAR](https://doi.org/10.1002/essoar.10509355.1).
 
 ## Table of Content
 
 **Part 1**: GLAFT user manual.
 
-**Parts 2–5**: Other supplemental material for the article "GLAcier Feature Tracking testkit (GLAFT): A statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking," including all necessary components to reproduce the presented work:
+**Parts 2–5**: Other supplemental material for the article "GLAcier Feature Tracking testkit (GLAFT): a statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking," including all necessary components to reproduce the presented work:
 
 - Part 2: Supplementary tables and figures
 - Part 3: Figure scripts
