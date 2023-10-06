@@ -22,4 +22,12 @@ GLAFT uses the MIT License. More information is available [here](https://github.
 
 ## Citing GLAFT
 
-Zheng, W., Bhushan, S., Van Wyk De Vries, M., Kochtitzky, W., Shean, D., Copland, L., Dow, C., Jones-Ivey, R., and Pérez, F.: GLAcier Feature Tracking testkit (GLAFT): a statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking, The Cryosphere, 17, 4063–4078, https://doi.org/10.5194/tc-17-4063-2023, 2023.
+Please consider citing the following references when using GLAFT:
+
+#### Tool, metrics, and relevant discussion
+
+- Zheng, W., Bhushan, S., Van Wyk De Vries, M., Kochtitzky, W., Shean, D., Copland, L., Dow, C., Jones-Ivey, R., and Pérez, F.: GLAcier Feature Tracking testkit (GLAFT): a statistically and physically based framework for evaluating glacier velocity products derived from optical satellite image feature tracking, The Cryosphere, 17, 4063–4078, https://doi.org/10.5194/tc-17-4063-2023, 2023.
+
+#### Tool only
+
+- Zheng, W., Bhushan, S., & Sundell, E. (2023). whyjz/GLAFT: GLAFT [version #]. Zenodo. https://doi.org/10.5281/zenodo.7527956
