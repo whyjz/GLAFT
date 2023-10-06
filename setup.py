@@ -11,7 +11,7 @@ with open("requirements.txt", "r") as f:
 
 setuptools.setup(
     name             = "glaft",
-    version          = "0.2.0",
+    version          = "1.0.0",
     author           = "The GLAFT team",
     author_email     = "whyjz@berkeley.edu",
     maintainer       = "Whyjay Zheng",
